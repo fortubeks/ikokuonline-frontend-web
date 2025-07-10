@@ -10059,9 +10059,12 @@ input:focus-visible {
 /* ======================= Newsletter Css End =========================== */
 /* Home Two Css Start */
 .color-two:root {
-    --main-h: 224;
+    /* --main-h: 224;
     --main-s: 71%;
-    --main-l: 49%;
+    --main-l: 49%; */
+    --main-h: 14;
+    --main-s: 98%;
+    --main-l: 61%;
 }
 
 .font-exo h1,

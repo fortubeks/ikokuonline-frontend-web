@@ -28,20 +28,40 @@
     </div>
     <!-- ==================== Scroll to Top End Here ==================== -->
 
-    <!-- JS Libraries -->
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- Web Frontend JS Libraries -->
+    <script src="{{url('assets/marketpro/js/jquery-3.7.1.min.js')}}"></script>
     <!-- <script src="assets/js/bootstrap.bundle.min.js"></script> -->
-    <script src="assets/js/phosphor-icon.js"></script>
-    <script src="assets/js/select2.min.js"></script>
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/count-down.js"></script>
-    <script src="assets/js/jquery-ui.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/aos.js"></script>
-    <script src="assets/js/marque.min.js"></script>
-    <script src="assets/js/vanilla-tilt.min.js"></script>
-    <script src="assets/js/counter.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="{{url('assets/marketpro/js/phosphor-icon.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/select2.min.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/slick.min.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/count-down.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/jquery-ui.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/wow.min.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/aos.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/marque.min.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/vanilla-tilt.min.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/counter.min.js')}}"></script>
+    <script src="{{url('assets/marketpro/js/main.js')}}"></script>
+
+    <!-- ================================== Dashboard End =========================== -->
+    <!-- Jquery js -->
+    <script src="{{url('assets/dp-market-dashboard/js/jquery-3.7.1.min.js')}}"></script>
+    <!-- Bootstrap Bundle Js -->
+    <script src="{{url('assets/dp-market-dashboard/js/boostrap.bundle.min.js')}}"></script>
+    <!-- CountDown -->
+    <script src="{{url('assets/dp-market-dashboard/js/countdown.js')}}"></script>
+    <!-- counter up -->
+    <script src="{{url('assets/dp-market-dashboard/js/counterup.min.js')}}"></script>
+    <!-- Slick js -->
+    <script src="{{url('assets/dp-market-dashboard/js/slick.min.js')}}"></script>
+    <!-- magnific popup -->
+    <script src="{{url('assets/dp-market-dashboard/js/jquery.magnific-popup.js')}}"></script>
+    <!-- apex chart -->
+    <script src="{{url('assets/dp-market-dashboard/js/apexchart.js')}}"></script>
+    <!-- marquee -->
+    <script src="{{url('assets/dp-market-dashboard/js/marquee.min.js')}}"></script>
+    <!-- main js -->
+    <script src="{{url('assets/dp-market-dashboard/js/main.js')}}"></script>
 </body>
 
 </html>
