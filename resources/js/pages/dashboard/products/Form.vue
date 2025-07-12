@@ -69,6 +69,11 @@
                             <label for="can_negotiate" class="form-label mb-0">Can Negotiate</label>
                         </div>
 
+                        <div class="col-sm-12 col-xs-12">
+                            <label for="images" class="form-label">Upload Images</label>
+                            <input type="file" id="images" class="common-input common-input--md border--color-dark bg--white" multiple>
+                        </div>
+
                         <div class="col-sm-12 text-end">
                             <button class="btn btn-main btn-lg pill mt-4"> {{ product ? 'Update Product ' : 'Add Product' }}</button>
                         </div>
