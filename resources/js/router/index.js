@@ -7,7 +7,10 @@ import ForgotPassword from '../pages/auth/ForgotPassword.vue';
 import ResetPassword from '../pages/auth/ResetPassword.vue';
 import VerifyAccount from '../pages/auth/VerifyAccount.vue';
 
+import Home from '../pages/home-page/Home.vue';
+
 import DashboardLayout from '../layouts/DashboardLayout.vue';
+import HomePageLayout from '../layouts/HomePageLayout.vue';
 
 import ProfileForm from '../pages/dashboard/profile/Form.vue';
 
@@ -24,14 +27,20 @@ import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
 const routes = [
-    { path: '/', redirect: '/login' },
+    //{ path: '/', redirect: '/login' },
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
     { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword },
     { path: '/reset-password/:token', name: 'reset-password', component: ResetPassword, props: true },
     { path: '/verify-account/:id', name: 'verify-account', component: VerifyAccount, props: true },
     { path: '/test', name: 'test', component: Test },
-
+    { 
+        path: '/', 
+        component: HomePageLayout,
+        children: [
+            { path: '', name: 'home-page', component: Home },
+        ]
+     },
     {
         path: '/dashboard',
         component: DashboardLayout,
