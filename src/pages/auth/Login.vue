@@ -42,7 +42,12 @@
               </div>
 
               <div class="mt-48">
-                <a href="#" class="text-danger-600 text-sm fw-semibold hover-text-decoration-underline">Forgot your password?</a>
+                <router-link
+                    to="/forgot-password"
+                    class="text-danger-600 text-sm fw-semibold hover-text-decoration-underline"
+                >
+                    Forgot your password?
+                </router-link>
               </div>
             </div>
           </div>
@@ -54,8 +59,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
+//import axios from 'axios';
 import router from '../../router';
+
+import api from '@/services/api';
 
 const form = ref({
   email: '',
@@ -64,13 +71,19 @@ const form = ref({
 
 const login = async () => {
   try {
-    const res = await axios.post('http://127.0.0.1:8000/api/auth/login', form.value);
+    const res = await api.post('/auth/login', form.value);
+
+    const token = res.data.token || res.data.access_token;
+
+    if (!token) {
+        //throw new Error('Token not returned from API');
+    }
     
     // Save token (adjust key based on your API)
-    localStorage.setItem('token', res.data.token);
+    localStorage.setItem('token', token);
 
     // Set default Authorization header for future requests
-    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     // Redirect to dashboard or home
     router.push('/dashboard');

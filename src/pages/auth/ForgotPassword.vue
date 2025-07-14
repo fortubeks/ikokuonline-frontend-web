@@ -15,15 +15,15 @@
                         <h6 class="mb-32 form-header">Account Recovery</h6>
 
                         <div class="mb-24 text-center">
-                            <label for="email" class="text-neutral-900 text-lg mb-8 fw-medium">Enter your registered phone number </label>
+                            <label for="email" class="text-neutral-900 text-lg mb-8 fw-medium">Enter your registered email address </label>
                         </div>
                         <div class="mb-24">
                             <div class="position-relative">
-                                <input type="number" class="common-input" id="phone" placeholder="Enter Phone Number">
+                                <input type="text" v-model="email" class="common-input" id="email" placeholder="Enter Email">
                             </div>
                         </div>
                         <div class="mb-24 mt-48 text-center">
-                            <button type="button" class="btn py-16 primary-btn btn-fill-499">Send Password Reset Code</button>
+                            <button type="button" class="btn py-16 primary-btn btn-fill-499" @click="submitEmail">Send Password Reset Code</button>
                         </div>
                         <div class="mt-48 text-center">
                             <label class="form-check-label flex-grow-1" for="terms-condition">Didn't receive the code? <a class="text-danger-600 text-sm fw-semibold hover-text-decoration-underline" href="#">Request another</a></label>
@@ -40,22 +40,36 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
-import router from '../../router';
+//import axios from 'axios';
+import api from '@/services/api';
+import { useRouter } from 'vue-router'; 
 
-const form = ref({
-  email: '',
-  password: '',
-});
+const email = ref('');
+const router = useRouter();
 
-const login = async () => {
+const submitEmail = async () => {
+  if (!email.value) {
+    alert('Email is required');
+    return;
+  }
+
   try {
-    const res = await axios.post('http://your-backend-domain.com/api/login', form.value);
-    localStorage.setItem('token', res.data.token); // Save token
-    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
-    router.push('/dashboard'); // or wherever you want
+    await api.post('/auth/forgot-password', {
+      email: email.value
+    });
+
+    localStorage.setItem('reset_email', email.value);
+
+    alert('Reset instructions have been sent to your email');
+    router.push({
+      name: 'reset-password',
+    });
+    
   } catch (error) {
-    alert('Login failed');
+    if (localStorage.getItem('reset_email')) {
+        localStorage.removeItem('reset_email');
+    }
+    alert(error.response?.data?.message || 'Failed to send reset instructions');
   }
 };
 </script>

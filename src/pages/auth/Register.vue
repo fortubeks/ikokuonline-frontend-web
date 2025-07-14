@@ -72,7 +72,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
+//import axios from 'axios';
+import api from '@/services/api';
 import router from '../../router';
 
 const form = ref({
@@ -87,16 +88,21 @@ const form = ref({
 const register = async () => {
   try {
     //await axios.post('http://127.0.0.1:8000/api/auth/register', form.value);
-    const res = await axios.post('http://127.0.0.1:8000/api/auth/register', form.value);
+    const res = await api.post('/api/auth/register', form.value);
     alert('Registered successfully');
     //router.push('/login');
     const email = form.value.email;
 
+    localStorage.setItem('reset_email', email.value);
+
     // Redirect to verification page with query param
-    router.push({ name: 'verify-account', query: { email } });
+    router.push({ name: 'verify-account'});
   } catch (error) {
     //console.error(error);
     //alert('Registration failed');
+    if (localStorage.getItem('reset_email')) {
+        localStorage.removeItem('reset_email');
+    }
     alert(error.response?.data?.message || 'Registration failed');
   }
 };

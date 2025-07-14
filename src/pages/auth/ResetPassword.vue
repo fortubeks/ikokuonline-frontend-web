@@ -16,18 +16,18 @@
 
                         <div class="mb-24">
                             <div class="position-relative">
-                                <input type="number" class="common-input" id="phone" placeholder="Enter OTP">
+                                <input type="text"  v-model="otp"  inputmode="numeric" pattern="\d*" class="common-input" id="otp" placeholder="Enter OTP">
                             </div>
                         </div>
                         <div class="mb-24">
-                            <label for="password" class="text-neutral-900 text-lg mb-8 fw-medium">New Password</label>
+                            <label for="newPassword" class="text-neutral-900 text-lg mb-8 fw-medium">New Password</label>
                             <div class="position-relative">
-                                <input type="password" class="common-input" id="password" placeholder="Enter New Password">
+                                <input type="password" v-model="newPassword" class="common-input" id="newPassword" placeholder="Enter New Password">
                                 <span class="toggle-password position-absolute top-50 inset-inline-end-0 me-16 translate-middle-y cursor-pointer ph ph-eye-slash" id="#password"></span>
                             </div>
                         </div>
                         <div class="mb-24 mt-48 text-center">
-                            <button type="button" class="btn py-16 primary-btn btn-fill-499">Reset password</button>
+                            <button type="button" class="btn py-16 primary-btn btn-fill-499" @click="resetPassword">Reset password</button>
                         </div>
                     </div>
                 </div>
@@ -40,24 +40,53 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import router from '../../router';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+//import axios from 'axios';
+import api from '@/services/api';
 
-const form = ref({
-  email: '',
-  password: '',
+const router = useRouter();
+const email = ref('');
+const otp = ref('');
+const newPassword = ref('');
+
+onMounted(() => {
+  const storedEmail = localStorage.getItem('reset_email');
+  if (!storedEmail) {
+    // Redirect back if no email stored
+    router.push('/forgot-password');
+  } else {
+    email.value = storedEmail;
+  }
 });
 
-const login = async () => {
+const resetPassword = async () => {
+  if (!otp.value || !newPassword.value) {
+    alert('OTP and new password are required');
+    return;
+  }
+
   try {
-    const res = await axios.post('http://your-backend-domain.com/api/login', form.value);
-    localStorage.setItem('token', res.data.token); // Save token
-    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
-    router.push('/dashboard'); // or wherever you want
+    await api.post('/auth/reset-password', {
+      email: email.value,
+      otp: otp.value,
+      password: newPassword.value,
+    });
+
+    if (localStorage.getItem('reset_email')) {
+        localStorage.removeItem('reset_email');
+    }
+
+    alert('Password has been reset successfully');
+    router.push('/login');
+
   } catch (error) {
-    alert('Login failed');
+    alert(error.response?.data?.message || 'Reset failed');
+    if (localStorage.getItem('reset_email')) {
+        localStorage.removeItem('reset_email');
+    }
   }
 };
 </script>
+
 

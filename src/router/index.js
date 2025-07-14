@@ -34,7 +34,6 @@ import VerifyAccount from '../pages/auth/VerifyAccount.vue';
 import DashboardLayout from '../layouts/DashboardLayout.vue';
 
 import ProfileForm from '../pages/dashboard/profile/Form.vue';
-
 import VehicleListings from '../pages/dashboard/vehicle-listings/VehicleListings.vue';
 import VehicleListingsForm from '../pages/dashboard/vehicle-listings/Form.vue';
 
@@ -48,48 +47,62 @@ import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
 const routes = [
-    { path: '/', redirect: '/login' },
-    { path: '/login', name: 'login', component: Login },
-    { path: '/register', name: 'register', component: Register },
-    { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword },
-    { path: '/reset-password/:token', name: 'reset-password', component: ResetPassword, props: true },
-    { path: '/verify-account', name: 'verify-account', component: VerifyAccount, props: true },
-    { path: '/test', name: 'test', component: Test },
+  { path: '/', redirect: '/login' },
 
-    {
-        path: '/dashboard',
-        component: DashboardLayout,
-        children: [
-            // Products
-            { path: 'products', name: 'Products', component: Products },
-            { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
-            { path: 'products/edit/:id', name: 'ProductEdit', component: ProductsForm, props: true },
+  // Public pages
+  { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },
+  { path: '/register', name: 'register', component: Register, meta: { guestOnly: true } },
+  { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword, meta: { guestOnly: true } },
+  { path: '/reset-password', name: 'reset-password', component: ResetPassword, props: true, meta: { guestOnly: true } },
+  { path: '/verify-account', name: 'verify-account', component: VerifyAccount, props: true, meta: { guestOnly: true } },
+  { path: '/test', name: 'test', component: Test },
 
-            // Product Categories
-            { path: 'product-categories', name: 'ProductCategories', component: ProductCategories },
-            { path: 'product-categories/create', name: 'ProductCategoriesCreate', component: ProductCategoriesForm },
-            { path: 'product-categories/edit/:id', name: 'ProductCategoriesEdit', component: ProductCategoriesForm, props: true },
+  // Protected pages
+  {
+    path: '/dashboard',
+    component: DashboardLayout,
+    meta: { requiresAuth: true },
+    children: [
+      { path: 'products', name: 'Products', component: Products },
+      { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
+      { path: 'products/edit/:id', name: 'ProductEdit', component: ProductsForm, props: true },
 
-            // Vehicle Listings
-            { path: 'vehicle-listings', name: 'VehicleListings', component: VehicleListings },
-            { path: 'vehicle-listings/create', name: 'VehicleListingCreate', component: VehicleListingsForm },
-            { path: 'vehicle-listings/edit/:id', name: 'VehicleListingEdit', component: VehicleListingsForm, props: true },
+      { path: 'product-categories', name: 'ProductCategories', component: ProductCategories },
+      { path: 'product-categories/create', name: 'ProductCategoriesCreate', component: ProductCategoriesForm },
+      { path: 'product-categories/edit/:id', name: 'ProductCategoriesEdit', component: ProductCategoriesForm, props: true },
 
-            // Profile
-            { path: 'profile', name: 'Profile', component: ProfileForm },
+      { path: 'vehicle-listings', name: 'VehicleListings', component: VehicleListings },
+      { path: 'vehicle-listings/create', name: 'VehicleListingCreate', component: VehicleListingsForm },
+      { path: 'vehicle-listings/edit/:id', name: 'VehicleListingEdit', component: VehicleListingsForm, props: true },
 
-            // Orders
-            { path: 'orders', name: 'Orders', component: Orders },
-            { path: 'orders/:id', name: 'OrderShow', component: OrderShow, props: true },
-        ],
-    },
+      { path: 'profile', name: 'Profile', component: ProfileForm },
+
+      { path: 'orders', name: 'Orders', component: Orders },
+      { path: 'orders/:id', name: 'OrderShow', component: OrderShow, props: true },
+    ],
+  },
 ];
 
 const base = import.meta.env.VITE_APP_BASE_URL || '/';
 
 const router = createRouter({
-    history: createWebHistory(base),
-    routes,
+  history: createWebHistory(base),
+  routes,
+});
+
+// route guard
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('token');
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    return next({ name: 'login' });
+  }
+
+  if (to.meta.guestOnly && isAuthenticated) {
+    return next({ name: 'Products' }); // or any default authenticated route
+  }
+
+  next();
 });
 
 export default router;
