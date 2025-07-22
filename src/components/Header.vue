@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- components/Header.vue -->
 <template>
   <div class="dashboard-nav bg-white flx-between gap-md-3 gap-2">

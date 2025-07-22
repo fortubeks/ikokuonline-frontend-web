@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- components/Footer.vue -->
 <template>
   <div class="dashboard-footer bottom-footer-two mt-32 border-0 bg-white">

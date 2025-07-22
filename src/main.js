@@ -15,7 +15,18 @@
 
 import { createApp } from 'vue';
 import App from './App.vue';
+import { MotionPlugin } from '@vueuse/motion'
 import router from './router';
+import './assets/tailwind.css'
+import '@fontsource/sora/400.css'; 
+import '@fontsource/sora/500.css';
+import '@fontsource/sora/600.css'; 
+import '@fontsource/sora/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/700.css';
+
+
+
 
 import '@/assets/marketpro/css/bootstrap.min.css';
 import '@/assets/marketpro/css/select2.min.css';
@@ -33,6 +44,11 @@ import '@/assets/dp-market-dashboard/css/line-awesome.min.css';
 import '@/assets/dp-market-dashboard/css/main.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
+import '@fontsource/sora/400.css';
+import '@fontsource/sora/600.css';
+
+
+createApp(App).use(MotionPlugin).mount('#app')
 
 const app = createApp(App);
 app.use(router);

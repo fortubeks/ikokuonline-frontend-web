@@ -47,18 +47,47 @@ import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
 import HomePageLayout from '@/layouts/HomePageLayout.vue';
+import TyresPage from '../pages/homepage/TirePage.vue';
+import BatteriesPage from '../pages/homepage/BatteryPage.vue';
+import FluidsPage from '../pages/homepage/FluidsPage.vue';
+import AudioPage from '../pages/homepage/AudioPage.vue';
+import AccessoriesPage from '../pages/homepage/AccessoryPage.vue';
+import VehiclesPage from '../pages/homepage/VehiclePage.vue';
 
-import Home from '@/pages/webfront/Home.vue';
+import EnginePartsPage from '../pages/homepage/EnginePartsPage.vue';
+import SuspensionPage from '../pages/homepage/SuspensionPage.vue';
+import BrakesPage from '../pages/homepage/BrakesPage.vue';
+
+// import Home from '@/pages/webfront/Home.vue';
+
+import Home from '@/pages/webfront/HomeView.vue';
+
+
 
 const routes = [
-  { path: '/',
+  {
+    path: '/',
     component: HomePageLayout,
     children: [
-      { path: 'home', name: 'home', component: Home}
-    ]
-   },
+      { path: '', name: 'home', component: Home },
+      { path: 'tyres', name: 'tyres', component: TyresPage },
+      { path: 'batteries', name: 'batteries', component: BatteriesPage },
+      { path: 'fluids', name: 'fluids', component: FluidsPage },
+      { path: 'audio', name: 'audio', component: AudioPage },
+      { path: 'accessories', name: 'accessories', component: AccessoriesPage },
+      { path: 'vehicles', name: 'vehicles', component: VehiclesPage },
+      {
+        path: 'replacement',
+        children: [
+          { path: 'engine', name: 'engine-parts', component: EnginePartsPage },
+          { path: 'suspension', name: 'suspension', component: SuspensionPage },
+          { path: 'brakes', name: 'brakes', component: BrakesPage },
+        ],
+      },
+    ],
+  },
 
-  // Public pages
+  // Public auth routes
   { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },
   { path: '/register', name: 'register', component: Register, meta: { guestOnly: true } },
   { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword, meta: { guestOnly: true } },
@@ -66,11 +95,10 @@ const routes = [
   { path: '/verify-account', name: 'verify-account', component: VerifyAccount, props: true, meta: { guestOnly: true } },
   { path: '/test', name: 'test', component: Test },
 
-  // Protected pages
+  // Dashboard (protected)
   {
     path: '/dashboard',
     component: DashboardLayout,
-    //meta: { requiresAuth: true },
     children: [
       { path: 'products', name: 'Products', component: Products },
       { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
@@ -84,13 +112,14 @@ const routes = [
       { path: 'vehicle-listings/create', name: 'VehicleListingCreate', component: VehicleListingsForm },
       { path: 'vehicle-listings/edit/:id', name: 'VehicleListingEdit', component: VehicleListingsForm, props: true },
 
-      { path: 'profile', name: 'Profile', component: ProfileForm },
-
       { path: 'orders', name: 'Orders', component: Orders },
       { path: 'orders/:id', name: 'OrderShow', component: OrderShow, props: true },
+
+      { path: 'profile', name: 'Profile', component: ProfileForm },
     ],
   },
 ];
+
 
 const base = import.meta.env.VITE_APP_BASE_URL || '/';
 

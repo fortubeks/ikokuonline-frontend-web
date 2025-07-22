@@ -1,59 +1,151 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <header class="header-middle border-bottom border-neutral-40 bg-black">
-        <div class="container container-lg">
-            <nav class="header-inner flex-between gap-8">
-                <!-- Logo Start -->
-                <div class="logo">
-                    <a href="index.html" class="link">
-                        <img :src="`${appUrl}/assets/images/logo/ikokuonline_white_logo.png`" alt="Logo" style="width: 150px; height: 70px;" />
-                    </a>
-                </div>
-                <!-- Logo End  -->
+  <header class="bg-black">
+    <div>
+      <nav class="flex items-center py-[26.5px] px-[100px] justify-between gap-8">
+      
+        <motion
+          :initial="{ opacity: 0, x: -30 }"
+          :enter="{ opacity: 1, x: 0, transition: { duration: 0.5 } }"
+        >
+          <router-link to="/">
+            <img
+              :src="logoWhite"
+              alt="Logo"
+              class="w-[150px] h-[70px] object-contain"
+            />
+          </router-link>
+        </motion>
 
-                <!-- Menu Start  -->
-                <div class="header-menu d-lg-block d-none">
-                    <!-- Nav Menu Start -->
-                    <ul class="nav-menu flex-align ">
-                        <li class="on-hover-item nav-menu__item has-submenu activePage">
-                            <a href="javascript:void(0)" class="nav-menu__link text-heading">Home</a>
-                            <ul class="on-hover-dropdown common-dropdown nav-submenu scroll-sm">
-                                <li class="common-dropdown__item nav-submenu__item">
-                                    <a href="index.html" class="common-dropdown__link nav-submenu__link text-heading hover-bg-neutral-100"> Home Grocery</a>
-                                </li>
-                                <li class="common-dropdown__item nav-submenu__item activePage">
-                                    <a href="index-two.html" class="common-dropdown__link nav-submenu__link text-heading hover-bg-neutral-100"> Home Electronics</a>
-                                </li>
-                                <li class="common-dropdown__item nav-submenu__item">
-                                    <a href="index-three.html" class="common-dropdown__link nav-submenu__link text-heading hover-bg-neutral-100"> Home Fashion</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-menu__item">
-                            <a href="contact.html" class="nav-menu__link text-heading">Contact Us</a>
-                        </li>
-                    </ul>
-                    <!-- Nav Menu End -->
-                </div>
-                <!-- Menu End  -->
+        <!-- Navigation (desktop) -->
+        <motion
+          :initial="{ opacity: 0, y: -20 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } }"
+          class="hidden py-[18.5px] lg:block"
+        >
+          <ul class="flex items-center space-x-6">
+            <li
+              v-for="(item, index) in navItems"
+              :key="item.label"
+              class="relative"
+            >
+              <!-- Dropdown Menu -->
+              <template v-if="item.dropdown">
+                <button
+                  @click="toggleDropdown(index)"
+                  class="text-base font-medium focus:outline-none"
+                  :class="[
+                    isDropdownOpen === index || item.children.some(child => route.path === child.path)
+                      ? 'text-[#22C55E]'
+                      : 'text-white',
+                    'hover:text-gray-300'
+                  ]"
+                >
+                  {{ item.label }}
+                </button>
 
-                <!-- Middle Header Right start -->
-                <div class="header-right flex-align">
-                    <!-- Dropdown Select Start -->
-                    <a href="javascript:void(0)" class="d-flex align-content-around fw-medium text-main-600 py-14 px-24 bg-main-50 line-height-1 bg-main-600 text-white">
-                        <span class="d-sm-flex d-none line-height-1"><i class="ph-bold ph-user"></i></span>
-                        Become a seller
-                    </a>
-                    <!-- Dropdown Select End -->
-                    <button type="button" class="toggle-mobileMenu d-lg-none ms-3n text-gray-800 text-4xl d-flex"> <i class="ph ph-list"></i> </button>
-                </div>
-                <!-- Middle Header Right End  -->
+                <transition
+                  enter-active-class="transition ease-out duration-200"
+                  enter-from-class="opacity-0 translate-y-2"
+                  enter-to-class="opacity-100 translate-y-0"
+                  leave-active-class="transition ease-in duration-150"
+                  leave-from-class="opacity-100 translate-y-0"
+                  leave-to-class="opacity-0 translate-y-2"
+                >
+                  <ul
+                    v-if="isDropdownOpen === index"
+                    class="absolute left-0 mt-2 w-full rounded-md bg-white shadow-lg z-50"
+                  >
+                    <li
+                      v-for="child in item.children"
+                      :key="child.label"
+                      class="hover:bg-gray-100"
+                    >
+                      <router-link
+                        :to="child.path"
+                        class="block px-4 py-2 text-sm"
+                        :class="[
+                          route.path === child.path
+                            ? 'text-[#22C55E] font-semibold'
+                            : 'text-gray-700'
+                        ]"
+                        @click="isDropdownOpen = null"
+                      >
+                        {{ child.label }}
+                      </router-link>
+                    </li>
+                  </ul>
+                </transition>
+              </template>
 
-            </nav>
-        </div>
-    </header>
+              <!-- Regular Link -->
+              <template v-else>
+                <router-link
+                  :to="item.path"
+                  class="text-base font-medium hover:text-gray-300"
+                  :class="[
+                    route.path === item.path ? 'text-[#22C55E]' : 'text-white'
+                  ]"
+                >
+                  {{ item.label }}
+                </router-link>
+              </template>
+            </li>
+          </ul>
+        </motion>
+
+        <!-- Right Button -->
+        <motion
+          :initial="{ opacity: 0, scale: 0.95 }"
+          :enter="{ opacity: 1, scale: 1, transition: { duration: 0.4, delay: 0.4 } }"
+        >
+          <a
+            href="javascript:void(0)"
+            class="hidden sm:flex items-center gap-[15px] font-medium text-base text-white bg-[#FD603E] py-[22px] px-[24px] rounded transition"
+          >
+            <img
+              :src="buttondot"
+              alt="dot"
+            />
+            Become a seller
+          </a>
+        </motion>
+      </nav>
+    </div>
+  </header>
 </template>
 
 <script setup>
-import { useAppConfig } from '@/composables/useAppConfig';
-const { appUrl } = useAppConfig();
+import { ref } from 'vue';
+// import { useAppConfig } from '@/composables/useAppConfig';
+import { useRoute } from 'vue-router';
+import logoWhite from '@/assets/images/logo/ikokuonline_white_logo.png'
+import buttondot from "@/assets/svgs/buttondot.svg"
+
+
+
+const route = useRoute();
+const isDropdownOpen = ref(null);
+
+function toggleDropdown(index) {
+  isDropdownOpen.value = isDropdownOpen.value === index ? null : index;
+}
+
+const navItems = [
+  { label: "Tyres", path: "/tyres" },
+  { label: "Batteries", path: "/batteries" },
+  { label: "Fluids", path: "/fluids" },
+  { label: "Audio and DnD", path: "/audio" },
+  { label: "Accessories", path: "/accessories" },
+  {
+    label: "Replacement Parts",
+    dropdown: true,
+    children: [
+      { label: "Engine Parts", path: "/replacement/engine" },
+      { label: "Suspension", path: "/replacement/suspension" },
+      { label: "Brakes", path: "/replacement/brakes" },
+    ],
+  },
+  { label: "Vehicles", path: "/vehicles" },
+];
 </script>

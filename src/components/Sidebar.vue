@@ -1,7 +1,7 @@
 <!-- components/Sidebar.vue -->
 <template>
   <div class="dashboard-sidebar">
-    <button type="button" class="dashboard-sidebar__close d-lg-none d-flex">
+    <button type="button" class="dashboard-sidebar__close  d-lg-none d-flex">
       <i class="las la-times"></i>
     </button>
     <div class="dashboard-sidebar__inner">
@@ -14,11 +14,13 @@
       </a>
 
       <ul class="sidebar-list">
-        <li v-for="item in links" :key="item.text" :class="['sidebar-list__item', isActive(item.route) ? 'activePage' : '']">
+        <li v-for="item in links" :key="item.text" :class="['sidebar-list__item', isActive(item.route) ? 'activePage' : ''] ">
           <router-link
             :to="item.route"
             :class="['sidebar-list__link', isActive(item.route) ? 'activePage' : '']"
           >
+
+
             <span class="sidebar-list__icon">
               <img :src="item.icon" class="icon" />
               <img :src="item.activeIcon" class="icon icon-active" />
@@ -85,4 +87,11 @@ const isActive = (targetRoute) => {
   }
   return route.path.startsWith(targetRoute);
 };
+
+
+
+
 </script>
+
+
+
