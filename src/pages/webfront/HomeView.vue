@@ -118,138 +118,16 @@
         </div>
       </div>
     </div>
+    <DealsWeek :products="products" :onAddToCart="handleAddToCart" />
 
-    <div class="h-fit font-sora w-full border border-[#E6E6E6] rounded-2xl p-[24px]">
-      <div class="w-full h-full rounded-2xl flex flex-col gap-[24px]">
-        <div class="h-fit w-full flex lg:flex-row flex-col justify-between">
-          <p class="text-[#121535] text-2xl font-semibold">Deal of The Week</p>
-          <div class="w-fit font-inter flex items-center gap-4 h-fit">
-            <p class="text-base font-semibold text-[#4D4D4D]">View All Deals</p>
+    <TrendingProduct :products="products" :onAddToCart="handleAddToCart" />
 
-            <div class="flex items-center gap-2">
-              <button
-                class="bg-[#FD603E] w-[40px] flex justify-center items-center h-[40px] rounded-full text-white"
-              >
-                &lt;
-              </button>
-              <button
-                class="bg-white border border-[#CCCCCC] w-[40px] flex justify-center items-center h-[40px] rounded-full text-[#1A1A1A]"
-              >
-                &gt;
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[12px]">
-          <AddToCartCard
-            v-for="(item, index) in products"
-            :key="index"
-            :product="item"
-            :title="item.name"
-            :promotext="item.promotext"
-            :Reviews="item.reviews"
-            :image="item.image"
-            :firstPrice="item.originalPrice"
-            :discountPrice="item.discountedPrice"
-            :ratings="item.rating"
-            :onAddToCart="handleAddToCart"
-            :isPromo="item.promo"
-          />
-        </div>
-      </div>
-    </div>
+    <BrandCarousel :brands="brands" />
 
-    <div class="h-fit w-full border border-[#E6E6E6] font-sora rounded-[16px] p-[24px]">
-      <div class="flex flex-col gap-[24px] w-full h-full">
-        <div class="h-fit w-full flex lg:flex-row flex-col justify-between">
-          <p class="text-[#121535] text-2xl font-semibold">Trending Products</p>
+    <FeaturedDeals :products="productsdeals" :onAddToCart="handleAddToCart" />
 
-          <div class="flex lg:flex-row flex-col items-center gap-[8px]">
-            <button
-              class="py-[12px] px-[24px] rounded-[48px] bg-[#FD603E] text-white text-base font-normal"
-            >
-              All
-            </button>
-            <button
-              class="py-[12px] px-[24px] rounded-[48px] border border-[#CCCCCC] text-[#121535] text-base font-normal"
-            >
-              Car Parts
-            </button>
-            <button
-              class="py-[12px] px-[24px] rounded-[48px] border border-[#CCCCCC] text-[#121535] text-base font-normal"
-            >
-              Vehicles
-            </button>
-          </div>
-
-          <div class="w-fit font-inter flex items-center gap-4 h-fit">
-            <div class="flex items-center gap-2">
-              <button
-                class="bg-[#FD603E] w-[40px] flex justify-center items-center h-[40px] rounded-full text-white"
-              >
-                &lt;
-              </button>
-              <button
-                class="bg-white border border-[#CCCCCC] w-[40px] flex justify-center items-center h-[40px] rounded-full text-[#1A1A1A]"
-              >
-                &gt;
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="flex flex-col gap-[10px]">
-          <div
-            class="rounded-[16px] bg-[#F3EDDE] w-full h-fit py-[85px] flex justify-center items-center"
-          >
-            <p
-              class="lg:text-[24px] text-[12px] font-semibold text-[#121535] max-w-[536px] flex flex-col items-center lg:leading-[120%]"
-            >
-              Free Delivery for all Port Harcourt Residents <span>On Orders Above N9,800</span>
-            </p>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[12px]">
-            <AddToCartCard
-              v-for="(item, index) in products"
-              :key="index"
-              :product="item"
-              :title="item.name"
-              :promotext="item.promotext"
-              :Reviews="item.reviews"
-              :image="item.image"
-              :firstPrice="item.originalPrice"
-              :discountPrice="item.discountedPrice"
-              :ratings="item.rating"
-              :onAddToCart="handleAddToCart"
-              :isPromo="item.promo"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="h-[835px] w-full border border-[#E6E6E6] rounded-[16px] p-[24px]">
-      <div class="bg-yellow-400 w-full h-full">
-        <div class="h-fit w-full flex justify-between">
-          <p class="text-[#121535] text-2xl font-semibold">Trending Products</p>
-          <div class="w-fit font-inter flex items-center gap-4 h-fit">
-            <div class="flex items-center gap-2">
-              <button
-                class="bg-[#FD603E] w-[40px] flex justify-center items-center h-[40px] rounded-full text-white"
-              >
-                &lt;
-              </button>
-              <button
-                class="bg-white border border-[#CCCCCC] w-[40px] flex justify-center items-center h-[40px] rounded-full text-[#1A1A1A]"
-              >
-                &gt;
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[14px]">
-      <AddToCartCard
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-[14px]">
+      <!-- <FeaturedProductsCard
         v-for="(item, index) in products"
         :key="index"
         :product="item"
@@ -262,13 +140,13 @@
         :ratings="item.rating"
         :onAddToCart="handleAddToCart"
         :isPromo="item.promo"
-      />
+      /> -->
     </div>
   </section>
 </template>
 
 <script setup>
-import AddToCartCard from '@/components/utils/AddToCartCard.vue'
+// import AddToCartCard from '@/components/utils/AddToCartCard.vue'
 import profilePics from '@/assets/svgs/profilepics.svg'
 import heartPics from '@/assets/svgs/heartpics.svg'
 import comparepics from '@/assets/svgs/comparepics.svg'
@@ -280,6 +158,11 @@ import { ref } from 'vue'
 import TiresComponent from '@/components/utils/TiresComponent.vue'
 import AllCategory from '@/components/utils/AllCategory.vue'
 import SearchInput from '@/components/utils/SearchInput.vue'
+import DealsWeek from '../homepage/DealsWeek.vue'
+import TrendingProduct from '../homepage/TrendingProduct.vue'
+import BrandCarousel from '../homepage/BrandCarousel.vue'
+// import FeaturedProductsCard from '@/components/utils/FeaturedProductsCard.vue'
+import FeaturedDeals from '../homepage/FeaturedDeals.vue'
 
 const images = [tirepics, tirepics, tirepics]
 const activeIndex = ref(0)
@@ -287,6 +170,57 @@ const activeIndex = ref(0)
 function handleAddToCart() {
   console.log('Product added to cart!')
 }
+
+const productsdeals = [
+  {
+    name: 'Universal Car Horn',
+    promotext: 'Best Sale',
+    image: '/src/assets/svgs/carpics.svg',
+    rating: 4.5,
+    reviews: 24,
+    promo: true,
+    sold: 18,
+    total: 35,
+    originalPrice: 28000,
+    discountedPrice: 20000,
+  },
+  {
+    name: '17 AH New Power Battery',
+    promotext: 'Best Sale',
+    image: '/src/assets/svgs/carpics.svg',
+    rating: 3.7,
+    reviews: 10,
+    promo: false,
+    sold: 12,
+    total: 40,
+    originalPrice: 35000,
+    discountedPrice: 31000,
+  },
+  {
+    name: 'Universal Car Horn',
+    promotext: 'Best Sale',
+    image: '/src/assets/svgs/carpics.svg',
+    rating: 4.5,
+    reviews: 24,
+    promo: true,
+    sold: 18,
+    total: 35,
+    originalPrice: 28000,
+    discountedPrice: 20000,
+  },
+  {
+    name: '17 AH New Power Battery',
+    promotext: 'Best Sale',
+    image: '/src/assets/svgs/carpics.svg',
+    rating: 3.7,
+    reviews: 10,
+    promo: false,
+    sold: 12,
+    total: 40,
+    originalPrice: 35000,
+    discountedPrice: 31000,
+  },
+]
 
 const products = [
   {
@@ -351,6 +285,33 @@ const products = [
   },
 ]
 
+const brands = [
+  {
+    image: '/src/assets/svgs/hondapics.svg',
+  },
+  {
+    image: '/src/assets/svgs/nissanpics.svg',
+  },
+  {
+    image: '/src/assets/svgs/jaguarpics.svg',
+  },
+  {
+    image: '/src/assets/svgs/minipics.svg',
+  },
+  {
+    image: '/src/assets/svgs/jeeppics.svg',
+  },
+  {
+    image: '/src/assets/svgs/audipics.svg',
+  },
+  {
+    image: '/src/assets/svgs/bpics.svg',
+  },
+  {
+    image: '/src/assets/svgs/infinitypics.svg',
+  },
+]
+
 const productcard = [
   {
     bgImage: 'url(/images/cardpic1.svg)',
@@ -385,4 +346,12 @@ const productcard = [
 ]
 </script>
 
-<style scoped></style>
+<style scoped>
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>
