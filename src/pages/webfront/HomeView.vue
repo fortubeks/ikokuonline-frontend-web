@@ -49,20 +49,18 @@
       :style="{ backgroundImage: 'url(/images/backgroundimage1.svg)' }"
     >
       <div class="w-fit flex flex-col font-sora gap-[52px] h-fit">
-        <p
-          class="font-sora lg:text-[48px] text-2xl w-[480px] leading-[56px] font-semibold text-[#FFFFFF]"
-        >
+        <p class="font-sora lg:text-[50px] w-[480px] leading-[56px] font-semibold text-[#FFFFFF]">
           Get Your Vehicle, Car Parts and Accessories For Less
         </p>
 
-        <div class="h-[52px] w-fit flex gap-2.5 items-center">
-          <button class="h-fit w-fit px-[24px] py-[20px] border border-[#FFFFFF] rounded-3xl">
+        <div class="h-fit w-fit flex gap-[20px] items-center">
+          <button class="h-fit w-fit px-[24px] py-[20px] border border-[#FFFFFF] rounded-[48px]">
             <div class="w-full h-full flex items-center gap-2">
               <p class="text-base text-[#FFFFFF]">Shop Car Parts</p>
               <img :src="cartticon" alt="cart" />
             </div>
           </button>
-          <button class="h-fit w-fit px-[24px] py-[20px] bg-[#FD603E] rounded-3xl">
+          <button class="h-fit w-fit px-[24px] py-[20px] bg-[#FD603E] rounded-[48px]">
             <div class="w-full h-full flex items-center gap-2">
               <p class="text-base text-[#FFFFFF]">Shop Car Parts</p>
               <img :src="cartticon" alt="cart" />
