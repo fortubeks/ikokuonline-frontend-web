@@ -1,10 +1,11 @@
 <template>
-  <div class="relative w-fit font-inter" ref="dropdownRef">
-    <!-- Trigger Section -->
+  <div class="relative w-fit min-w-[137px] font-inter" ref="dropdownRef">
     <section
-      class="h-[48px] flex items-center justify-center cursor-pointer border border-[#FD603E] px-4 rounded-l-lg gap-2"
+      class="h-[48px] flex items-center justify-center cursor-pointer border border-[#FB6A00] px-4 rounded-l-lg gap-2"
       @click="toggleModal"
     >
+
+    
       <p class="text-xs font-medium text-[#808080] truncate max-w-[120px]">
         {{ selectedCategory || 'All Categories' }}
       </p>
@@ -15,12 +16,10 @@
       v-if="showModal"
       class="absolute z-50 mt-2 w-[322px] pb-[30px] font-sora bg-white border border-[#ccc] rounded-lg shadow-lg"
     >
-      <!-- Header -->
       <div class="bg-[#F3E7DE] rounded-t-lg py-3.5 px-[24px]">
         <p class="text-base font-semibold w-fit text-[#101828]">Categories</p>
       </div>
 
-      <!-- Search & Arrow Controls -->
       <div class="relative mb-2 px-[19px] py-[27px]">
         <div class="flex flex-col gap-1.5 relative">
           <p class="text-sm font-semibold text-[#344054]">Enter Category</p>

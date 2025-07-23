@@ -1,7 +1,7 @@
 <template>
-  <section class="w-full flex flex-col gap-8 min-h-[50vh]">
+  <section class="w-full flex flex-col gap-[32px] min-h-[50vh]">
     <div class="flex font-inter justify-end w-full h-fit">
-      <div class="w-fit py-5 flex gap-14 items-center h-[48px]">
+      <div class="w-fit py-[20px] flex gap-14 items-center h-fit">
         <div class="w-fit flex items-center flex-col min-h-[48px] justify-between">
           <div>
             <img :src="profilePics" :alt="profile" />
@@ -56,13 +56,13 @@
         </p>
 
         <div class="h-[52px] w-fit flex gap-2.5 items-center">
-          <button class="h-full px-20 border border-[#FFFFFF] rounded-3xl">
+          <button class="h-fit w-fit px-[24px] py-[20px] border border-[#FFFFFF] rounded-3xl">
             <div class="w-full h-full flex items-center gap-2">
               <p class="text-base text-[#FFFFFF]">Shop Car Parts</p>
               <img :src="cartticon" alt="cart" />
             </div>
           </button>
-          <button class="h-full px-20 bg-[#FD603E] rounded-3xl">
+          <button class="h-fit w-fit px-[24px] py-[20px] bg-[#FD603E] rounded-3xl">
             <div class="w-full h-full flex items-center gap-2">
               <p class="text-base text-[#FFFFFF]">Shop Car Parts</p>
               <img :src="cartticon" alt="cart" />
@@ -97,7 +97,7 @@
       <div></div>
     </div>
 
-    <div class="h-fit w-full lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-8">
+    <div class="h-fit w-full lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-[24px]">
       <TiresComponent
         v-for="(items, index) in productcard"
         :key="index"
@@ -107,7 +107,7 @@
       />
     </div>
     <div class="flex justify-center items-center">
-      <div class="flex flex-col items-center gap-8 h-[98px] w-[921px]">
+      <div class="flex flex-col items-center gap-[32px] h-fit w-[921px]">
         <p class="text-[24px] font-semibold text-[#121535] leading-[120%] font-sora">
           Can’t find category? Search below
         </p>
@@ -115,6 +115,46 @@
         <div class="w-full h-fit flex">
           <AllCategory />
           <SearchInput />
+        </div>
+      </div>
+    </div>
+
+    <div class="h-fit font-sora w-full border border-[#E6E6E6] rounded-2xl p-[24px]">
+      <div class="w-full h-full rounded-2xl flex flex-col gap-[24px]">
+        <div class="h-fit w-full flex justify-between">
+          <p class="text-[#121535] text-2xl font-semibold">Deal of The Week</p>
+          <div class="w-fit font-inter flex items-center gap-4 h-fit">
+            <p class="text-base font-semibold text-[#4D4D4D]">View All Deals</p>
+
+            <div class="flex items-center gap-2">
+              <div
+                class="bg-[#FD603E] w-[40px] flex justify-center items-center h-[40px] rounded-full text-white"
+              >
+                &lt;
+              </div>
+              <div
+                class="bg-white border border-[#CCCCCC] w-[40px] flex justify-center items-center h-[40px] rounded-full text-[#1A1A1A]"
+              >
+                &gt;
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[12px]">
+          <AddToCartCard
+            v-for="(item, index) in products"
+            :key="index"
+            :product="item"
+            :title="item.name"
+            :promotext="item.promotext"
+            :Reviews="item.reviews"
+            :image="item.image"
+            :firstPrice="item.originalPrice"
+            :discountPrice="item.discountedPrice"
+            :ratings="item.rating"
+            :onAddToCart="handleAddToCart"
+            :isPromo="item.promo"
+          />
         </div>
       </div>
     </div>
@@ -184,39 +224,42 @@ const products = [
     originalPrice: 35000,
     discountedPrice: 31000,
   },
-  // {
-  //   name: "215/60/16 Maxtrek Tyre",
-  //   image: "/src/assets/svgs/tireimage.svg",
-  //   rating: 5,
-  //   reviews: 33,
-  //   sold: 27,
-  //   promo: true,
-  //   total: 30,
-  //   originalPrice: 50000,
-  //   discountedPrice: 47000,
-  // },
-  // {
-  //   name: "Car Wiper Blade",
-  //   image: "/src/assets/svgs/tireimage.svg",
-  //   rating: 2.5,
-  //   reviews: 8,
-  //   sold: 5,
-  //   promo: false,
-  //   total: 25,
-  //   originalPrice: 5000,
-  //   discountedPrice: 3500,
-  // },
-  // {
-  //   name: "Engine Oil Premium",
-  //   image: "/src/assets/svgs/tireimage.svg",
-  //   rating: 4.0,
-  //   reviews: 15,
-  //   sold: 20,
-  //   promo: true,
-  //   total: 45,
-  //   originalPrice: 12000,
-  //   discountedPrice: 10000,
-  // },
+  {
+    name: '215/60/16 Maxtrek Tyre',
+    image: '/src/assets/svgs/tireimage.svg',
+    rating: 5,
+    promotext: 'Best Sale',
+    reviews: 33,
+    sold: 27,
+    promo: true,
+    total: 30,
+    originalPrice: 50000,
+    discountedPrice: 47000,
+  },
+  {
+    name: 'Car Wiper Blade',
+    image: '/src/assets/svgs/tireimage.svg',
+    rating: 2.5,
+    promotext: 'Best Sale',
+    reviews: 8,
+    sold: 5,
+    promo: false,
+    total: 25,
+    originalPrice: 5000,
+    discountedPrice: 3500,
+  },
+  {
+    name: 'Engine Oil Premium',
+    image: '/src/assets/svgs/tireimage.svg',
+    rating: 4.0,
+    reviews: 15,
+    promotext: 'Best Sale',
+    sold: 20,
+    promo: true,
+    total: 45,
+    originalPrice: 12000,
+    discountedPrice: 10000,
+  },
 ]
 
 const productcard = [

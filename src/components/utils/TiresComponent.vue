@@ -1,6 +1,6 @@
 <template>
   <section
-    class="py-16 rounded-2xl px-[35px] bg-cover font-sora bg-center h-[149px]"
+    class="py-[48px] rounded-2xl px-[35px] bg-cover font-sora bg-center h-[149px]"
     :style="{ backgroundImage: props.bgimage }"
   >
     <div class="w-full flex items-center justify-between h-full">

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- components/Sidebar.vue -->
 <template>
   <div class="dashboard-sidebar">
@@ -40,6 +41,7 @@ const icons = import.meta.glob('@/assets/dp-market-dashboard/images/icons/*.svg'
 
 const route = useRoute();
 
+// eslint-disable-next-line no-unused-vars
 const { appUrl } = useAppConfig();
 
 const links = [
