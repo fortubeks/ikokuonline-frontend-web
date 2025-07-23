@@ -2,43 +2,35 @@
 <template>
   <header class="bg-black">
     <div>
-      <nav class="flex items-center py-[26.5px] px-[100px] justify-between gap-8">
-      
+      <nav class="flex items-center py-[26.5px] px-[100px] justify-between gap-[32px]">
         <motion
           :initial="{ opacity: 0, x: -30 }"
           :enter="{ opacity: 1, x: 0, transition: { duration: 0.5 } }"
         >
           <router-link to="/">
-            <img
-              :src="logoWhite"
-              alt="Logo"
-              class="w-[150px] h-[70px] object-contain"
-            />
+            <img :src="logoWhite" alt="Logo" class="w-[150px] h-[70px] object-contain" />
           </router-link>
         </motion>
 
-        <!-- Navigation (desktop) -->
+      
         <motion
           :initial="{ opacity: 0, y: -20 }"
           :enter="{ opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } }"
           class="hidden py-[18.5px] lg:block"
         >
           <ul class="flex items-center space-x-6">
-            <li
-              v-for="(item, index) in navItems"
-              :key="item.label"
-              class="relative"
-            >
+            <li v-for="(item, index) in navItems" :key="item.label" class="relative">
               <!-- Dropdown Menu -->
               <template v-if="item.dropdown">
                 <button
                   @click="toggleDropdown(index)"
                   class="text-base font-medium focus:outline-none"
                   :class="[
-                    isDropdownOpen === index || item.children.some(child => route.path === child.path)
+                    isDropdownOpen === index ||
+                    item.children.some((child) => route.path === child.path)
                       ? 'text-[#22C55E]'
                       : 'text-white',
-                    'hover:text-gray-300'
+                    'hover:text-gray-300',
                   ]"
                 >
                   {{ item.label }}
@@ -56,18 +48,14 @@
                     v-if="isDropdownOpen === index"
                     class="absolute left-0 mt-2 w-full rounded-md bg-white shadow-lg z-50"
                   >
-                    <li
-                      v-for="child in item.children"
-                      :key="child.label"
-                      class="hover:bg-gray-100"
-                    >
+                    <li v-for="child in item.children" :key="child.label" class="hover:bg-gray-100">
                       <router-link
                         :to="child.path"
                         class="block px-4 py-2 text-sm"
                         :class="[
                           route.path === child.path
                             ? 'text-[#22C55E] font-semibold'
-                            : 'text-gray-700'
+                            : 'text-gray-700',
                         ]"
                         @click="isDropdownOpen = null"
                       >
@@ -78,14 +66,12 @@
                 </transition>
               </template>
 
-              <!-- Regular Link -->
+              
               <template v-else>
                 <router-link
                   :to="item.path"
                   class="text-base font-medium hover:text-gray-300"
-                  :class="[
-                    route.path === item.path ? 'text-[#22C55E]' : 'text-white'
-                  ]"
+                  :class="[route.path === item.path ? 'text-[#22C55E]' : 'text-white']"
                 >
                   {{ item.label }}
                 </router-link>
@@ -94,7 +80,7 @@
           </ul>
         </motion>
 
-        <!-- Right Button -->
+        
         <motion
           :initial="{ opacity: 0, scale: 0.95 }"
           :enter="{ opacity: 1, scale: 1, transition: { duration: 0.4, delay: 0.4 } }"
@@ -103,10 +89,7 @@
             href="javascript:void(0)"
             class="hidden sm:flex items-center gap-[15px] font-medium text-base text-white bg-[#FD603E] py-[22px] px-[24px] rounded transition"
           >
-            <img
-              :src="buttondot"
-              alt="dot"
-            />
+            <img :src="buttondot" alt="dot" />
             Become a seller
           </a>
         </motion>
@@ -116,36 +99,34 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 // import { useAppConfig } from '@/composables/useAppConfig';
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
 import logoWhite from '@/assets/images/logo/ikokuonline_white_logo.png'
-import buttondot from "@/assets/svgs/buttondot.svg"
+import buttondot from '@/assets/svgs/buttondot.svg'
 
-
-
-const route = useRoute();
-const isDropdownOpen = ref(null);
+const route = useRoute()
+const isDropdownOpen = ref(null)
 
 function toggleDropdown(index) {
-  isDropdownOpen.value = isDropdownOpen.value === index ? null : index;
+  isDropdownOpen.value = isDropdownOpen.value === index ? null : index
 }
 
 const navItems = [
-  { label: "Tyres", path: "/tyres" },
-  { label: "Batteries", path: "/batteries" },
-  { label: "Fluids", path: "/fluids" },
-  { label: "Audio and DnD", path: "/audio" },
-  { label: "Accessories", path: "/accessories" },
+  { label: 'Tyres', path: '/tyres' },
+  { label: 'Batteries', path: '/batteries' },
+  { label: 'Fluids', path: '/fluids' },
+  { label: 'Audio and DnD', path: '/audio' },
+  { label: 'Accessories', path: '/accessories' },
   {
-    label: "Replacement Parts",
+    label: 'Replacement Parts',
     dropdown: true,
     children: [
-      { label: "Engine Parts", path: "/replacement/engine" },
-      { label: "Suspension", path: "/replacement/suspension" },
-      { label: "Brakes", path: "/replacement/brakes" },
+      { label: 'Engine Parts', path: '/replacement/engine' },
+      { label: 'Suspension', path: '/replacement/suspension' },
+      { label: 'Brakes', path: '/replacement/brakes' },
     ],
   },
-  { label: "Vehicles", path: "/vehicles" },
-];
+  { label: 'Vehicles', path: '/vehicles' },
+]
 </script>

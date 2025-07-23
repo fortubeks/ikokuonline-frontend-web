@@ -3,7 +3,7 @@
   <div class=" ">
     <Header />
     <MiddleHeader />
-    <div class="lg:px-[100px] h-fit bg-white">
+    <div class="lg:px-[100px] px-[24px] h-fit bg-white">
       <router-view />
       <!-- this renders the page content -->
     </div>
