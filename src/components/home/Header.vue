@@ -1,132 +1,274 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <header class="bg-black">
-    <div>
-      <nav class="flex items-center py-[26.5px] px-[100px] justify-between gap-[32px]">
-        <motion
-          :initial="{ opacity: 0, x: -30 }"
-          :enter="{ opacity: 1, x: 0, transition: { duration: 0.5 } }"
-        >
-          <router-link to="/">
-            <img :src="logoWhite" alt="Logo" class="w-[150px] h-[70px] object-contain" />
-          </router-link>
-        </motion>
+  <div>
+    <header class="header bg-white border-bottom-0 box-shadow-3xl py-[40px] z-2">
+      <div class="container container-lg">
+        <nav class="header-inner d-flex justify-content-between gap-8">
+          <div class="flex-align menu-category-wrapper position-relative">
+            <div>
+              <button
+                type="button"
+                class="category-button d-flex align-items-center gap-12 text-white bg-success-600 px-20 py-16 rounded-6 hover-bg-success-700 transition-2"
+              >
+                <span class="text-xl line-height-1"><i class="ph ph-squares-four"></i></span>
+                <span>Browse Categories</span>
+                <span class="line-height-1 icon transition-2">
+                  <i class="ph-bold ph-caret-down"></i>
+                </span>
+              </button>
 
-      
-        <motion
-          :initial="{ opacity: 0, y: -20 }"
-          :enter="{ opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } }"
-          class="hidden py-[18.5px] lg:block"
-        >
-          <ul class="flex items-center space-x-6">
-            <li v-for="(item, index) in navItems" :key="item.label" class="relative">
-              <!-- Dropdown Menu -->
-              <template v-if="item.dropdown">
-                <button
-                  @click="toggleDropdown(index)"
-                  class="text-base font-medium focus:outline-none"
-                  :class="[
-                    isDropdownOpen === index ||
-                    item.children.some((child) => route.path === child.path)
-                      ? 'text-[#22C55E]'
-                      : 'text-white',
-                    'hover:text-gray-300',
-                  ]"
-                >
-                  {{ item.label }}
-                </button>
-
-                <transition
-                  enter-active-class="transition ease-out duration-200"
-                  enter-from-class="opacity-0 translate-y-2"
-                  enter-to-class="opacity-100 translate-y-0"
-                  leave-active-class="transition ease-in duration-150"
-                  leave-from-class="opacity-100 translate-y-0"
-                  leave-to-class="opacity-0 translate-y-2"
-                >
-                  <ul
-                    v-if="isDropdownOpen === index"
-                    class="absolute left-0 mt-2 w-full rounded-md bg-white shadow-lg z-50"
+              <div
+                class="category-dropdown border border-success-200 shadow bg-white p-16 rounded-16 w-100 max-w-472 position-absolute inset-block-start-100 inset-inline-start-0 z-99 transition-2"
+              >
+                <div class="d-grid grid-cols-3-repeat gap-4 max-h-350 overflow-y-auto">
+                  <a
+                    v-for="(category, index) in categories"
+                    :key="index"
+                    href="shop.html"
+                    class="py-16 px-8 rounded-8 hover-bg-main-50 d-flex flex-column align-items-center text-center border border-white hover-border-main-100"
                   >
-                    <li v-for="child in item.children" :key="child.label" class="hover:bg-gray-100">
-                      <router-link
-                        :to="child.path"
-                        class="block px-4 py-2 text-sm"
-                        :class="[
-                          route.path === child.path
-                            ? 'text-[#22C55E] font-semibold'
-                            : 'text-gray-700',
-                        ]"
-                        @click="isDropdownOpen = null"
+                    <img :src="category.img" :alt="category.title" class="w-40" />
+                    <span class="fw-semibold text-heading mt-16 text-sm">{{ category.title }}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="header-menu d-lg-block d-none">
+              <ul class="nav-menu flex-align">
+                <li
+                  v-for="(nav, index) in navItems"
+                  :key="index"
+                  class="on-hover-item nav-menu__item"
+                  :class="{ 'has-submenu': nav.children, activePage: nav.active }"
+                >
+                  <span v-if="nav.badge" :class="['badge-notification', nav.badge.class]">
+                    {{ nav.badge.text }}
+                  </span>
+                  <a v-if="!nav.children" :href="nav.href" class="nav-menu__link text-heading-two">
+                    {{ nav.label }}
+                  </a>
+                  <a v-else href="javascript:void(0)" class="nav-menu__link text-heading-two">
+                    {{ nav.label }}
+                  </a>
+                  <ul
+                    v-if="nav.children"
+                    class="on-hover-dropdown common-dropdown nav-submenu scroll-sm"
+                  >
+                    <li
+                      v-for="(child, childIndex) in nav.children"
+                      :key="childIndex"
+                      class="common-dropdown__item nav-submenu__item"
+                    >
+                      <a
+                        :href="child.href"
+                        class="common-dropdown__link nav-submenu__link text-heading-two hover-bg-neutral-100"
                       >
                         {{ child.label }}
-                      </router-link>
+                      </a>
                     </li>
                   </ul>
-                </transition>
-              </template>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-              
-              <template v-else>
-                <router-link
-                  :to="item.path"
-                  class="text-base font-medium hover:text-gray-300"
-                  :class="[route.path === item.path ? 'text-[#22C55E]' : 'text-white']"
+          <div class="header-right flex-align gap-20">
+            <a href="tel:+(2)871382023" class="d-sm-flex align-items-center gap-16 d-none">
+              <span class="d-flex text-32">
+                <img src="../../assets/images/icon/mobile.png" alt="Mobile Icon" />
+              </span>
+              <span class="">
+                <span class="d-block text-heading fw-medium">Need any Help! call Us</span>
+                <span class="d-block fw-bold text-main-600 hover-text-decoration-underline"
+                  >+(2) 871 382 023</span
                 >
-                  {{ item.label }}
-                </router-link>
-              </template>
-            </li>
-          </ul>
-        </motion>
+              </span>
+            </a>
+            <button
+              @click="isMobileMenuOpen = true"
+              type="button"
+              class="toggle-mobileMenu d-lg-none ms-3n text-gray-800 text-4xl d-flex"
+            >
+              <i class="ph ph-list">menu</i>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-        
-        <motion
-          :initial="{ opacity: 0, scale: 0.95 }"
-          :enter="{ opacity: 1, scale: 1, transition: { duration: 0.4, delay: 0.4 } }"
-        >
-          <a
-            href="javascript:void(0)"
-            class="hidden sm:flex items-center gap-[15px] font-medium text-base text-white bg-[#FD603E] py-[22px] px-[24px] rounded transition"
-          >
-            <img :src="buttondot" alt="dot" />
-            Become a seller
-          </a>
-        </motion>
-      </nav>
-    </div>
-  </header>
+    <transition name="slide">
+      <div
+        v-if="isMobileMenuOpen"
+        class="mobile-menu scroll-sm d-lg-none !d-block fixed inset-0 z-50 bg-white"
+        ref="mobileMenuRef"
+      >
+        <button type="button" class="close-button" @click="isMobileMenuOpen = false">
+          <i class="ph ph-x">aaaa</i>
+        </button>
+        <div class="mobile-menu__inner">
+          <div class="mobile-menu__menu">
+            <ul class="nav-menu flex-align nav-menu--mobile">
+              <li
+                v-for="(nav, index) in navItems"
+                :key="index"
+                class="on-hover-item nav-menu__item"
+                :class="{ 'has-submenu': nav.children, activePage: nav.active }"
+              >
+                <span v-if="nav.badge" :class="['badge-notification', nav.badge.class]">
+                  {{ nav.badge.text }}
+                </span>
+                <a v-if="!nav.children" :href="nav.href" class="nav-menu__link text-heading-two">
+                  {{ nav.label }}
+                </a>
+                <div v-else>
+                  <a href="javascript:void(0)" class="nav-menu__link text-heading-two">
+                    {{ nav.label }}
+                  </a>
+                  <ul class="on-hover-dropdown common-dropdown nav-submenu scroll-sm">
+                    <li
+                      v-for="(child, childIndex) in nav.children"
+                      :key="childIndex"
+                      class="common-dropdown__item nav-submenu__item"
+                    >
+                      <a
+                        :href="child.href"
+                        class="common-dropdown__link nav-submenu__link text-heading-two hover-bg-neutral-100"
+                      >
+                        {{ child.label }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-// import { useAppConfig } from '@/composables/useAppConfig';
-import { useRoute } from 'vue-router'
-import logoWhite from '@/assets/images/logo/ikokuonline_white_logo.png'
-import buttondot from '@/assets/svgs/buttondot.svg'
 
-const route = useRoute()
-const isDropdownOpen = ref(null)
+import '@/assets/images/logo/favicon.png'
+import '@/assets/css/bootstrap.min.css'
+import '@/assets/css/select2.min.css'
+import '@/assets/css/slick.css'
+import '@/assets/css/jquery-ui.css'
+import '@/assets/css/animate.css'
 
-function toggleDropdown(index) {
-  isDropdownOpen.value = isDropdownOpen.value === index ? null : index
+import { onMounted, onBeforeUnmount } from 'vue'
+
+const mobileMenuRef = ref(null)
+
+function handleClickOutside(event) {
+  if (mobileMenuRef.value && !mobileMenuRef.value.contains(event.target)) {
+    isMobileMenuOpen.value = false
+  }
 }
 
-const navItems = [
-  { label: 'Tyres', path: '/tyres' },
-  { label: 'Batteries', path: '/batteries' },
-  { label: 'Fluids', path: '/fluids' },
-  { label: 'Audio and DnD', path: '/audio' },
-  { label: 'Accessories', path: '/accessories' },
+onMounted(() => {
+  document.addEventListener('mousedown', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('mousedown', handleClickOutside)
+})
+
+import '@/assets/css/aos.css'
+import '@/assets/css/main.css'
+import 'jquery'
+import '@/assets/marketpro/js/jquery-3.7.1.min.js'
+// import '@/assets/marketpro/js/boostrap.bundle.min.js';
+import '@/assets/marketpro/js/phosphor-icon.js'
+import '@/assets/marketpro/js/select2.min.js'
+import '@/assets/marketpro/js/slick.min.js'
+import '@/assets/marketpro/js/count-down.js'
+import '@/assets/marketpro/js/jquery-ui.js'
+// import '@/assets/marketpro/js/wow.min.js';
+// import '@/assets/marketpro/js/aos.js';
+import '@/assets/marketpro/js/marque.min.js'
+import '@/assets/marketpro/js/vanilla-tilt.min.js'
+import '@/assets/marketpro/js/counter.min.js'
+import '@/assets/marketpro/js/main.js'
+
+const isMobileMenuOpen = ref(false)
+
+const categories = [
   {
-    label: 'Replacement Parts',
-    dropdown: true,
+    title: 'Vegetables',
+    img: new URL('@/assets/images/icon/category-1.png', import.meta.url).href,
+  },
+  {
+    title: 'Milk & Cake',
+    img: new URL('@/assets/images/icon/category-2.png', import.meta.url).href,
+  },
+  { title: 'Grocery', img: new URL('@/assets/images/icon/category-3.png', import.meta.url).href },
+  { title: 'Beauty', img: new URL('@/assets/images/icon/category-4.png', import.meta.url).href },
+  {
+    title: 'Wines & Drinks',
+    img: new URL('@/assets/images/icon/category-5.png', import.meta.url).href,
+  },
+  { title: 'Snacks', img: new URL('@/assets/images/icon/category-6.png', import.meta.url).href },
+  { title: 'Juice', img: new URL('@/assets/images/icon/category-7.png', import.meta.url).href },
+  { title: 'Fruits', img: new URL('@/assets/images/icon/category-8.png', import.meta.url).href },
+  {
+    title: 'Tea & Coffee',
+    img: new URL('@/assets/images/icon/category-9.png', import.meta.url).href,
+  },
+]
+
+const navItems = [
+  {
+    label: 'Home',
+    active: true,
     children: [
-      { label: 'Engine Parts', path: '/replacement/engine' },
-      { label: 'Suspension', path: '/replacement/suspension' },
-      { label: 'Brakes', path: '/replacement/brakes' },
+      { label: 'Home Grocery', href: 'index.html' },
+      { label: 'Home Electronics', href: 'index-two.html' },
+      { label: 'Home Fashion', href: 'index-three.html' },
     ],
   },
-  { label: 'Vehicles', path: '/vehicles' },
+  {
+    label: 'Shop',
+    children: [
+      { label: 'Shop', href: 'shop.html' },
+      { label: 'Shop Details', href: 'product-details.html' },
+      { label: 'Shop Details Two', href: 'product-details-two.html' },
+    ],
+  },
+  {
+    label: 'Pages',
+    badge: { text: 'New', class: 'bg-warning-600 text-white text-sm py-2 px-8 rounded-4' },
+    children: [
+      { label: 'Cart', href: 'cart.html' },
+      { label: 'Wishlist', href: 'wishlist.html' },
+      { label: 'Checkout', href: 'checkout.html' },
+      { label: 'Become Seller', href: 'become-seller.html' },
+      { label: 'Account', href: 'account.html' },
+    ],
+  },
+  {
+    label: 'Vendors',
+    badge: { text: 'New', class: 'bg-tertiary-600 text-white text-sm py-2 px-8 rounded-4' },
+    children: [
+      { label: 'Vendors', href: 'vendor.html' },
+      { label: 'Vendor Details', href: 'vendor-details.html' },
+      { label: 'Vendors Two', href: 'vendor-two.html' },
+      { label: 'Vendors Two Details', href: 'vendor-two-details.html' },
+    ],
+  },
+  {
+    label: 'Blog',
+    children: [
+      { label: 'Blog', href: 'blog.html' },
+      { label: 'Blog Details', href: 'blog-details.html' },
+    ],
+  },
+  {
+    label: 'Contact Us',
+    href: 'contact.html',
+  },
 ]
 </script>

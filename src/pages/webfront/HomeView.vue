@@ -1,50 +1,6 @@
 <template>
   <section class="w-full flex flex-col gap-[32px] min-h-[50vh]">
-    <div class="flex font-inter justify-end w-full h-fit">
-      <div class="w-fit py-[20px] flex gap-14 items-center h-fit">
-        <div class="w-fit flex items-center flex-col lg:min-h-[48px] justify-between">
-          <div>
-            <img :src="profilePics" :alt="profile" />
-          </div>
-          <p class="font-medium text-base text-[#000000]">Profile</p>
-        </div>
-        <div class="w-fit relative flex items-center flex-col h-fit min-h-[48px] justify-between">
-          <div>
-            <img :src="heartPics" :alt="heart" />
-          </div>
-          <p class="font-medium text-base text-[#000000]">Wishlist</p>
-          <div
-            class="h-14 flex justify-center items-center w-14 top-[-10%] right-[22%] bg-[#FD603E] rounded-full text-xs absolute"
-          >
-            2
-          </div>
-        </div>
-        <div class="w-fit flex items-center relative flex-col h-fit min-h-[48px] justify-between">
-          <div>
-            <img :src="comparepics" :alt="compare" />
-          </div>
-          <p class="font-medium text-base text-[#000000]">Compare</p>
-          <div
-            class="h-14 flex justify-center items-center w-14 top-[-10%] right-[22%] bg-[#FD603E] rounded-full text-xs absolute"
-          >
-            2
-          </div>
-        </div>
-        <div class="w-fit flex items-center relative flex-col h-fit min-h-[48px] justify-between">
-          <div>
-            <img :src="cartPics" :alt="profile" />
-          </div>
-          <p class="font-medium text-base text-[#000000]">Cart</p>
-          <div
-            class="h-14 flex justify-center items-center w-14 top-[-10%] right-[5%] bg-[#FD603E] rounded-full text-xs absolute"
-          >
-            2
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div
+    <!-- <div
       class="w-full min-h-[633px] h-fit flex lg:flex-row flex-col gap-[50px] lg:gap-[172px] items-center lg:px-auto px-[20px] lg:pl-[99px] max-lg:py-10 bg-contain bg-center"
       :style="{ backgroundImage: 'url(/images/backgroundimage1.svg)' }"
     >
@@ -95,7 +51,11 @@
           ></button>
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <BannerSection :banners="bannerItems" />
+
+    <FeaturedSection />
 
     <div class="h-fit w-full lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-[24px]">
       <TiresComponent
@@ -147,14 +107,14 @@
 
 <script setup>
 // import AddToCartCard from '@/components/utils/AddToCartCard.vue'
-import profilePics from '@/assets/svgs/profilepics.svg'
-import heartPics from '@/assets/svgs/heartpics.svg'
-import comparepics from '@/assets/svgs/comparepics.svg'
-import cartPics from '@/assets/svgs/cartpics.svg'
-import tirepics from '@/assets/svgs/tirepics.svg'
-import cartticon from '@/assets/svgs/cartticon.svg'
+// import profilePics from '@/assets/svgs/profilepics.svg'
+// import heartPics from '@/assets/svgs/heartpics.svg'
+// import comparepics from '@/assets/svgs/comparepics.svg'
+// import cartPics from '@/assets/svgs/cartpics.svg'
+// import tirepics from '@/assets/svgs/tirepics.svg'
+// import cartticon from '@/assets/svgs/cartticon.svg'
 
-import { ref } from 'vue'
+// import { ref } from 'vue'
 import TiresComponent from '@/components/utils/TiresComponent.vue'
 import AllCategory from '@/components/utils/AllCategory.vue'
 import SearchInput from '@/components/utils/SearchInput.vue'
@@ -163,9 +123,11 @@ import TrendingProduct from '../homepage/TrendingProduct.vue'
 import BrandCarousel from '../homepage/BrandCarousel.vue'
 // import FeaturedProductsCard from '@/components/utils/FeaturedProductsCard.vue'
 import FeaturedDeals from '../homepage/FeaturedDeals.vue'
+import BannerSection from '../homepages/BannerSection.vue'
+import FeaturedSection from '../homepages/FeaturedSection.vue'
 
-const images = [tirepics, tirepics, tirepics]
-const activeIndex = ref(0)
+// const images = [tirepics, tirepics, tirepics]
+// const activeIndex = ref(0)
 
 function handleAddToCart() {
   console.log('Product added to cart!')
@@ -282,6 +244,36 @@ const products = [
     total: 45,
     originalPrice: 12000,
     discountedPrice: 10000,
+  },
+]
+
+const bannerItems = [
+  {
+    title: 'Daily Grocery Order and Get',
+    highlight: 'Express',
+    subheading: 'Save up to 50% off on your first order',
+    buttonText: 'Explore Shop',
+    buttonLink: 'shop.html',
+    price: '$60.99',
+    image: 'assets/images/thumbs/banner-img1.png',
+  },
+  {
+    title: 'Fresh Vegetables with',
+    highlight: 'Free Shipping',
+    subheading: 'Only Today’s Deal',
+    buttonText: 'Shop Now',
+    buttonLink: 'shop.html',
+    price: '$39.99',
+    image: 'assets/images/thumbs/banner-img2.png',
+  },
+  {
+    title: 'Get Best Quality at',
+    highlight: 'Low Price',
+    subheading: 'Flash Sale',
+    buttonText: 'Grab Now',
+    buttonLink: 'shop.html',
+    price: '$29.50',
+    image: 'assets/images/thumbs/banner-img3.png',
   },
 ]
 

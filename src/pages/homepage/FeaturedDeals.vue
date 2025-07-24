@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-[24px] h-fit">
+  <div class="flex lg:flex-row flex-col gap-[24px] h-fit">
     <div class="h-fit font-sora w-full border border-[#E6E6E6] rounded-2xl p-[24px]">
       <div class="w-full h-full rounded-2xl flex flex-col gap-[24px]">
         <div class="h-fit w-full flex lg:flex-row flex-col justify-between">
@@ -35,7 +35,10 @@
           </div>
         </div>
 
-        <div ref="scrollContainer" class="grid grid-cols-2 gap-[10px] scroll-smooth no-scrollbar">
+        <div
+          ref="scrollContainer"
+          class="grid grid-cols-1 lg:grid-cols-2 gap-[10px] scroll-smooth no-scrollbar"
+        >
           <FeaturedProductsCard
             v-for="(item, index) in products"
             :key="index"
@@ -58,7 +61,7 @@
         <div class="h-fit flex flex-col items-center gap-[23px] w-full">
           <p class="text-2xl font-semibold text-[#FFFFFF]">Nissan SUV 2005</p>
 
-          <div class="flex gap-2 items-end">
+          <div class="flex  gap-2 items-end">
             <p
               class="text-base font-semibold whitespace-nowrap flex gap-1 items-end text-[#FFFFFF]"
             >
@@ -69,7 +72,7 @@
               >
             </p>
             <div
-              class="w-[128px] flex items-end whitespace-nowrap justify-center text-2xl font-semibold text-[#FFFFFF] h-full bg-contain bg-center"
+              class="lg:w-[128px] w-full flex items-end whitespace-nowrap justify-center text-2xl font-semibold text-[#FFFFFF] h-full bg-contain bg-center"
               :style="{ backgroundImage: 'url(/images/promopics.svg)' }"
             >
               20% off

@@ -2,7 +2,7 @@
   <section
     class="border max-w-[534px] border-[#E6E6E6] font-sora h-fit rounded-2xl px-[13px] py-[16px]"
   >
-    <div class="w-full flex gap-[18px] h-full rounded-lg">
+    <div class="w-full flex  gap-[18px] h-full rounded-lg">
       <div class="w-full relative h-fit bg-[#F1F1F1] rounded-lg">
         <div class="absolute top-0 rounded-lg w-full h-fit">
           <div
