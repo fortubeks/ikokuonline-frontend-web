@@ -99,7 +99,13 @@ const routes = [
   {
     path: '/dashboard',
     component: DashboardLayout,
+    
     children: [
+       {
+      path: '',
+      name: 'DashboardHome',
+      component: Products, 
+    },
       { path: 'products', name: 'Products', component: Products },
       { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
       { path: 'products/edit/:id', name: 'ProductEdit', component: ProductsForm, props: true },
