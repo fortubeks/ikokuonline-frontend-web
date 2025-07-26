@@ -2,7 +2,6 @@
   <section class="banner">
     <div class="container container-lg">
       <div class="banner-item rounded-24 overflow-hidden position-relative arrow-center">
-      
         <a
           href="#featureSection"
           class="scroll-down w-84 h-84 text-center d-flex justify-content-center align-items-center bg-main-600 rounded-circle border border-5 text-white border-white position-absolute start-50 translate-middle-x bottom-0 hover-bg-main-800"
@@ -10,14 +9,12 @@
           <span class="icon line-height-0"><i class="ph ph-caret-double-down"></i></span>
         </a>
 
-    
         <img
           src="@/assets/images/bg/banner-bg.png"
           alt=""
           class="banner-img position-absolute inset-block-start-0 inset-inline-start-0 w-100 h-100 z-n1 object-fit-cover rounded-24"
         />
 
-  
         <div class="flex-align">
           <button
             type="button"
@@ -35,12 +32,13 @@
           </button>
         </div>
 
-      
         <div class="banner-slider">
           <div v-for="(item, index) in banners" :key="index" class="banner-slider__item">
             <div class="banner-slider__inner d-flex justify-content-between position-relative">
               <div class="banner-item__content">
-                <span class="fw-semibold text-success-600 text-capitalize mb-8 animate-left-right animation-delay-08">
+                <span
+                  class="fw-semibold text-success-600 text-capitalize mb-8 animate-left-right animation-delay-08"
+                >
                   {{ item.subheading }}
                 </span>
                 <h2 class="banner-item__title max-w-700 mb-30 animate-left-right animation-delay-1">
@@ -50,7 +48,7 @@
                 <div class="d-flex align-items-center gap-16 animate-left-right animation-delay-12">
                   <a
                     :href="item.buttonLink"
-                    class="btn btn-main d-inline-flex align-items-center rounded-pill gap-8"
+                    class="btn btn-main d-inline-flex align-items-center  rounded-pill gap-8"
                   >
                     {{ item.buttonText }}
                     <span class="icon text-xl d-flex">
@@ -109,6 +107,4 @@ const BannerSection = {
 export default BannerSection
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

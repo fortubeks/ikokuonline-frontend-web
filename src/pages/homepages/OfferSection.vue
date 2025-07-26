@@ -25,7 +25,7 @@
                 <span :class="offer.expireClass">{{ offer.expire }}</span>
               </div>
               <a
-                href="shop.html"
+                href="/product"
                 class="mt-16 btn d-inline-flex align-items-center rounded-pill gap-8"
                 :class="offer.btnClass"
                 tabindex="0"

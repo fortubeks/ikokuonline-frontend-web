@@ -78,7 +78,7 @@
                       <span class="text-xs fw-bold text-gray-600">({{ product.reviews }})</span>
                     </div>
                     <a
-                      href="cart.html"
+                      href="/cart"
                       class="product-card__cart btn bg-main-50 text-main-600 hover-bg-main-600 hover-text-white py-2 px-3 rounded-pill d-flex align-items-center gap-2 mt-3 w-100 justify-content-center"
                     >
                       Add To Cart <i class="ph ph-shopping-cart"></i>

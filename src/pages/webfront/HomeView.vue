@@ -25,29 +25,11 @@
     <BestSellSEction />
 
     <NewsletterSection />
-
-    <FooterSection />
   </section>
 </template>
 
 <script setup>
-// import AddToCartCard from '@/components/utils/AddToCartCard.vue'
-// import profilePics from '@/assets/svgs/profilepics.svg'
-// import heartPics from '@/assets/svgs/heartpics.svg'
-// import comparepics from '@/assets/svgs/comparepics.svg'
-// import cartPics from '@/assets/svgs/cartpics.svg'
-// import tirepics from '@/assets/svgs/tirepics.svg'
-// import cartticon from '@/assets/svgs/cartticon.svg'
 
-// import { ref } from 'vue'
-// import TiresComponent from '@/components/utils/TiresComponent.vue'
-// import AllCategory from '@/components/utils/AllCategory.vue'
-// import SearchInput from '@/components/utils/SearchInput.vue'
-// import DealsWeek from '../homepage/DealsWeek.vue'
-// import TrendingProduct from '../homepage/TrendingProduct.vue'
-// import BrandCarousel from '../homepage/BrandCarousel.vue'
-// import FeaturedProductsCard from '@/components/utils/FeaturedProductsCard.vue'
-// import FeaturedDeals from '../homepage/FeaturedDeals.vue'
 import BannerSection from '../homepages/BannerSection.vue'
 import FeaturedSection from '../homepages/FeaturedSection.vue'
 import PromotionalBanners from '../homepages/PromotionalBanners.vue'
@@ -61,7 +43,7 @@ import ProductSection from '../homepages/ProductSection.vue'
 import BrandSection from '../homepages/BrandSection.vue'
 import BestSellSEction from '../homepages/BestSellSEction.vue'
 import NewsletterSection from '../homepages/NewsletterSection.vue'
-import FooterSection from '../homepages/FooterSection.vue'
+
 
 // const images = [tirepics, tirepics, tirepics]
 // const activeIndex = ref(0)
@@ -186,7 +168,7 @@ const bannerItems = [
     highlight: 'Express',
     subheading: 'Save up to 50% off on your first order',
     buttonText: 'Explore Shop',
-    buttonLink: 'shop.html',
+    buttonLink: '/product',
     price: '$60.99',
     image: 'assets/images/thumbs/banner-img1.png',
   },
@@ -195,7 +177,7 @@ const bannerItems = [
     highlight: 'Free Shipping',
     subheading: 'Only Today’s Deal',
     buttonText: 'Shop Now',
-    buttonLink: 'shop.html',
+    buttonLink: '/product',
     price: '$39.99',
     image: 'assets/images/thumbs/banner-img2.png',
   },
@@ -204,7 +186,7 @@ const bannerItems = [
     highlight: 'Low Price',
     subheading: 'Flash Sale',
     buttonText: 'Grab Now',
-    buttonLink: 'shop.html',
+    buttonLink: '/product',
     price: '$29.50',
     image: 'assets/images/thumbs/banner-img3.png',
   },

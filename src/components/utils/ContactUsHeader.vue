@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <header class="header bg-white border-bottom-0 box-shadow-3xl py-[40px] z-2">
@@ -73,24 +72,51 @@
             </div>
           </div>
 
-          <div class="header-right flex-align gap-20">
-            <a href="tel:+(2)871382023" class="d-sm-flex align-items-center gap-16 d-none">
-              <span class="d-flex text-32">
-                <img src="../../assets/images/icon/mobile.png" alt="Mobile Icon" />
-              </span>
-              <span class="">
-                <span class="d-block text-black fw-medium">Need any Help! call Us</span>
-                <span class="d-block fw-bold text-main-600 hover-text-decoration-underline"
-                  >+(2) 871 382 023</span
+        
+          <div class="header-right flex-align">
+            <ul class="header-top__right style-two style-three flex-align flex-wrap">
+              <li
+                class="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white"
+              >
+                <a
+                  href="javascript:void(0)"
+                  class="selected-text text-neutral-500 fw-semibold text-sm py-8"
                 >
-              </span>
-            </a>
+                  Eng
+                </a>
+                <ul
+                  class="selectable-text-list on-hover-dropdown common-dropdown common-dropdown--sm max-h-200 scroll-sm px-0 py-8"
+                >
+                  <li v-for="lang in languages" :key="lang.name">
+                    <a
+                      href="javascript:void(0)"
+                      class="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
+                    >
+                      <img
+                        :src="lang.flag"
+                        :alt="lang.name"
+                        class="w-16 h-12 rounded-4 border border-gray-100"
+                      />
+                      {{ lang.name }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="d-sm-flex d-none">
+                <a
+                  href="javascript:void(0)"
+                  class="selected-text text-neutral-500 fw-semibold text-sm py-8 hover-text-heading"
+                >
+                  Order Tracking
+                </a>
+              </li>
+            </ul>
             <button
-              @click="isMobileMenuOpen = true"
               type="button"
               class="toggle-mobileMenu d-lg-none ms-3n text-gray-800 text-4xl d-flex"
+              @click="toggleMobileMenu"
             >
-              <i class="ph ph-list">menu</i>
+              <i class="ph ph-list"></i>
             </button>
           </div>
         </nav>
@@ -149,122 +175,63 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue'
 
-import '@/assets/images/logo/favicon.png'
-import '@/assets/css/bootstrap.min.css'
-import '@/assets/css/select2.min.css'
-import '@/assets/css/slick.css'
-import '@/assets/css/jquery-ui.css'
-import '@/assets/css/animate.css'
+export default {
+  name: 'HeaderComponent',
+  setup() {
+    const searchQuery = ref('')
+    const mobileMenuOpen = ref(false)
 
-import { onMounted, onBeforeUnmount } from 'vue'
+    function toggleMobileMenu() {
+      mobileMenuOpen.value = !mobileMenuOpen.value
+    }
 
-const mobileMenuRef = ref(null)
+    function closeSearch() {
+      searchQuery.value = ''
+    }
 
-function handleClickOutside(event) {
-  if (mobileMenuRef.value && !mobileMenuRef.value.contains(event.target)) {
-    isMobileMenuOpen.value = false
-  }
+    const languages = [
+      {
+        name: 'English',
+        flag: new URL('@/assets/images/thumbs/flag1.png', import.meta.url).href,
+      },
+      {
+        name: 'Japan',
+        flag: new URL('@/assets/images/thumbs/flag2.png', import.meta.url).href,
+      },
+      {
+        name: 'French',
+        flag: new URL('@/assets/images/thumbs/flag3.png', import.meta.url).href,
+      },
+      {
+        name: 'Germany',
+        flag: new URL('@/assets/images/thumbs/flag4.png', import.meta.url).href,
+      },
+      {
+        name: 'Bangladesh',
+        flag: new URL('@/assets/images/thumbs/flag6.png', import.meta.url).href,
+      },
+      {
+        name: 'South Korea',
+        flag: new URL('@/assets/images/thumbs/flag5.png', import.meta.url).href,
+      },
+    ]
+
+    return {
+      searchQuery,
+      mobileMenuOpen,
+      toggleMobileMenu,
+      closeSearch,
+      languages,
+    }
+  },
 }
-
-onMounted(() => {
-  document.addEventListener('mousedown', handleClickOutside)
-})
-
-onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', handleClickOutside)
-})
-
-import '@/assets/css/aos.css'
-import '@/assets/css/main.css'
-import 'jquery'
-import '@/assets/marketpro/js/jquery-3.7.1.min.js'
-// import '@/assets/marketpro/js/boostrap.bundle.min.js';
-import '@/assets/marketpro/js/phosphor-icon.js'
-import '@/assets/marketpro/js/select2.min.js'
-import '@/assets/marketpro/js/slick.min.js'
-import '@/assets/marketpro/js/count-down.js'
-import '@/assets/marketpro/js/jquery-ui.js'
-// import '@/assets/marketpro/js/wow.min.js';
-// import '@/assets/marketpro/js/aos.js';
-import '@/assets/marketpro/js/marque.min.js'
-import '@/assets/marketpro/js/vanilla-tilt.min.js'
-import '@/assets/marketpro/js/counter.min.js'
-import '@/assets/marketpro/js/main.js'
-
-const isMobileMenuOpen = ref(false)
-
-const categories = [
-  {
-    title: 'Vegetables',
-    img: new URL('@/assets/images/icon/category-1.png', import.meta.url).href,
-  },
-  {
-    title: 'Milk & Cake',
-    img: new URL('@/assets/images/icon/category-2.png', import.meta.url).href,
-  },
-  { title: 'Grocery', img: new URL('@/assets/images/icon/category-3.png', import.meta.url).href },
-  { title: 'Beauty', img: new URL('@/assets/images/icon/category-4.png', import.meta.url).href },
-  {
-    title: 'Wines & Drinks',
-    img: new URL('@/assets/images/icon/category-5.png', import.meta.url).href,
-  },
-  { title: 'Snacks', img: new URL('@/assets/images/icon/category-6.png', import.meta.url).href },
-  { title: 'Juice', img: new URL('@/assets/images/icon/category-7.png', import.meta.url).href },
-  { title: 'Fruits', img: new URL('@/assets/images/icon/category-8.png', import.meta.url).href },
-  {
-    title: 'Tea & Coffee',
-    img: new URL('@/assets/images/icon/category-9.png', import.meta.url).href,
-  },
-]
-
-const navItems = [
-  {
-    label: 'Home',
-    active: true,
-    children: [{ label: 'Home', href: '/' }],
-  },
-  {
-    label: 'Shop',
-    children: [
-      { label: 'Shop', href: 'shop.html' },
-      { label: 'Shop Details', href: 'product-details.html' },
-      { label: 'Shop Details Two', href: 'product-details-two.html' },
-    ],
-  },
-  {
-    label: 'Pages',
-    badge: { text: 'New', class: 'bg-warning-600 text-white text-sm py-2 px-8 rounded-4' },
-    children: [
-      { label: 'Cart', href: 'cart.html' },
-      { label: 'Wishlist', href: 'wishlist.html' },
-      { label: 'Checkout', href: 'checkout.html' },
-      { label: 'Become Seller', href: 'become-seller.html' },
-      { label: 'Account', href: 'account.html' },
-    ],
-  },
-  {
-    label: 'Vendors',
-    badge: { text: 'New', class: 'bg-tertiary-600 text-white text-sm py-2 px-8 rounded-4' },
-    children: [
-      { label: 'Vendors', href: 'vendor.html' },
-      { label: 'Vendor Details', href: 'vendor-details.html' },
-      { label: 'Vendors Two', href: 'vendor-two.html' },
-      { label: 'Vendors Two Details', href: 'vendor-two-details.html' },
-    ],
-  },
-  {
-    label: 'Blog',
-    children: [
-      { label: 'Blog', href: 'blog.html' },
-      { label: 'Blog Details', href: 'blog-details.html' },
-    ],
-  },
-  {
-    label: 'Contact Us',
-    href: '/contact',
-  },
-]
 </script>
+
+<style scoped>
+.search-box {
+  z-index: 1050;
+}
+</style>

@@ -3,7 +3,7 @@
     <div class="container container-lg">
       <nav class="header-inner flex-between gap-[32px]">
         <div class="logo">
-          <a :href="logopics" class="link">
+          <a href="/" class="link">
             <img :src="logo.src" :alt="logo.alt" />
           </a>
         </div>
@@ -91,7 +91,7 @@ import HeaderItem from './HeaderItem.vue'
 const headerItems = [
   { label: 'Profile', icon: profilePics, link: '#' },
   { label: 'Wishlist', icon: heartPics, link: 'wishlist.html', count: 2 },
-  { label: 'Cart', icon: cartPics, link: 'cart.html', count: 2 },
+  { label: 'Cart', icon: cartPics, link: '/cart', count: 2 },
 ]
 
 function onSearch() {

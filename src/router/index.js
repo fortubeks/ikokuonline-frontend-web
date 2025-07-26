@@ -47,6 +47,7 @@ import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
 import HomePageLayout from '@/layouts/HomePageLayout.vue';
+import ProductViewLayout from "@/layouts/ProductViewLayout.vue"
 import TyresPage from '../pages/homepage/TirePage.vue';
 import BatteriesPage from '../pages/homepage/BatteryPage.vue';
 import FluidsPage from '../pages/homepage/FluidsPage.vue';
@@ -61,12 +62,21 @@ import BrakesPage from '../pages/homepage/BrakesPage.vue';
 // import Home from '@/pages/webfront/Home.vue';
 
 import Home from '@/pages/webfront/HomeView.vue';
+import ProductHome from '@/pages/productview/ProductHome.vue';
+import ContactUsLayout from '@/layouts/ContactUsLayout.vue';
+import ContactUs from '@/pages/contactus/ContactUs.vue';
+import CartLayout from '@/layouts/CartLayout.vue';
+import CartPage from '@/pages/cart/CartPage.vue';
+import CheckoutPage from '@/pages/checkoutpage/CheckoutPage.vue';
+import CheckOutLayout from '@/layouts/CheckOutLayout.vue';
+import ProductDetailsLayout from '@/layouts/ProductDetailsLayout.vue';
+import ProductDetail from '@/pages/productdetails/ProductDetail.vue';
 
 
 
 const routes = [
   {
-    path: '/',
+    path: '',
     component: HomePageLayout,
     children: [
       { path: '', name: 'home', component: Home },
@@ -86,8 +96,43 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/product',
+    component: ProductViewLayout,
+    children: [
+    { path: '', name: 'Producthome', component: ProductHome },
+    ],
+  },
+  {
+    path: '/contact',
+    component: ContactUsLayout,
+    children: [
+    { path: '', name: 'contact', component: ContactUs },
+    ],
+  },
+  {
+    path: '/cart',
+    component: CartLayout,
+    children: [
+    { path: '', name: 'cart', component: CartPage },
+    ],
+  },
+  {
+    path: '/checkout',
+    component: CheckOutLayout,
+    children: [
+    { path: '', name: 'checkout', component: CheckoutPage },
+    ],
+  },
+  {
+    path: '/product-details',
+    component: ProductDetailsLayout,
+    children: [
+    { path: '', name: 'products', component: ProductDetail },
+    ],
+  },
 
-  // Public auth routes
+  
   { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },
   { path: '/register', name: 'register', component: Register, meta: { guestOnly: true } },
   { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword, meta: { guestOnly: true } },

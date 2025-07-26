@@ -30,7 +30,7 @@
                 </ul>
               </div>
               <a
-                href="shop.html"
+                href="/product"
                 :class="sale.buttonClass + ' d-inline-flex align-items-center rounded-pill gap-2 mt-4'"
               >
                 Shop Now

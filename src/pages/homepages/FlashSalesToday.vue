@@ -1,30 +1,30 @@
 <template>
   <div class="product pt-60">
     <div class="container container-lg">
-      <div class="section-heading w-full">
-        <div class="d-flex justify-content-between flex-wrap gap-3">
+      <div class="py-[20px] px-[20px] w-full">
+        <div class="d-flex justify-content-between flex-wrap items-center gap-3">
           <h5 class="mb-0 wow fadeInLeft">Flash Sales Today</h5>
           <div class="d-flex align-items-center gap-3 wow fadeInRight">
             <a
-              href="shop.html"
+              href="/product"
               class="text-sm fw-medium text-gray-700 hover-text-main-600 text-decoration-underline"
             >
               View All Deals
             </a>
-            <div class="d-flex  align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2">
               <button
                 ref="prevBtn"
                 type="button"
-                class="rounded-circle h-[40px] w-[40px] d-flex align-items-center justify-content-center border border-green-400"
+                class="rounded-circle h-[40px] w-[40px] d-flex align-items-center justify-content-center border border-green-400 fw-bold fs-5"
               >
-                <i class="ph ph-caret-left"></i>
+                &lt;
               </button>
               <button
                 ref="nextBtn"
                 type="button"
-                class="rounded-circle h-[40px] w-[40px] d-flex align-items-center justify-content-center border border-green-400"
+                class="rounded-circle h-[40px] w-[40px] d-flex align-items-center justify-content-center border border-green-400 fw-bold fs-5"
               >
-                <i class="ph ph-caret-right"></i>
+                &gt;
               </button>
             </div>
           </div>
@@ -43,7 +43,7 @@
             class="product-card p-3 border border-gray-100 rounded-3 position-relative transition"
           >
             <a
-              href="cart.html"
+              href="/cart"
               class="btn bg-main-50 text-main-600 hover-bg-main-600 hover-text-white py-2 px-3 rounded-pill d-flex align-items-center gap-2 position-absolute top-0 end-0 m-2"
             >
               Add <i class="ph ph-shopping-cart"></i>
@@ -259,20 +259,59 @@ export default {
       return ((product.sold / product.total) * 100).toFixed(0)
     },
   },
+  // mounted() {
+  //   if (window.AOS) window.AOS.init()
+  //   if (window.WOW) new window.WOW().init()
+
+  //   this.$nextTick(() => {
+  //     const $slider = window.$('.product-one-slider')
+  //     $slider.slick({
+  //       slidesToShow: 3,
+  //       slidesToScroll: 1,
+  //       autoplay: true,
+  //       autoplaySpeed: 2500,
+  //       arrows: true,
+  //       prevArrow: window.$(this.$refs.prevBtn),
+  //       nextArrow: window.$(this.$refs.nextBtn),
+  //       responsive: [
+  //         {
+  //           breakpoint: 992,
+  //           settings: { slidesToShow: 2 },
+  //         },
+  //         {
+  //           breakpoint: 576,
+  //           settings: { slidesToShow: 1 },
+  //         },
+  //       ],
+  //     })
+  //   })
+  // },
+
   mounted() {
     if (window.AOS) window.AOS.init()
     if (window.WOW) new window.WOW().init()
 
     this.$nextTick(() => {
+      // Wait for DOM refs to be ready
+      const prev = this.$refs.prevBtn
+      const next = this.$refs.nextBtn
+
+      // Check refs are mounted
+      if (!prev || !next) {
+        console.warn('Prev/Next buttons not found in DOM')
+        return
+      }
+
       const $slider = window.$('.product-one-slider')
+
       $slider.slick({
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2500,
         arrows: true,
-        prevArrow: window.$(this.$refs.prevBtn),
-        nextArrow: window.$(this.$refs.nextBtn),
+        prevArrow: window.$(prev),
+        nextArrow: window.$(next),
         responsive: [
           {
             breakpoint: 992,

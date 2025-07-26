@@ -79,7 +79,7 @@
                 </ul>
               </div>
               <a
-                href="shop.html"
+                href="/product"
                 class="mt-16 btn bg-white hover-text-white hover-bg-main-800 text-main-600 fw-medium d-inline-flex align-items-center rounded-pill gap-8"
                 tabindex="0"
               >

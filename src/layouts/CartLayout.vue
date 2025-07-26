@@ -1,20 +1,23 @@
 <template>
   <div class=" ">
-    <HeaderMiddle />
     <Header />
-    <MiddleHeader />
-    <div class="px-[24px] h-full bg-white">
+    <HeaderMiddle />
+    <ShopNav
+      title="Cart"
+      current="Product Cart"
+      :links="[{ label: 'Home', href: '/', icon: 'ph ph-house' }]"
+    />
+    <section class="contact">
       <router-view />
-      <!-- this renders the page content -->
-    </div>
+    </section>
+
     <ProductFooter />
   </div>
 </template>
 
 <script setup>
 import Header from '@/components/home/Header.vue'
-// import Footer from '@/components/home/Footer.vue'
-import MiddleHeader from '@/components/home/MiddleHeader.vue'
 import HeaderMiddle from '@/pages/homepages/HeaderMiddle.vue'
+import ShopNav from '@/pages/productview/ShopNav.vue'
 import ProductFooter from '@/pages/productview/ProductFooter.vue'
 </script>
