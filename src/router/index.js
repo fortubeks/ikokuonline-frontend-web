@@ -71,6 +71,10 @@ import CheckoutPage from '@/pages/checkoutpage/CheckoutPage.vue';
 import CheckOutLayout from '@/layouts/CheckOutLayout.vue';
 import ProductDetailsLayout from '@/layouts/ProductDetailsLayout.vue';
 import ProductDetail from '@/pages/productdetails/ProductDetail.vue';
+import AccountLayout from '@/layouts/AccountLayout.vue';
+import Accountpage from '@/pages/accounts/Accountpage.vue';
+import WishListLayout from '@/layouts/WishListLayout.vue';
+import WishList from '@/pages/wishlists/WishList.vue';
 
 
 
@@ -129,6 +133,20 @@ const routes = [
     component: ProductDetailsLayout,
     children: [
     { path: '', name: 'products', component: ProductDetail },
+    ],
+  },
+  {
+    path: '/account',
+    component: AccountLayout,
+    children: [
+    { path: '', name: 'account', component: Accountpage },
+    ],
+  },
+  {
+    path: '/wishlist',
+    component: WishListLayout,
+    children: [
+    { path: '', name: 'wishlist', component: WishList },
     ],
   },
 
