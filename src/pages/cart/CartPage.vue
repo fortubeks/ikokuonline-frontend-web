@@ -8,11 +8,11 @@
               <table class="table style-three">
                 <thead>
                   <tr>
-                    <th class="h6 mb-0 text-lg fw-bold">Product Name</th>
-                    <th class="h6 mb-0 text-lg fw-bold">Price</th>
-                    <th class="h6 mb-0 text-lg fw-bold">Quantity</th>
-                    <th class="h6 mb-0 text-lg fw-bold">Subtotal</th>
-                    <th class="h6 mb-0 text-lg fw-bold">Delete</th>
+                    <th class="h6 py-4 px-4 mb-0 text-lg fw-bold">Product Name</th>
+                    <th class="h6 p-4 mb-0 text-lg fw-bold">Price</th>
+                    <th class="h6 p-4 mb-0 text-lg fw-bold">Quantity</th>
+                    <th class="h6 p-4 mb-0 text-lg fw-bold">Subtotal</th>
+                    <th class="h6 p-4 mb-0 text-lg fw-bold">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
