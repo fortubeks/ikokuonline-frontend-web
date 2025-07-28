@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <header class="header !bg-[#000000] border-bottom-0 box-shadow-3xl py-[25px] z-2">
+    <header class="header !bg-[#000000] border-bottom-0 box-shadow-3xl py-2 z-2">
       <div class="container container-lg">
         <nav class="header-inner d-flex justify-content-between gap-8">
           <div class="flex-align !gap-[168px] menu-category-wrapper position-relative">
@@ -59,11 +59,8 @@
           <div class="header-right flex-align gap-20">
             <div>
               <div class="lg:block hidden">
-                <button
-                  @click="goToLogin"
-                  type="button"
-                  class="category-button d-flex align-items-center gap-12 text-white bg-[#FD603E] px-[20px] py-16 rounded-6 hover-bg-success-700 transition-2"
-                >
+                <button @click="goToLogin" type="button"
+                  class="category-button d-flex align-items-center gap-12 text-white bg-[#FD603E] px-2 py-2 hover-bg-light-700 transition-2">
                   <span class="text-xl line-height-1"><i class="ph ph-squares-four"></i></span>
                   <span class="text-base font-inter">Become A Seller</span>
                 </button>
