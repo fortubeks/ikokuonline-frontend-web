@@ -22,7 +22,7 @@
           <h6 class="footer-item__title text-white">Information</h6>
           <ul class="footer-menu">
             <li v-for="(item, i) in infoLinks" :key="i" class="mb-16">
-              <a href="/shop" class="text-white hover-text-main-600">{{ item }}</a>
+              <a href="/products" class="text-white hover-text-main-600">{{ item }}</a>
             </li>
           </ul>
         </div>

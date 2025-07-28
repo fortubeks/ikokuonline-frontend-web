@@ -1,6 +1,6 @@
 <template>
   <section class="banner">
-    <div class="container container-lg">
+    <div class="container w-full container-lg">
       <div class="banner-item rounded-24 overflow-hidden position-relative arrow-center">
         <a
           href="#featureSection"
@@ -48,7 +48,7 @@
                 <div class="d-flex align-items-center gap-16 animate-left-right animation-delay-12">
                   <a
                     :href="item.buttonLink"
-                    class="btn btn-main d-inline-flex align-items-center  rounded-pill gap-8"
+                    class="btn btn-main d-inline-flex align-items-center rounded-pill gap-8"
                   >
                     {{ item.buttonText }}
                     <span class="icon text-xl d-flex">

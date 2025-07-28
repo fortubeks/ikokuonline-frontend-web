@@ -5,7 +5,7 @@
     <ShopNav
       title="Shop"
       current="Product Shop"
-      :links="[{ label: 'Home', href: 'index.html', icon: 'ph ph-house' }]"
+      :links="[{ label: 'Home', href: '/', icon: 'ph ph-house' }]"
     />
 
     <section class="shop py-80">

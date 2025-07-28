@@ -4,29 +4,19 @@
       <div class="row gy-4">
         <div class="col-xl-9 col-lg-8">
           <div class="cart-table border border-gray-100 rounded-8 px-40 py-48">
-            <div class="overflow-x-auto scroll-sm scroll-sm-horizontal">
+            <div class="overflow-x-auto w-full scroll-sm scroll-sm-horizontal">
               <table class="table style-three">
                 <thead>
                   <tr>
-                    <th class="h6 mb-0 text-lg fw-bold">Delete</th>
                     <th class="h6 mb-0 text-lg fw-bold">Product Name</th>
                     <th class="h6 mb-0 text-lg fw-bold">Price</th>
                     <th class="h6 mb-0 text-lg fw-bold">Quantity</th>
                     <th class="h6 mb-0 text-lg fw-bold">Subtotal</th>
+                    <th class="h6 mb-0 text-lg fw-bold">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(item, i) in cartItems" :key="i">
-                    <td>
-                      <button
-                        type="button"
-                        class="remove-tr-btn flex-align gap-12 hover-text-danger-600"
-                        @click="removeItem(i)"
-                      >
-                        <i class="ph ph-x-circle text-2xl d-flex"></i>
-                        Remove
-                      </button>
-                    </td>
                     <td>
                       <div class="table-product d-flex align-items-center gap-24">
                         <a
@@ -94,6 +84,15 @@
                       <span class="text-lg h6 mb-0 fw-semibold"
                         >${{ item.quantity * item.price }}</span
                       >
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="remove-tr-btn flex-align gap-12 hover-text-danger-600"
+                        @click="removeItem(i)"
+                      >
+                        <i class="ph ph-x-circle text-2xl d-flex"></i>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
