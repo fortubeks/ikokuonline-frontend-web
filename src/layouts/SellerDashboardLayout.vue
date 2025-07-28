@@ -20,7 +20,7 @@
           </template>
         </Suspense>
 
-        <div class="dashboard-body__content flex-grow">
+        <div class=" flex-grow">
           <router-view />
         </div>
 

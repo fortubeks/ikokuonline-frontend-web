@@ -56,9 +56,10 @@
                   </select>
                 </div>
               </div>
-              <div class="dashboard-card__chart h-full">
+              <div class="dashboard-card__chart w-full h-full">
                 <apexchart
                   height="100%"
+                  width="90%"
                   type="area"
                   :options="chartOptions"
                   :series="chartSeries"

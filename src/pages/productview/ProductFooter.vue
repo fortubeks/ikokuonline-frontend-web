@@ -1,14 +1,12 @@
 <template>
   <footer class="footer py-80 bg-[#000000] overflow-hidden">
     <div class="container container-lg">
-      <div
-        class="footer-item-two-wrapper d-flex lg:!gap-[120px] !gap-8 align-items-start flex-wrap"
-      >
+      <div class="footer-item-two-wrapper d-flex lg:!gap-[90px] !gap-8 align-items-start flex-wrap">
         <div class="footer-item !max-w-[407px]" data-aos="fade-up" data-aos-duration="200">
           <div class="footer-item__logo">
             <a href="/"> <img src="@/assets/svgs/ikokuonline.svg" alt="logo" /></a>
           </div>
-          <p class="mb-24 flex flex-col font-sora text-white gap-3">
+          <p class="mb-24 max-w-[300px] flex flex-col font-sora text-white gap-3">
             Ikokuonline.com is the No.1 online shop for your car batteries, tyres, car parts and
             accessories in Nigeria.
             <span>

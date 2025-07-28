@@ -207,14 +207,7 @@ const navItems = [
     label: 'Batteries',
     href: '/',
   },
-  {
-    label: 'Fluids',
-    href: '/',
-  },
-  {
-    label: 'Audio & DND',
-    href: '/',
-  },
+
   {
     label: 'Accessories',
     href: '/',

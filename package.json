@@ -17,6 +17,7 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.6",
     "@fontsource/sora": "^5.2.6",
+    "@phosphor-icons/vue": "^2.2.1",
     "@phosphor-icons/web": "^2.1.2",
     "@popperjs/core": "^2.11.8",
     "@vueuse/motion": "^3.0.3",

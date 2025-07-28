@@ -53,6 +53,10 @@ import '@/assets/marketpro/js/vanilla-tilt.min.js'
 import '@/assets/marketpro/js/counter.min.js'
 import '@/assets/marketpro/js/main.js'
 
+
+
+
+
 // Create App
 const app = createApp(App)
 app.use(router)

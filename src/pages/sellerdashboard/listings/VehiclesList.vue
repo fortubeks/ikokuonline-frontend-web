@@ -1,174 +1,359 @@
 <template>
-  <div class="dashboard-body__content">
-    
-    <div class="welcome-balance mt-2 mb-40 flx-between gap-2">
-      <div class="welcome-balance__left">
-        <h4 class="welcome-balance__title mb-0">Welcome back! Michel</h4>
-      </div>
-      <div class="welcome-balance__right flx-align gap-2">
-        <span class="welcome-balance__text fw-500 text-heading">Available Balance:</span>
-        <h4 class="welcome-balance__balance mb-0">$580.00</h4>
-      </div>
-    </div>
+  <div class="h-[150vh] flex-grow w-full">
+    <div
+      class="h-[300px] relative w-full bg-cover bg-center"
+      :style="`background-image: url(${bgcover})`"
+    >
+      <div
+        v-if="tab === 0"
+        class="px-[32px] overflow-x-auto w-[500px] h-fit lg:w-full top-[70%] absolute"
+      >
+        <div class="w-full h-fit bg-[#FFFFFF] overflow-x-auto py-[32px]">
+          <h1 class="text-3xl font-bold pb-6 px-[18px]">Vehicle Listings</h1>
 
-    <div class="dashboard-body__item-wrapper">
-      
-      <div class="dashboard-body__item">
-        <div class="row gy-4">
-          <div class="col-xl-3 col-sm-6" v-for="(widget, index) in widgets" :key="index">
-            <div class="dashboard-widget">
-              <img :src="widget.shape1" alt="" class="dashboard-widget__shape one">
-              <img :src="widget.shape2" alt="" class="dashboard-widget__shape two">
-              <span class="dashboard-widget__icon">
-                <img :src="widget.icon" alt="">
-              </span>
-              <div class="dashboard-widget__content flx-between gap-1 align-items-end">
-                <div>
-                  <h4 class="dashboard-widget__number mb-1 mt-3">{{ widget.number }}</h4>
-                  <span class="dashboard-widget__text font-14">{{ widget.text }}</span>
+          <div class="flex justify-between px-[40px] items-center mb-6 flex-wrap gap-4">
+            <div class="flex space-x-6">
+              <button
+                class="py-2 font-sora"
+                :class="activeTab === 'all' ? 'font-semibold text-[#000425]' : 'text-gray-500'"
+                @click="activeTab = 'all'"
+              >
+                All ({{ vehicles.length }})
+              </button>
+              <button
+                class="py-2 font-sora"
+                :class="activeTab === 'in-stock' ? 'font-semibold text-[#000425]' : 'text-gray-500'"
+                @click="activeTab = 'in-stock'"
+              >
+                In Stock
+              </button>
+              <button
+                class="py-2 font-sora"
+                :class="
+                  activeTab === 'out-stock' ? 'font-semibold text-[#000425]' : 'text-gray-500'
+                "
+                @click="activeTab = 'out-stock'"
+              >
+                Out Stock
+              </button>
+            </div>
+
+            <div class="flex space-x-4 relative">
+              <!-- Filter Dropdown -->
+              <div class="relative" ref="filterDropdownRef">
+                <button
+                  class="flex items-center px-4 py-2 border border-gray-300 rounded-md"
+                  @click="filterOpen = !filterOpen"
+                >
+                  {{ selectedCondition || 'Filter' }}
+                  <i class="ph ph-caret-down ml-2 text-base"></i>
+                </button>
+                <div
+                  v-if="filterOpen"
+                  class="absolute z-10 mt-1 bg-white border border-gray-200 rounded-md shadow-md w-full"
+                >
+                  <button
+                    class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    @click="handleFilterSelection('New')"
+                  >
+                    Condition: New
+                  </button>
+                  <button
+                    class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    @click="handleFilterSelection('Used')"
+                  >
+                    Condition: Used
+                  </button>
                 </div>
-                <img src="@/assets/dp-market-dashboard/images/icons/chart-icon.svg" alt="">
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-    
-      <div class="dashboard-body__item">
-        <div class="row gy-4">
-          <div class="col-xl-8">
-            <div class="dashboard-card">
-              <div class="dashboard-card__header flx-between gap-2">
-                <h6 class="dashboard-card__title mb-0">Sales History</h6>
-                <div class="select-has-icon d-inline-block">
-                  <select class="select common-input select-sm">
-                    <option value="1">Monthly</option>
-                    <option value="2">Daily</option>
-                    <option value="3">Yearly</option>
-                  </select>
+              <div class="relative" ref="dateDropdownRef">
+                <button
+                  class="flex items-center px-4 py-2 border border-gray-300 rounded-md"
+                  @click="dateOpen = !dateOpen"
+                >
+                  {{ selectedDate || 'All Date' }}
+                  <i class="ph ph-caret-down ml-2 text-base"></i>
+                </button>
+                <div
+                  v-if="dateOpen"
+                  class="absolute z-10 mt-1 bg-white border border-gray-200 rounded-md shadow-md w-full"
+                >
+                  <button
+                    class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    @click="handleDateSelection('Today')"
+                  >
+                    Today
+                  </button>
+                  <button
+                    class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    @click="handleDateSelection('This Week')"
+                  >
+                    This Week
+                  </button>
+                  <button
+                    class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                    @click="handleDateSelection('This Month')"
+                  >
+                    This Month
+                  </button>
                 </div>
               </div>
-              <div class="dashboard-card__chart">
-                <div id="chart"></div>
-              </div>
             </div>
           </div>
 
-          <div class="col-xl-4">
-            <div class="dashboard-card">
-              <div class="dashboard-card__header">
-                <h6 class="dashboard-card__title mb-0">Top Countries</h6>
+          <div class="overflow-x-auto pl-[60px]">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr class="border-b border-gray-200">
+                  <th class="py-4 text-left font-semibold font-sora text-[#000425]">Name</th>
+                  <th class="py-4 text-left font-semibold font-sora text-[#000425]">Model</th>
+                  <th class="py-4 text-left font-semibold font-sora text-[#000425]">Price</th>
+                  <th class="py-4 text-left font-semibold font-sora text-[#000425]">Stock</th>
+                  <th class="py-4 text-left font-semibold font-sora text-[#000425]">Condition</th>
+                  <th class="py-4 text-left font-semibold font-sora text-[#000425]">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="vehicle in filteredVehicles"
+                  :key="vehicle.id"
+                  class="border-b border-gray-200 border-dashed"
+                >
+                  <td class="py-4">{{ vehicle.name }}</td>
+                  <td class="py-4">{{ vehicle.model }}</td>
+                  <td class="py-4">{{ vehicle.price }}</td>
+                  <td class="py-4">{{ vehicle.stock }}</td>
+                  <td class="py-4">{{ vehicle.condition }}</td>
+                  <td class="py-4">
+                    <div class="flex items-center gap-[14px]">
+                      <button>
+                        <img :src="editicon" alt="edit" />
+                      </button>
+                      <button>
+                        <img :src="deleteicon" alt="delete" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pt-[32px] flex justify-between flex-wrap gap-4">
+            <div class="relative flex gap-[30px] px-[49px]" ref="bulkDropdownRef">
+              <button
+                class="flex items-center h-fit px-[16px] py-[16px] bg-gray-100 rounded-md"
+                @click="bulkActionsOpen = !bulkActionsOpen"
+              >
+                {{ selectedBulkAction || 'Bulk Actions' }}
+                <i class="ph ph-caret-down ml-2 text-base"></i>
+              </button>
+
+              <div
+                v-if="bulkActionsOpen"
+                class="absolute top-full left-0 mt-1 w-full bg-white shadow-lg rounded-md border border-gray-200 z-10"
+              >
+                <button
+                  class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  @click="
+                    () => {
+                      selectedBulkAction.value = 'Edit'
+                      bulkActionsOpen.value = false
+                    }
+                  "
+                >
+                  Edit
+                </button>
+                <button
+                  class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  @click="
+                    () => {
+                      selectedBulkAction.value = 'Delete'
+                      bulkActionsOpen.value = false
+                    }
+                  "
+                >
+                  Delete
+                </button>
               </div>
-              <ul class="country-list">
-                <li class="country-list__item flx-between gap-2" v-for="(country, index) in countries" :key="index">
-                  <div class="country-list__content flx-align gap-2">
-                    <span class="country-list__flag">
-                      <img :src="country.flag" alt="" />
-                    </span>
-                    <span class="country-list__name">{{ country.name }}</span>
-                  </div>
-                  <span class="country-list__amount">{{ country.amount }}</span>
-                </li>
-              </ul>
+
+              <button
+                class="h-fit px-[28.5px] py-[13px] bg-white border border-gray-300 text-orange-500 font-medium rounded-md"
+                :disabled="!selectedBulkAction"
+              >
+                Apply
+              </button>
+            </div>
+
+            <div class="px-[25px]">
+              <button class="btn btn-main btn-lg rounded-[10px] mt-4" @click="tab = 1">
+                Add New
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      
-      <div class="dashboard-body__item">
-        <div class="table-responsive">
-          <table class="table style-two">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Item Sales</th>
-                <th>Earning</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(sale, index) in sales" :key="index">
-                <td>{{ sale.date }}</td>
-                <td>{{ sale.items }}</td>
-                <td>{{ sale.earning }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div v-else-if="tab === 1" class="absolute top-[70%] px-[32px] w-full">
+        <AddNewListing @close="tab = 0" @add-vehicle="handleAddVehicle" />
       </div>
-
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      widgets: [
-        {
-          shape1: '@/assets/dp-market-dashboard/images/shapes/widget-shape1.png',
-          shape2: '@/assets/dp-market-dashboard/images/shapes/widget-shape2.png',
-          icon: '@/assets/dp-market-dashboard/images/icons/dashboard-widget-icon1.svg',
-          number: '2M+',
-          text: 'Total Products'
-        },
-        {
-          shape1: '@/assets/dp-market-dashboard/images/shapes/widget-shape1.png',
-          shape2: '@/assets/dp-market-dashboard/images/shapes/widget-shape2.png',
-          icon: '@/assets/dp-market-dashboard/images/icons/dashboard-widget-icon2.svg',
-          number: '$5289.00',
-          text: 'Total Earnings'
-        },
-        {
-          shape1: '@/assets/dp-market-dashboard/images/shapes/widget-shape1.png',
-          shape2: '@/assets/dp-market-dashboard/images/shapes/widget-shape2.png',
-          icon: '@/assets/dp-market-dashboard/images/icons/dashboard-widget-icon3.svg',
-          number: '5,2458',
-          text: 'Total Downloads'
-        },
-        {
-          shape1: '@/assets/dp-market-dashboard/images/shapes/widget-shape1.png',
-          shape2: '@/assets/dp-market-dashboard/images/shapes/widget-shape2.png',
-          icon: '@/assets/dp-market-dashboard/images/icons/dashboard-widget-icon4.svg',
-          number: '2,589',
-          text: 'Total Sales'
-        }
-      ],
-      countries: [
-        { name: 'United States', flag: '@/assets/dp-market-dashboard/images/thumbs/flag1.png', amount: '$58.00' },
-        { name: 'Maxico', flag: '@/assets/dp-market-dashboard/images/thumbs/flag2.png', amount: '$69.00' },
-        { name: 'Brazil', flag: '@/assets/dp-market-dashboard/images/thumbs/flag3.png', amount: '$120.00' },
-        { name: 'Canada', flag: '@/assets/dp-market-dashboard/images/thumbs/flag4.png', amount: '$25.00' },
-        { name: 'Ireland', flag: '@/assets/dp-market-dashboard/images/thumbs/flag5.png', amount: '$85.00' },
-        { name: 'Newzealand', flag: '@/assets/dp-market-dashboard/images/thumbs/flag6.png', amount: '$99.00' },
-        { name: 'Spain', flag: '@/assets/dp-market-dashboard/images/thumbs/flag7.png', amount: '$89.00' },
-        { name: 'Turkey', flag: '@/assets/dp-market-dashboard/images/thumbs/flag8.png', amount: '$72.00' },
-        { name: 'Italy', flag: '@/assets/dp-market-dashboard/images/thumbs/flag9.png', amount: '$465.00' },
-        { name: 'Argentina', flag: '@/assets/dp-market-dashboard/images/thumbs/flag10.png', amount: '$45.00' },
-        { name: 'Maxico', flag: '@/assets/dp-market-dashboard/images/thumbs/flag11.png', amount: '$42.00' },
-        { name: 'Newzealand', flag: '@/assets/dp-market-dashboard/images/thumbs/flag12.png', amount: '$89.00' }
-      ],
-      sales: [
-        { date: 'Saturday, 10', items: 2, earning: '$89.00' },
-        { date: 'Sunday, 11', items: 3, earning: '$150.00' },
-        { date: 'Monday, 12', items: 2, earning: '$15.00' },
-        { date: 'Tuesday, 15', items: 2, earning: '$25.00' },
-        { date: 'Wednesday, 16', items: 5, earning: '$20.00' },
-        { date: 'Thursday, 17', items: 3, earning: '$35.00' },
-        { date: 'Wednesday, 18', items: 1, earning: '$15.00' },
-        { date: 'Thursday, 20', items: 5, earning: '$22.00' },
-        { date: 'Wednesday, 22', items: 8, earning: '$10.00' },
-        { date: 'Tuesday, 23', items: 6, earning: '$125.00' },
-        { date: 'Wednesday, 24', items: 3, earning: '$15.00' },
-        { date: 'Tuesday, 23', items: 9, earning: '$15.00' },
-        { date: 'Wednesday, 24', items: 5, earning: '$23.00' }
-      ]
-    };
-  }
-};
-</script>
+<script setup>
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import bgcover from '@/assets/svgs/coverpicture.svg'
+import editicon from '@/assets/svgs/edit-icon.svg'
+import deleteicon from '@/assets/svgs/deleteicon.svg'
+import AddNewListing from './AddNewListing.vue'
+const tab = ref(0)
 
-<style scoped>
-</style>
+// const showAddForm = ref(false)
+
+function handleAddVehicle(newVehicle) {
+  vehicles.value.unshift({
+    ...newVehicle,
+    addedDate: new Date().toISOString().split('T')[0],
+  })
+  tab.value = 0 // return to list view
+}
+
+const selectedBulkAction = ref(null)
+const bulkDropdownRef = ref(null)
+
+const activeTab = ref('all')
+const bulkActionsOpen = ref(false)
+const filterOpen = ref(false)
+const dateOpen = ref(false)
+
+const filterDropdownRef = ref(null)
+const dateDropdownRef = ref(null)
+
+const selectedCondition = ref(null)
+const selectedDate = ref(null)
+
+const vehicles = ref([
+  {
+    id: 1,
+    name: 'Nissan',
+    model: 'SUV',
+    price: 'N4,000,000',
+    stock: 45,
+    condition: 'New',
+    addedDate: '2025-07-28',
+  },
+  {
+    id: 2,
+    name: 'Jaguar',
+    model: '2005',
+    price: 'N4,000,000',
+    stock: 8,
+    condition: 'Used',
+    addedDate: '2025-07-27',
+  },
+  {
+    id: 3,
+    name: 'Camry',
+    model: '2024',
+    price: 'N4,000,000',
+    stock: 45,
+    condition: 'New',
+    addedDate: '2025-07-20',
+  },
+  {
+    id: 4,
+    name: 'Jeep',
+    model: 'SUV',
+    price: 'N4,000,000',
+    stock: 0,
+    condition: 'Used',
+    addedDate: '2025-07-01',
+  },
+  {
+    id: 5,
+    name: 'Toyota',
+    model: 'Saloon',
+    price: 'N4,000,000',
+    stock: 45,
+    condition: 'Used',
+    addedDate: '2025-06-30',
+  },
+  {
+    id: 6,
+    name: 'Honda',
+    model: '2014',
+    price: 'N4,000,000',
+    stock: 5,
+    condition: 'New',
+    addedDate: '2025-07-28',
+  },
+])
+
+function isInSelectedDateRange(dateStr) {
+  const today = new Date()
+  const d = new Date(dateStr)
+
+  if (selectedDate.value === 'Today') {
+    return today.toDateString() === d.toDateString()
+  }
+
+  if (selectedDate.value === 'This Week') {
+    const diff = (today - d) / (1000 * 60 * 60 * 24)
+    return diff <= 7
+  }
+
+  if (selectedDate.value === 'This Month') {
+    return today.getMonth() === d.getMonth() && today.getFullYear() === d.getFullYear()
+  }
+
+  return true
+}
+
+const filteredVehicles = computed(() => {
+  return vehicles.value.filter((v) => {
+    const inStockFilter =
+      activeTab.value === 'in-stock'
+        ? v.stock > 0
+        : activeTab.value === 'out-stock'
+          ? v.stock === 0
+          : true
+
+    const conditionFilter = selectedCondition.value ? v.condition === selectedCondition.value : true
+    const dateFilter = selectedDate.value ? isInSelectedDateRange(v.addedDate) : true
+
+    return inStockFilter && conditionFilter && dateFilter
+  })
+})
+
+function handleFilterSelection(option) {
+  selectedCondition.value = option
+  filterOpen.value = false
+}
+
+function handleDateSelection(option) {
+  selectedDate.value = option
+  dateOpen.value = false
+}
+
+function handleClickOutside(event) {
+  if (filterDropdownRef.value && !filterDropdownRef.value.contains(event.target)) {
+    filterOpen.value = false
+  }
+  if (dateDropdownRef.value && !dateDropdownRef.value.contains(event.target)) {
+    dateOpen.value = false
+  }
+  if (bulkDropdownRef.value && !bulkDropdownRef.value.contains(event.target)) {
+    bulkActionsOpen.value = false
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('click', handleClickOutside)
+})
+</script>
