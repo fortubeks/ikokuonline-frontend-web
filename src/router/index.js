@@ -75,6 +75,11 @@ import AccountLayout from '@/layouts/AccountLayout.vue';
 import Accountpage from '@/pages/accounts/Accountpage.vue';
 import WishListLayout from '@/layouts/WishListLayout.vue';
 import WishList from '@/pages/wishlists/WishList.vue';
+import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
+import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
+import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
+import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
+import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
 
 
 
@@ -158,7 +163,24 @@ const routes = [
   { path: '/verify-account', name: 'verify-account', component: VerifyAccount, props: true, meta: { guestOnly: true } },
   { path: '/test', name: 'test', component: Test },
 
-  // Dashboard (protected)
+
+  {
+    path: '/seller-dashboard',
+    component: SellerDashboardLayout,
+    
+    children: [
+       {
+      path: '',
+      name: 'seller-dashboard',
+      component: DashBoardHome, 
+    },
+      { path: '/sellerprofile', name: 'seller-profile', component: SellerProfile },
+      { path: '/listingscarparts', name: 'carpart', component: CarPart },
+      { path: '/listingsvehicleslist', name: 'vehicle list', component: VehiclesList,  },
+
+     
+    ],
+  },
   {
     path: '/dashboard',
     component: DashboardLayout,

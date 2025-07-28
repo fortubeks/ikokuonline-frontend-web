@@ -1,11 +1,11 @@
 <template>
   <div class=" ">
-    <HeaderMiddle />
     <Header />
-    <MiddleHeader />
-    <div class="px-[24px] h-full bg-white">
+    <HeaderMiddle />
+
+    <div class="px-[24px] min-h-screen bg-white">
       <router-view />
-      <!-- this renders the page content -->
+    
     </div>
     <ProductFooter />
   </div>
@@ -13,8 +13,6 @@
 
 <script setup>
 import Header from '@/components/home/Header.vue'
-// import Footer from '@/components/home/Footer.vue'
-import MiddleHeader from '@/components/home/MiddleHeader.vue'
 import HeaderMiddle from '@/pages/homepages/HeaderMiddle.vue'
 import ProductFooter from '@/pages/productview/ProductFooter.vue'
 </script>

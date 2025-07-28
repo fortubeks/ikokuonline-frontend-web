@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Search Box -->
     <form @submit.prevent class="search-box">
       <button
         type="button"
@@ -27,7 +26,6 @@
       </div>
     </form>
 
-    <!-- Mobile Menu -->
     <div class="mobile-menu scroll-sm d-lg-none d-block" v-if="showMobileMenu">
       <button type="button" class="close-button" @click="closeMobileMenu">
         <i class="ph ph-x"></i>
@@ -42,7 +40,6 @@
       </div>
     </div>
 
-    <!-- Middle Header -->
     <header class="header-middle border-bottom border-neutral-40 py-4">
       <div class="container container-lg">
         <nav class="header-inner flex-between gap-8">

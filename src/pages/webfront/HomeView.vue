@@ -25,11 +25,12 @@
     <BestSellSEction />
 
     <NewsletterSection />
+
+    <ShippingSection />
   </section>
 </template>
 
 <script setup>
-
 import BannerSection from '../homepages/BannerSection.vue'
 import FeaturedSection from '../homepages/FeaturedSection.vue'
 import PromotionalBanners from '../homepages/PromotionalBanners.vue'
@@ -43,7 +44,7 @@ import ProductSection from '../homepages/ProductSection.vue'
 import BrandSection from '../homepages/BrandSection.vue'
 import BestSellSEction from '../homepages/BestSellSEction.vue'
 import NewsletterSection from '../homepages/NewsletterSection.vue'
-
+import ShippingSection from '../homepages/ShippingSection.vue'
 
 // const images = [tirepics, tirepics, tirepics]
 // const activeIndex = ref(0)
@@ -164,31 +165,31 @@ import NewsletterSection from '../homepages/NewsletterSection.vue'
 
 const bannerItems = [
   {
-    title: 'Daily Grocery Order and Get',
+    title: 'Get Your Vehicle For Less',
     highlight: 'Express',
     subheading: 'Save up to 50% off on your first order',
     buttonText: 'Explore Shop',
     buttonLink: '/product',
     price: '$60.99',
-    image: 'assets/images/thumbs/banner-img1.png',
+    image: '@/assets/svgs/tireimage.svg',
   },
   {
-    title: 'Fresh Vegetables with',
+    title: 'Get Your Accessories For Less',
     highlight: 'Free Shipping',
     subheading: 'Only Today’s Deal',
     buttonText: 'Shop Now',
     buttonLink: '/product',
     price: '$39.99',
-    image: 'assets/images/thumbs/banner-img2.png',
+    image: '@/assets/images/thumbs/banner-img2.png',
   },
   {
-    title: 'Get Best Quality at',
+    title: 'Get  Car Parts and Accessories For Less',
     highlight: 'Low Price',
     subheading: 'Flash Sale',
     buttonText: 'Grab Now',
     buttonLink: '/product',
     price: '$29.50',
-    image: 'assets/images/thumbs/banner-img3.png',
+    image: '@/assets/images/thumbs/banner-img3.png',
   },
 ]
 

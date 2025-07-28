@@ -8,7 +8,6 @@
       :links="[{ label: 'Home', href: 'index.html', icon: 'ph ph-house' }]"
     />
 
-    <MiddleHeader />
     <section class="shop py-80">
       <div class="container container-lg">
         <div class="row w-full d-flex">
@@ -27,8 +26,6 @@
 
 <script setup>
 import Header from '@/components/home/Header.vue'
-// import Footer from '@/components/home/Footer.vue'
-import MiddleHeader from '@/components/home/MiddleHeader.vue'
 import HeaderMiddle from '@/pages/homepages/HeaderMiddle.vue'
 import ShopNav from '@/pages/productview/ShopNav.vue'
 import ProductSideBar from '@/pages/productview/ProductSideBar.vue'

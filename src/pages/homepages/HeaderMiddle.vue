@@ -2,12 +2,6 @@
   <header class="header-middle border-bottom border-gray-100">
     <div class="container container-lg">
       <nav class="header-inner flex-between gap-[32px]">
-        <div class="logo">
-          <a href="/" class="link">
-            <img :src="logo.src" :alt="logo.alt" />
-          </a>
-        </div>
-
         <form
           class="flex-align flex-wrap form-location-wrapper max-w-840 w-100"
           @submit.prevent="onSearch"
@@ -58,14 +52,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
-import logopics from '@/assets/images/logo/ikokuonline_logo.png'
-
-const logo = {
-  link: 'index.html',
-  src: logopics,
-  alt: 'Logo',
-}
 
 const categories = [
   'Grocery',
