@@ -2,9 +2,8 @@
   <footer class="footer py-80 bg-[#000000] overflow-hidden">
     <div class="container container-lg">
       <div
-        class="footer-item-two-wrapper d-flex !lg:gap-[120px] !gap-8 align-items-start flex-wrap"
+        class="footer-item-two-wrapper d-flex lg:!gap-[120px] !gap-8 align-items-start flex-wrap"
       >
-        
         <div class="footer-item !max-w-[407px]" data-aos="fade-up" data-aos-duration="200">
           <div class="footer-item__logo">
             <a href="/"> <img src="@/assets/svgs/ikokuonline.svg" alt="logo" /></a>
