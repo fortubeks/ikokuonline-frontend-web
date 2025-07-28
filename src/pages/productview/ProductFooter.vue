@@ -31,7 +31,7 @@
           <h6 class="footer-item__title text-white">Products</h6>
           <ul class="footer-menu">
             <li v-for="(item, i) in aboutLinks" :key="i" class="mb-16">
-              <a href="/product" class="text-white hover-text-main-600">{{ item }}</a>
+              <a href="/products" class="text-white hover-text-main-600">{{ item }}</a>
             </li>
           </ul>
         </div>

@@ -106,7 +106,7 @@ const routes = [
     ],
   },
   {
-    path: '/product',
+    path: '/products',
     component: ProductViewLayout,
     children: [
     { path: '', name: 'Producthome', component: ProductHome },

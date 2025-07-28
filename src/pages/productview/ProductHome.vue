@@ -47,7 +47,7 @@
         data-aos="fade-up"
       >
         <a
-          href="/product-details"
+          href="/products"
           class="product-card__thumb flex-center rounded-8 bg-gray-50 position-relative"
         >
           <img :src="product.image" alt="" class="w-auto max-w-unset" />
