@@ -46,10 +46,116 @@ import ProductCategoriesForm from '../pages/dashboard/product-categories/Form.vu
 import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
-const routes = [
-  { path: '/', redirect: '/login' },
+import HomePageLayout from '@/layouts/HomePageLayout.vue';
+import ProductViewLayout from "@/layouts/ProductViewLayout.vue"
+import TyresPage from '../pages/homepage/TirePage.vue';
+import BatteriesPage from '../pages/homepage/BatteryPage.vue';
+import FluidsPage from '../pages/homepage/FluidsPage.vue';
+import AudioPage from '../pages/homepage/AudioPage.vue';
+import AccessoriesPage from '../pages/homepage/AccessoryPage.vue';
+import VehiclesPage from '../pages/homepage/VehiclePage.vue';
 
-  // Public pages
+import EnginePartsPage from '../pages/homepage/EnginePartsPage.vue';
+import SuspensionPage from '../pages/homepage/SuspensionPage.vue';
+import BrakesPage from '../pages/homepage/BrakesPage.vue';
+
+// import Home from '@/pages/webfront/Home.vue';
+
+import Home from '@/pages/webfront/HomeView.vue';
+import ProductHome from '@/pages/productview/ProductHome.vue';
+import ContactUsLayout from '@/layouts/ContactUsLayout.vue';
+import ContactUs from '@/pages/contactus/ContactUs.vue';
+import CartLayout from '@/layouts/CartLayout.vue';
+import CartPage from '@/pages/cart/CartPage.vue';
+import CheckoutPage from '@/pages/checkoutpage/CheckoutPage.vue';
+import CheckOutLayout from '@/layouts/CheckOutLayout.vue';
+import ProductDetailsLayout from '@/layouts/ProductDetailsLayout.vue';
+import ProductDetail from '@/pages/productdetails/ProductDetail.vue';
+import AccountLayout from '@/layouts/AccountLayout.vue';
+import Accountpage from '@/pages/accounts/Accountpage.vue';
+import WishListLayout from '@/layouts/WishListLayout.vue';
+import WishList from '@/pages/wishlists/WishList.vue';
+import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
+import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
+import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
+import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
+import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
+
+
+
+const routes = [
+  {
+    path: '',
+    component: HomePageLayout,
+    children: [
+      { path: '', name: 'home', component: Home },
+      { path: 'tyres', name: 'tyres', component: TyresPage },
+      { path: 'batteries', name: 'batteries', component: BatteriesPage },
+      { path: 'fluids', name: 'fluids', component: FluidsPage },
+      { path: 'audio', name: 'audio', component: AudioPage },
+      { path: 'accessories', name: 'accessories', component: AccessoriesPage },
+      { path: 'vehicles', name: 'vehicles', component: VehiclesPage },
+      {
+        path: 'replacement',
+        children: [
+          { path: 'engine', name: 'engine-parts', component: EnginePartsPage },
+          { path: 'suspension', name: 'suspension', component: SuspensionPage },
+          { path: 'brakes', name: 'brakes', component: BrakesPage },
+        ],
+      },
+    ],
+  },
+  {
+    path: '/products',
+    component: ProductViewLayout,
+    children: [
+    { path: '', name: 'Producthome', component: ProductHome },
+    ],
+  },
+  {
+    path: '/contact',
+    component: ContactUsLayout,
+    children: [
+    { path: '', name: 'contact', component: ContactUs },
+    ],
+  },
+  {
+    path: '/cart',
+    component: CartLayout,
+    children: [
+    { path: '', name: 'cart', component: CartPage },
+    ],
+  },
+  {
+    path: '/checkout',
+    component: CheckOutLayout,
+    children: [
+    { path: '', name: 'checkout', component: CheckoutPage },
+    ],
+  },
+  {
+    path: '/product-details',
+    component: ProductDetailsLayout,
+    children: [
+    { path: '', name: 'products', component: ProductDetail },
+    ],
+  },
+  {
+    path: '/account',
+    component: AccountLayout,
+    children: [
+    { path: '', name: 'account', component: Accountpage },
+    ],
+  },
+  {
+    path: '/wishlist',
+    component: WishListLayout,
+    children: [
+    { path: '', name: 'wishlist', component: WishList },
+    ],
+  },
+
+  
   { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },
   { path: '/register', name: 'register', component: Register, meta: { guestOnly: true } },
   { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword, meta: { guestOnly: true } },
@@ -57,12 +163,34 @@ const routes = [
   { path: '/verify-account', name: 'verify-account', component: VerifyAccount, props: true, meta: { guestOnly: true } },
   { path: '/test', name: 'test', component: Test },
 
-  // Protected pages
+
+  {
+    path: '/seller-dashboard',
+    component: SellerDashboardLayout,
+    
+    children: [
+       {
+      path: '',
+      name: 'seller-dashboard',
+      component: DashBoardHome, 
+    },
+      { path: '/sellerprofile', name: 'seller-profile', component: SellerProfile },
+      { path: '/listingscarparts', name: 'carpart', component: CarPart },
+      { path: '/listingsvehicleslist', name: 'vehicle list', component: VehiclesList,  },
+
+     
+    ],
+  },
   {
     path: '/dashboard',
     component: DashboardLayout,
-    meta: { requiresAuth: true },
+    
     children: [
+       {
+      path: '',
+      name: 'DashboardHome',
+      component: Products, 
+    },
       { path: 'products', name: 'Products', component: Products },
       { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
       { path: 'products/edit/:id', name: 'ProductEdit', component: ProductsForm, props: true },
@@ -75,13 +203,14 @@ const routes = [
       { path: 'vehicle-listings/create', name: 'VehicleListingCreate', component: VehicleListingsForm },
       { path: 'vehicle-listings/edit/:id', name: 'VehicleListingEdit', component: VehicleListingsForm, props: true },
 
-      { path: 'profile', name: 'Profile', component: ProfileForm },
-
       { path: 'orders', name: 'Orders', component: Orders },
       { path: 'orders/:id', name: 'OrderShow', component: OrderShow, props: true },
+
+      { path: 'profile', name: 'Profile', component: ProfileForm },
     ],
   },
 ];
+
 
 const base = import.meta.env.VITE_APP_BASE_URL || '/';
 

@@ -71,25 +71,29 @@
     --light-l: 53%;
     --light: var(--light-h) var(--light-s) var(--light-l);
     /* Black Color */
-    --black-h: 234;
-    --black-s: 100%;
-    --black-l: 7%;
+    --black-h: 0;
+    --black-s: 0%;
+    --black-l: 0%;
     --black: var(--black-h) var(--black-s) var(--black-l);
-    /* Black Color */
-    --static-black-h: 234;
-    --static-black-s: 100%;
-    --static-black-l: 7%;
+
+    /* Static Black Color */
+    --static-black-h: 0;
+    --static-black-s: 0%;
+    --static-black-l: 0%;
     --static-black: var(--static-black-h) var(--static-black-s) var(--static-black-l);
+
     /* Black Two Color */
-    --black-two-h: 234;
-    --black-two-s: 69%;
-    --black-two-l: 9%;
+    --black-two-h: 0;
+    --black-two-s: 0%;
+    --black-two-l: 0%;
     --black-two: var(--black-two-h) var(--black-two-s) var(--black-two-l);
-    /* Black three Color */
-    --black-three-h: 235;
-    --black-three-s: 5%;
-    --black-three-l: 43%;
+
+    /* Black Three Color */
+    --black-three-h: 0;
+    --black-three-s: 0%;
+    --black-three-l: 0%;
     --black-three: var(--black-three-h) var(--black-three-s) var(--black-three-l);
+
     --heading-color: var(--black);
     --body-color: var(--black-three);
     --body-bg: 0 0% 100%;
@@ -429,6 +433,10 @@
 /* Text Color */
 .text-heading {
     color: hsl(var(--heading-color)) !important;
+}
+
+.text-heading {
+    color: #fff !important;
 }
 
 .text-body {
@@ -3434,7 +3442,7 @@ input[type=number] {
     font-weight: 500;
     font-size: 1rem;
     width: 100%;
-    padding: 38px 0;
+    /* padding: 38px 0; */
     width: 100%;
 }
 
