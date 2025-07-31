@@ -67,7 +67,7 @@ const resetPassword = async () => {
   }
 
   try {
-    await api.post('/auth/reset-password', {
+    await api.post('/api/auth/reset-password', {
       email: email.value,
       otp: otp.value,
       password: newPassword.value,

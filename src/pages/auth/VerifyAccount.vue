@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 //import axios from 'axios';
 import api from '@/services/api';
@@ -56,7 +56,7 @@ const otp = ref('');
 const email = ref('');
 
 onMounted(() => {
-  const storedEmail = localStorage.getItem('reset_email');
+  const storedEmail = localStorage.getItem('registered_email');
   if (!storedEmail) {
     // Redirect back if no email stored
     router.push('/register');
@@ -67,34 +67,34 @@ onMounted(() => {
 
 const verifyAccount = async () => {
   try {
-    await api.post('/auth/email/verify', {
+    await api.post('/api/auth/email/verify', {
       email: email.value,
       otp: otp.value,
     });
     alert('Account verified successfully');
-    if (localStorage.getItem('reset_email')) {
-        localStorage.removeItem('reset_email');
+    if (localStorage.getItem('registered_email')) {
+        localStorage.removeItem('registered_email');
     }
     router.push('/login');
   } catch (error) {
     alert(error.response?.data?.message || 'Verification failed');
-    if (localStorage.getItem('reset_email')) {
-        localStorage.removeItem('reset_email');
+    if (localStorage.getItem('registered_email')) {
+        localStorage.removeItem('registered_email');
     }
   }
 };
 
 const resendOTP = async () => {
   try {
-    await api.post('/auth/email/resend-verification', {
+    await api.post('/api/auth/email/resend-verification', {
       email: email.value,
     });
-    localStorage.setItem('reset_email', email.value);
+    localStorage.setItem('registered_email', email.value);
     alert('Verification code resent');
   } catch (error) {
-    if (localStorage.getItem('reset_email')) {
-        localStorage.removeItem('reset_email');
-    }
+    // if (localStorage.getItem('reset_email')) {
+    //     localStorage.removeItem('reset_email');
+    // }
     alert(error.response?.data?.message || 'Failed to resend verification code');
   }
 };

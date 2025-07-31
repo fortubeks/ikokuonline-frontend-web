@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import { MotionPlugin } from '@vueuse/motion'
+import { createPinia } from 'pinia';
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -52,6 +53,7 @@ import '@/assets/marketpro/js/marque.min.js'
 import '@/assets/marketpro/js/vanilla-tilt.min.js'
 import '@/assets/marketpro/js/counter.min.js'
 import '@/assets/marketpro/js/main.js'
+import { useAuthStore } from '@/stores/auth';
 
 
 
@@ -59,6 +61,14 @@ import '@/assets/marketpro/js/main.js'
 
 // Create App
 const app = createApp(App)
+const pinia = createPinia()
+app.use(pinia);
+
+
+const auth = useAuthStore();
+auth.checkAuth();
+auth.hydrate(); 
+
 app.use(router)
 app.use(MotionPlugin)
 app.use(VueApexCharts) 

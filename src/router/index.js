@@ -81,6 +81,8 @@ import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
 import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
 import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
 
+import { useAuthStore } from '@/stores/auth';
+
 
 
 const routes = [
@@ -184,13 +186,13 @@ const routes = [
   {
     path: '/dashboard',
     component: DashboardLayout,
-    
+    meta: { requiresAuth: true },
     children: [
-       {
-      path: '',
-      name: 'DashboardHome',
-      component: Products, 
-    },
+      {
+        path: '',
+        name: 'DashboardHome',
+        component: Products, 
+      },
       { path: 'products', name: 'Products', component: Products },
       { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
       { path: 'products/edit/:id', name: 'ProductEdit', component: ProductsForm, props: true },
@@ -209,6 +211,20 @@ const routes = [
       { path: 'profile', name: 'Profile', component: ProfileForm },
     ],
   },
+  {
+    path: '/logout',
+    name: 'logout',
+    beforeEnter: async (to, from, next) => {
+      const auth = useAuthStore();
+      try {
+        await auth.logout();
+      } catch (error) {
+        console.error('Logout failed', error);
+      }
+      next('/login');
+    },
+    meta: { requiresAuth: true }
+  }
 ];
 
 
@@ -220,18 +236,28 @@ const router = createRouter({
 });
 
 // route guard
+// router.beforeEach((to, from, next) => {
+//   const isAuthenticated = !!localStorage.getItem('token');
+
+//   if (to.meta.requiresAuth && !isAuthenticated) {
+//     return next({ name: 'login' });
+//   }
+
+//   if (to.meta.guestOnly && isAuthenticated) {
+//     return next({ name: 'Products' }); // or any default authenticated route
+//   }
+
+//   next();
+// });
+
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token');
+  const auth = useAuthStore();
 
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    return next({ name: 'login' });
+  if (to.meta.requiresAuth && !auth.isAuthenticated) {
+    next({ name: 'login' });
+  } else {
+    next();
   }
-
-  if (to.meta.guestOnly && isAuthenticated) {
-    return next({ name: 'Products' }); // or any default authenticated route
-  }
-
-  next();
 });
 
 export default router;

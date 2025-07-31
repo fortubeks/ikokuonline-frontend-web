@@ -54,7 +54,8 @@
               <div class="mb-24 mt-48">
                 <div class="flex-align gap-48 flex-wrap">
                   <button type="submit" class="btn py-16 primary-btn">Register</button>
-                  <button type="button" class="btn btn-black">Sign up with Google</button>
+                  <div id="google-signin-btn"></div>
+                  <!-- <button type="button" class="btn btn-black">Sign up with Google</button> -->
                 </div>
               </div>
 
@@ -71,10 +72,29 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 //import axios from 'axios';
 import api from '@/services/api';
 import router from '../../router';
+
+onMounted(() => {
+  if (window.google) {
+    window.google.accounts.id.initialize({
+      client_id: '477573067979-uvj8q3o1r49i69qqjn8ssp1ppuuqcs5h.apps.googleusercontent.com',
+      callback: handleGoogleCredential,
+    });
+
+    window.google.accounts.id.renderButton(
+      document.getElementById('google-signin-btn'),
+      {
+        theme: 'outline',
+        size: 'large',
+        shape: 'rectangular',
+        text: 'continue_with',
+      }
+    );
+  }
+});
 
 const form = ref({
   first_name: '',
@@ -85,24 +105,36 @@ const form = ref({
   account_type: 'customer',
 });
 
+const handleGoogleCredential = async (response) => {
+  const idToken = response.credential;
+
+  try {
+    const res = await api.post('/api/auth/google', { id_token: idToken });
+
+    localStorage.setItem('user', JSON.stringify(res.data.user));
+
+    // alert('Signed in with Google!');
+    router.push({ name: 'dashboard' }); // or any route after login
+  } catch (error) {
+    console.error('Google login failed:', error.response?.data);
+    alert(error.response?.data?.message || 'Google login failed');
+  }
+};
+
 const register = async () => {
   try {
     //await axios.post('http://127.0.0.1:8000/api/auth/register', form.value);
+    await api.get('/sanctum/csrf-cookie');
     const res = await api.post('/api/auth/register', form.value);
     alert('Registered successfully');
     //router.push('/login');
     const email = form.value.email;
-
-    localStorage.setItem('reset_email', email.value);
-
+    localStorage.setItem('registered_email', email)
     // Redirect to verification page with query param
     router.push({ name: 'verify-account'});
   } catch (error) {
     //console.error(error);
     //alert('Registration failed');
-    if (localStorage.getItem('reset_email')) {
-        localStorage.removeItem('reset_email');
-    }
     alert(error.response?.data?.message || 'Registration failed');
   }
 };
