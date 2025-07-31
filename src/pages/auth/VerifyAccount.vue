@@ -67,7 +67,7 @@ onMounted(() => {
 
 const verifyAccount = async () => {
   try {
-    await api.post('/auth/email/verify', {
+    await api.post('/api/auth/email/verify', {
       email: email.value,
       otp: otp.value,
     });
@@ -86,7 +86,7 @@ const verifyAccount = async () => {
 
 const resendOTP = async () => {
   try {
-    await api.post('/auth/email/resend-verification', {
+    await api.post('/api/auth/email/resend-verification', {
       email: email.value,
     });
     localStorage.setItem('registered_email', email.value);

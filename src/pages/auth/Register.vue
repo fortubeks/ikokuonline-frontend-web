@@ -109,12 +109,11 @@ const handleGoogleCredential = async (response) => {
   const idToken = response.credential;
 
   try {
-    const res = await api.post('/auth/google', { id_token: idToken });
+    const res = await api.post('/api/auth/google', { id_token: idToken });
 
-    localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
 
-    alert('Signed in with Google!');
+    // alert('Signed in with Google!');
     router.push({ name: 'dashboard' }); // or any route after login
   } catch (error) {
     console.error('Google login failed:', error.response?.data);
@@ -125,23 +124,17 @@ const handleGoogleCredential = async (response) => {
 const register = async () => {
   try {
     //await axios.post('http://127.0.0.1:8000/api/auth/register', form.value);
-    const res = await api.post('/auth/register', form.value);
+    await api.get('/sanctum/csrf-cookie');
+    const res = await api.post('/api/auth/register', form.value);
     alert('Registered successfully');
     //router.push('/login');
     const email = form.value.email;
-
-    //console.log(email);
-
-    localStorage.setItem('registered_email', email);
-
+    localStorage.setItem('registered_email', email)
     // Redirect to verification page with query param
     router.push({ name: 'verify-account'});
   } catch (error) {
     //console.error(error);
     //alert('Registration failed');
-    if (localStorage.getItem('registered_email')) {
-        localStorage.removeItem('registered_email');
-    }
     alert(error.response?.data?.message || 'Registration failed');
   }
 };

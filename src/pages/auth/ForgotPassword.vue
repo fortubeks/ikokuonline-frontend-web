@@ -54,7 +54,7 @@ const submitEmail = async () => {
   }
 
   try {
-    await api.post('/auth/forgot-password', {
+    await api.post('/api/auth/forgot-password', {
       email: email.value
     });
 

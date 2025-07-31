@@ -56,11 +56,25 @@
 </template>
 
 <script setup>
+// import Pagination from '@components/Pagination.vue';
+// import { ref, computed } from 'vue';
+
+// const products = ref([/* ... */]); // fetched or static
+
+// const currentPage = ref(1);
+// const pageSize = ref(5);
+
+// const start = computed(() => (currentPage.value - 1) * pageSize.value);
+// const end = computed(() => Math.min(start.value + pageSize.value, products.value.length));
+// const paginatedProducts = computed(() =>
+//   products.value.slice(start.value, end.value)
+// );
+
 import Pagination from '@components/Pagination.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import api from '@/services/api';
 
-const products = ref([/* ... */]); // fetched or static
-
+const products = ref([]);
 const currentPage = ref(1);
 const pageSize = ref(5);
 
@@ -69,4 +83,18 @@ const end = computed(() => Math.min(start.value + pageSize.value, products.value
 const paginatedProducts = computed(() =>
   products.value.slice(start.value, end.value)
 );
+
+// Fetch products on component mount
+const fetchProducts = async () => {
+  try {
+    const response = await api.get('/api/products');
+    products.value = response.data.data.data;
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+  }
+};
+
+onMounted(() => {
+  fetchProducts();
+});
 </script>
