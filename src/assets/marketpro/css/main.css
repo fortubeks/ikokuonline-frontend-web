@@ -10255,7 +10255,7 @@ input:focus-visible {
 /* ================================ Featured Products Css End ============================ */
 /* ============================= Banner Three Css Start ================================= */
 .banner-three {
-    background-color: var(--neutral-600);
+    background-color: var(--neutral-700);
     padding: 80px 0;
 }
 

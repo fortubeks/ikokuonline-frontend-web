@@ -3,9 +3,9 @@
     <Header />
     <HeaderMiddle />
 
-    <div class="px-[24px] min-h-screen bg-white">
+    <div class="min-h-screen bg-white">
       <router-view />
-    
+
     </div>
     <ProductFooter />
   </div>
