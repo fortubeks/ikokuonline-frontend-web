@@ -5,8 +5,10 @@
     style="background-image: url('@/assets/images/shape/line-pattern.png')"
   >
     <img
-      src="@/assets/images/shape/star-shape.png"
+      src="@/assets/images/shape/tiresvg.svg"
       alt="Shape"
+      width="50"
+      height="50"
       class="animation star-shape animation-rotate"
     />
     <img
@@ -41,7 +43,9 @@
                           Welcome To The Biggest Marketplace in Nigeria For Your Car Parts &
                           Vehicles
                         </p>
-                        <p class="mb-24Up animate-left-right animation-delay-12 text-center mt-4">
+                        <p
+                          class="mb-24Up px-3 flex items-center gap-3 animate-left-right animation-delay-12 text-center mt-4"
+                        >
                           <a
                             href="/products"
                             class="btn btn-outline-white d-inline-flex align-items-center rounded-pill gap-8 mt-lg-4 mt-sm-1 animate-left-right animation-delay-15"
@@ -83,9 +87,13 @@
     </div>
     <!-- /.container -->
   </section>
+
+  <FlashSalesToday />
 </template>
 
-<script setup></script>
+<script setup>
+import FlashSalesToday from '../homepages/FlashSalesToday.vue'
+</script>
 
 <style scoped>
 .no-scrollbar::-webkit-scrollbar {
