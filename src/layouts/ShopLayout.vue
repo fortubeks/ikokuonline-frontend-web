@@ -15,7 +15,7 @@
 import Header from '@/components/home/Header.vue'
 import HeaderMiddle from '@/pages/home-page-sections/HeaderMiddle.vue'
 import ProductFooter from '@/components/home/Footer.vue'
-import ShopNav from '@/pages/products/products-list/ShopNav.vue'
+import ShopNav from '@/pages/shop-pages/ShopNav.vue'
 
 import { useRoute } from 'vue-router'
 

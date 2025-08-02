@@ -1,14 +1,12 @@
 /* eslint-disable vue/multi-word-component-names */
-
-
 // Tailwind + Fonts
-import './assets/tailwind.css'
 import '@fontsource/sora/400.css'
 import '@fontsource/sora/500.css'
 import '@fontsource/sora/600.css'
 import '@fontsource/sora/700.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/700.css'
+import './assets/tailwind.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
