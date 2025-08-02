@@ -8,7 +8,7 @@
 
 <script setup>
 import NewsletterSection from './NewsletterSection.vue'
-import Productdetails from './Productdetails.vue'
+import Productdetails from './ProductSingleView.vue'
 import SimilarProduct from './SimilarProduct.vue'
 </script>
 

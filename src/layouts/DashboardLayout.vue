@@ -7,7 +7,8 @@
       <div class="dashboard-body">
         <Header />
         <div class="dashboard-body__content">
-          <router-view /> <!-- renders page content -->
+          <router-view />
+          <!-- renders page content -->
         </div>
         <Footer />
       </div>
@@ -16,8 +17,7 @@
 </template>
 
 <script setup>
-import Sidebar from '../components/Sidebar.vue';
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
-
+import Sidebar from '../components/Sidebar.vue'
+import Header from '../components/Header.vue'
+import Footer from '../components/dashboard/Footer.vue'
 </script>

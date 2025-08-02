@@ -1,27 +1,3 @@
-// import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
-
-// const router = createRouter({
-//   history: createWebHistory(import.meta.env.BASE_URL),
-//   routes: [
-//     {
-//       path: '/',
-//       name: 'home',
-//       component: HomeView,
-//     },
-//     {
-//       path: '/about',
-//       name: 'about',
-//       // route level code-splitting
-//       // this generates a separate chunk (About.[hash].js) for this route
-//       // which is lazy-loaded when the route is visited.
-//       component: () => import('../views/AboutView.vue'),
-//     },
-//   ],
-// })
-
-// export default router
-
 import { createRouter, createWebHistory } from 'vue-router';
 
 import Login from '../pages/auth/Login.vue';
@@ -47,21 +23,9 @@ import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
 import HomePageLayout from '@/layouts/HomePageLayout.vue';
-import TyresPage from '../pages/products/product-pages/TirePage.vue';
-import BatteriesPage from '../pages/products/product-pages/BatteryPage.vue';
-import FluidsPage from '../pages/products/product-pages/FluidsPage.vue';
-import AudioPage from '../pages/products/product-pages/AudioPage.vue';
-import AccessoriesPage from '../pages/products/product-pages/AccessoryPage.vue';
-import VehiclesPage from '../pages/products/product-pages/VehiclePage.vue';
-
-import EnginePartsPage from '../pages/products/product-pages/EnginePartsPage.vue';
-import SuspensionPage from '../pages/products/product-pages/SuspensionPage.vue';
-import BrakesPage from '../pages/products/product-pages/BrakesPage.vue';
-
-// import Home from '@/pages/webfront/Home.vue';
 
 import Home from '@/pages/webfront/HomeView.vue';
-import ProductHome from '@/pages/products/products-list/ProductHome.vue';
+import ProductHome from '@/pages/products/ProductHome.vue';
 import ContactUs from '@/pages/contact-us/ContactUs.vue';
 import CartPage from '@/pages/shop-pages/cart/CartPage.vue';
 import CheckoutPage from '@/pages/shop-pages/checkoutpage/CheckoutPage.vue';
@@ -83,34 +47,101 @@ const routes = [
     component: HomePageLayout,
     children: [
       { path: '', name: 'home', component: Home },
-      { path: 'tyres', name: 'tyres', component: TyresPage },
-      { path: 'batteries', name: 'batteries', component: BatteriesPage },
-      { path: 'fluids', name: 'fluids', component: FluidsPage },
-      { path: 'audio', name: 'audio', component: AudioPage },
-      { path: 'accessories', name: 'accessories', component: AccessoriesPage },
-      { path: 'vehicles', name: 'vehicles', component: VehiclesPage },
-      {
-        path: 'replacement',
-        children: [
-          { path: 'engine', name: 'engine-parts', component: EnginePartsPage },
-          { path: 'suspension', name: 'suspension', component: SuspensionPage },
-          { path: 'brakes', name: 'brakes', component: BrakesPage },
-        ],
-      },
+
     ],
   },
   {
-    path: '',
-    component: ShopLayout,
-    children: [
-      { path: '/cart', name: 'cart', component: CartPage },
-      { path: '/checkout', name: 'checkout', component: CheckoutPage },
-      { path: '/contact-us', name: 'contact-us', component: ContactUs },
-      { path: '/wishlist', name: 'wishlist', component: WishList },
-      { path: '/products', name: 'products', component: ProductHome },
-      { path: '/products/:id', name: 'single-product-view', component: ProductDetail },
-    ],
-  },
+  path: '',
+  component: ShopLayout,
+  children: [
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartPage,
+      meta: {
+        title: 'Cart',
+        current: 'Product Cart',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
+        ],
+      },
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: CheckoutPage,
+      meta: {
+        title: 'Checkout',
+        current: 'Payment & Shipping',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
+          { label: 'Cart', href: '/cart', icon: 'ph ph-shopping-cart' },
+        ],
+      },
+    },
+    {
+      path: '/contact-us',
+      name: 'contact-us',
+      component: ContactUs,
+      meta: {
+        title: 'Contact Us',
+        current: 'Get in Touch',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
+        ],
+      },
+    },
+    {
+      path: '/wishlist',
+      name: 'wishlist',
+      component: WishList,
+      meta: {
+        title: 'Wishlist',
+        current: 'Saved Products',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
+        ],
+      },
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: ProductHome,
+      meta: {
+        title: 'Products',
+        current: 'Browse All Products',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
+        ],
+      },
+    },
+    {
+      path: '/products/:id',
+      name: 'single-product-view',
+      component: ProductDetail,
+      meta: {
+        title: 'Product Details',
+        current: 'View Product',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
+          { label: 'Products', href: '/products', icon: 'ph ph-grid-four' },
+        ],
+      },
+    },
+    {
+      path: '/product-categories/:category',
+      name: 'product-category',
+      component: ProductHome,
+      meta: {
+        title: 'Product Category',
+        current: 'Browse Category',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
+        ],
+      },
+    },
+  ],
+},
 
 
   { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },

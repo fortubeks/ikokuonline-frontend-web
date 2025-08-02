@@ -1,128 +1,160 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <section class="pt-[85px] font-sora bg-[#000000] flex flex-col gap-[76px] w-full h-fit">
-    <div class="w-full lg:px-[100px] flex lg:flex-row flex-col gap-[80px]">
-      <!-- Logo & Description -->
-      <div class="flex lg:flex-row flex-col lg:gap-[70px]">
-        <div class="h-full w-[420px] flex flex-col gap-6">
-          <img :src="logoWhite" alt="Logo" class="w-[116px] h-[59px] object-contain" />
-          <p class="flex flex-col gap-6 text-[#FFFFFF] text-base font-normal">
-            Ikokuonline.com is the No.1 online shop for your car batteries, tyres, car parts and accessories in Nigeria.
+  <footer class="footer py-80 bg-[#000000] overflow-hidden">
+    <div class="container container-lg">
+      <div class="footer-item-two-wrapper d-flex lg:!gap-[90px] !gap-8 align-items-start flex-wrap">
+        <div class="footer-item !max-w-[407px]" data-aos="fade-up" data-aos-duration="200">
+          <div class="footer-item__logo">
+            <a href="/"> <img src="@/assets/svgs/ikokuonline.svg" alt="logo" /></a>
+          </div>
+          <p class="mb-24 max-w-[300px] flex flex-col font-sora text-white gap-3">
+            Ikokuonline.com is the No.1 online shop for your car batteries, tyres, car parts and
+            accessories in Nigeria.
             <span>
-              We aim to deliver the best competitive price while assuring you of genuine brands, best quality products, excellent customer service and fast delivery nationwide.
-            </span>
+              We aim to deliver the best competitive price while assuring you of genuine brands,
+              best quality products, excellent customer service and fast delivery nationwide.</span
+            >
           </p>
         </div>
 
-    
-        <div
-          v-for="section in footerSections"
-          :key="section.title"
-          class="h-full flex flex-col items-start gap-8 w-fit"
-        >
-          <h1 class="text-lg font-semibold text-[#FFFFFF]">{{ section.title }}</h1>
-          <div class="flex flex-col items-start gap-6">
-            <RouterLink
-              v-for="link in section.links"
-              :key="link.label"
-              :to="link.to"
-              class="text-base font-normal text-[#FFFFFF] hover:underline"
+        <div class="footer-item" data-aos="fade-up" data-aos-duration="1000">
+          <h6 class="footer-item__title text-white">Information</h6>
+          <ul class="footer-menu">
+            <li v-for="(item, i) in infoLinks" :key="i" class="mb-16">
+              <a href="/products" class="text-white hover-text-main-600">{{ item }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-item" data-aos="fade-up" data-aos-duration="400">
+          <h6 class="footer-item__title text-white">Products</h6>
+          <ul class="footer-menu">
+            <li v-for="(item, i) in aboutLinks" :key="i" class="mb-16">
+              <a href="/products" class="text-white hover-text-main-600">{{ item }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-item" data-aos="fade-up" data-aos-duration="1200">
+          <div class="flex-align gap-16 mb-16">
+            <span
+              class="h-32 w-32 flex-center rounded-circle border border-[#FD603E] text-main-two-600 text-md flex-shrink-0"
             >
-              {{ link.label }}
-            </RouterLink>
+              <i class="ph-fill ph-phone-call text-[#FD603E]"></i>
+            </span>
+            <a href="tel:+00123456789" class="text-md text-white hover-text-main-600"
+              >+00 123 456 789</a
+            >
           </div>
-        </div>
-      </div>
+          <div class="flex-align gap-16 mb-16">
+            <span
+              class="w-32 h-32 flex-center rounded-circle border border-[#FD603E] text-main-two-600 text-md flex-shrink-0"
+            >
+              <i class="ph-fill ph-envelope text-[#FD603E]"></i>
+            </span>
+            <a
+              href="mailto:support24@marketpro.com"
+              class="text-md whitespace-nowrap text-white hover-text-main-600"
+              >support24@marketpro.com</a
+            >
+          </div>
+          <div class="flex-align gap-16 mb-16">
+            <span
+              class="w-32 h-32 flex-center rounded-circle border border-[#FD603E] text-main-two-600 text-md flex-shrink-0"
+            >
+              <i class="ph-fill ph-map-pin text-[#FD603E]"></i>
+            </span>
+            <span class="text-md text-white whitespace-nowrap"
+              >789 Inner Lane, California, USA</span
+            >
+          </div>
 
-      
-      <div class="w-[280px] text-white flex flex-col gap-4 h-full">
-        <div
-          v-for="(item, index) in contactInfo"
-          :key="index"
-          class="flex gap-2 items-center"
-        >
-          <img :src="item.icon" :alt="item.alt" />
-          <button class="text-left">{{ item.text }}</button>
-        </div>
-
-        <div class="flex gap-2 w-full">
-          <a v-for="(icon, index) in socialIcons" :key="index" href="#" target="_blank" rel="noopener noreferrer">
-            <img :src="icon.src" :alt="icon.alt" />
-          </a>
+          <ul class="flex-align gap-16">
+            <li v-for="(social, i) in socialLinks" :key="i">
+              <a
+                :href="social.href"
+                class="w-44 h-44 flex-center bg-main-two-50 text-main-two-600 text-xl rounded-8 hover-bg-main-two-600 hover-text-white"
+              >
+                <i :class="social.icon"></i>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
+  </footer>
 
-    
-    <div class="h-fit lg:px-[120px] bg-[#7D7D7D]">
-      <div class="flex lg:flex-row flex-col  justify-between items-center py-[33.5px]">
-        <p class="text-normal text-sm text-[#FFFFFF]">
-          Ikokuonline © {{ currentYear }}. All Rights Reserved.
+  <div class="bottom-footer !bg-[#7D7D7D] py-8">
+    <div class="container container-lg">
+      <div class="bottom-footer__inner flex-between flex-wrap gap-16 py-16">
+        <p class="bottom-footer__text wow !text-[#FFFFFF] text-sm font-sora fadeInLeftBig">
+          Ikokuonline © 2025. All Rights Reserved
         </p>
-
-        <div class="flex lg:flex-row flex-col items-center gap-2">
-          <p class="text-normal text-sm text-[#FFFFFF]">We Are Accepting</p>
-          <img :src="paymenticon" alt="payment" />
+        <div class="flex-align gap-8 flex-wrap wow fadeInRightBig">
+          <span class="text-heading text-[#FFFFFF] text-sm">We Are Accepting</span>
+          <img src="@/assets/svgs/paymenticon.svg" alt="payments" />
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
-<script setup>
-import { RouterLink } from 'vue-router'
-
-import logoWhite from '@/assets/images/logo/ikokuonline_white_logo.png'
-import callicon from "@/assets/svgs/callicon.svg"
-import messageicon from "@/assets/svgs/messageicon.svg"
-import locationicon from "@/assets/svgs/locationicon.svg"
-import facebookicon from "@/assets/svgs/facebookicon.svg"
-import twittericon from "@/assets/svgs/twittericon.svg"
-import instagramicon from "@/assets/svgs/instagramicon.svg"
-import linkednicon from "@/assets/svgs/linkednicon.svg"
-import paymenticon from "@/assets/svgs/paymenticon.svg"
-
-const currentYear = new Date().getFullYear()
-
-const footerSections = [
-  {
-    title: "Information",
-    links: [
-      { label: "My Account", to: "/account" },
-      { label: "Become a Vendor", to: "/vendor" },
-      { label: "Return Policy", to: "/return-policy" },
-      { label: "Wishlist", to: "/wishlist" },
-      { label: "Order History", to: "/orders" },
-      { label: "Product Support", to: "/support" },
-    ],
+<script>
+export default {
+  name: 'FooterFull',
+  data() {
+    return {
+      aboutLinks: [
+        'Tyres',
+        'Batteries',
+        'Fluids and Lubricants',
+        'Accessories',
+        'Audio and DND',
+        'Replacement parts',
+      ],
+      supportLinks: [
+        { text: 'Help Center', href: '/' },
+        { text: 'Contact Us', href: '/contact' },
+        { text: 'TYres', href: '/' },
+        { text: 'Report Abuse', href: '/' },
+        { text: 'Submit and Dispute', href: '/p' },
+        { text: 'Policies & Rules', href: '/' },
+        { text: 'Online Shopping', href: '/' },
+        { text: 'Redeem Voucher', href: '/' },
+      ],
+      accountLinks: [
+        'My Account',
+        'Order History',
+        'Shoping Cart',
+        'Compare',
+        'Help Ticket',
+        'Wishlist',
+        'Order History',
+        'Product Support',
+      ],
+      infoLinks: [
+        'My Account',
+        'Become a Vendor',
+        'Return Policy',
+        'Wishlist',
+        'Order History',
+        'Product Support',
+      ],
+      socialLinks: [
+        { href: 'https://www.facebook.com', icon: 'ph-fill ph-facebook-logo' },
+        { href: 'https://www.twitter.com', icon: 'ph-fill ph-twitter-logo' },
+        { href: 'https://www.linkedin.com', icon: 'ph-fill ph-instagram-logo' },
+        { href: 'https://www.pinterest.com', icon: 'ph-fill ph-linkedin-logo' },
+      ],
+    }
   },
-  {
-    title: "Products",
-    links: [
-      { label: "Tyres", to: "/tyres" },
-      { label: "Batteries", to: "/batteries" },
-      { label: "Fluids and Lubricants", to: "/fluids" },
-      { label: "Accessories", to: "/accessories" },
-      { label: "Audio and DND", to: "/audio" },
-      { label: "Replacement parts", to: "/replacement" },
-    ],
+  mounted() {
+    if (window.AOS) window.AOS.init()
   },
-]
-
-const contactInfo = [
-  { icon: callicon, alt: "call", text: "+234 809 083 9412" },
-  { icon: messageicon, alt: "message", text: "support@ikokuonline.com" },
-  { icon: locationicon, alt: "location", text: "Port Harcourt, Rivers State" },
-]
-
-const socialIcons = [
-  { src: facebookicon, alt: "facebook" },
-  { src: twittericon, alt: "twitter" },
-  { src: instagramicon, alt: "instagram" },
-  { src: linkednicon, alt: "linkedin" },
-]
+}
 </script>
 
 <style scoped>
-
+.footer-item {
+  max-width: 220px;
+}
 </style>
