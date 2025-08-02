@@ -17,7 +17,7 @@
 
 <script setup>
 import Header from '@/components/home/Header.vue'
-import HeaderMiddle from '@/pages/homepages/HeaderMiddle.vue'
-import ShopNav from '@/pages/productview/ShopNav.vue'
-import ProductFooter from '@/pages/productview/ProductFooter.vue'
+import HeaderMiddle from '@/pages/home-page-sections/HeaderMiddle.vue'
+import ShopNav from '@/pages/products/products-list/ShopNav.vue'
+import ProductFooter from '@/pages//products/products-list/ProductFooter.vue'
 </script>

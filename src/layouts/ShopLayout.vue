@@ -2,12 +2,8 @@
   <div class=" ">
     <Header />
     <HeaderMiddle />
-    <ShopNav
-      title="Cart"
-      current="Product Cart"
-      :links="[{ label: 'Home', href: '/', icon: 'ph ph-house' }]"
-    />
-    <section class="contact">
+
+    <section class="">
       <router-view />
     </section>
 
@@ -18,6 +14,5 @@
 <script setup>
 import Header from '@/components/home/Header.vue'
 import HeaderMiddle from '@/pages/home-page-sections/HeaderMiddle.vue'
-import ShopNav from '@/pages/products/products-list/ShopNav.vue'
 import ProductFooter from '@/pages/products/products-list/ProductFooter.vue'
 </script>

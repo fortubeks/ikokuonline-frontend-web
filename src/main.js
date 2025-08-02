@@ -67,12 +67,12 @@ app.use(pinia);
 
 const auth = useAuthStore();
 auth.checkAuth();
-auth.hydrate(); 
+auth.hydrate();
 
 app.use(router)
 app.use(MotionPlugin)
-app.use(VueApexCharts) 
-app.component('apexchart', VueApexCharts) 
+app.use(VueApexCharts)
+app.component('apexchart', VueApexCharts)
 
 app.mount('#app')
 AOS.init()

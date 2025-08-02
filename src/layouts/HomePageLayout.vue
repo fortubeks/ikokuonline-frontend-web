@@ -5,7 +5,6 @@
 
     <div class="min-h-screen bg-white">
       <router-view />
-
     </div>
     <ProductFooter />
   </div>
@@ -13,6 +12,6 @@
 
 <script setup>
 import Header from '@/components/home/Header.vue'
-import HeaderMiddle from '@/pages/homepages/HeaderMiddle.vue'
-import ProductFooter from '@/pages/productview/ProductFooter.vue'
+import HeaderMiddle from '@/pages/home-page-sections/HeaderMiddle.vue'
+import ProductFooter from '@/pages/products/products-list/ProductFooter.vue'
 </script>

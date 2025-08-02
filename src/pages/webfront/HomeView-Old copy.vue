@@ -31,20 +31,20 @@
 </template>
 
 <script setup>
-import BannerSection from '../homepages/BannerSection.vue'
-import FeaturedSection from '../homepages/FeaturedSection.vue'
-import PromotionalBanners from '../homepages/PromotionalBanners.vue'
-import FlashSalesToday from '../homepages/FlashSalesToday.vue'
-import Salealert from '../homepages/Salealert.vue'
-import RecommendSection from '../homepages/RecommendSection.vue'
-import OfferSection from '../homepages/OfferSection.vue'
-import HotDealsSection from '../homepages/HotDealsSection.vue'
-import DealsEnd from '../homepages/DealsEnd.vue'
-import ProductSection from '../homepages/ProductSection.vue'
-import BrandSection from '../homepages/BrandSection.vue'
-import BestSellSEction from '../homepages/BestSellSEction.vue'
-import NewsletterSection from '../homepages/NewsletterSection.vue'
-import ShippingSection from '../homepages/ShippingSection.vue'
+import BannerSection from '../home-page-sections/BannerSection.vue'
+import FeaturedSection from '../home-page-sections/FeaturedSection.vue'
+import PromotionalBanners from '../home-page-sections/PromotionalBanners.vue'
+import FlashSalesToday from '../home-page-sections/FlashSalesToday.vue'
+import Salealert from '../home-page-sections/Salealert.vue'
+import RecommendSection from '../home-page-sections/RecommendSection.vue'
+import OfferSection from '../home-page-sections/OfferSection.vue'
+import HotDealsSection from '../home-page-sections/HotDealsSection.vue'
+import DealsEnd from '../home-page-sections/DealsEnd.vue'
+import ProductSection from '../home-page-sections/ProductSection.vue'
+import BrandSection from '../home-page-sections/BrandSection.vue'
+import BestSellSEction from '../home-page-sections/BestSellSEction.vue'
+import NewsletterSection from '../home-page-sections/NewsletterSection.vue'
+import ShippingSection from '../home-page-sections/ShippingSection.vue'
 
 // const images = [tirepics, tirepics, tirepics]
 // const activeIndex = ref(0)

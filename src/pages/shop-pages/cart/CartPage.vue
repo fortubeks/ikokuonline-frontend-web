@@ -1,4 +1,10 @@
 <template>
+  <ShopNav
+    title="Cart"
+    current="Product Cart"
+    :links="[{ label: 'Home', href: '/', icon: 'ph ph-house' }]"
+  />
+
   <section class="cart py-80">
     <div class="container container-lg">
       <div class="row gy-4">

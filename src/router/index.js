@@ -47,33 +47,25 @@ import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
 import HomePageLayout from '@/layouts/HomePageLayout.vue';
-import ProductViewLayout from "@/layouts/ProductViewLayout.vue"
-import TyresPage from '../pages/homepage/TirePage.vue';
-import BatteriesPage from '../pages/homepage/BatteryPage.vue';
-import FluidsPage from '../pages/homepage/FluidsPage.vue';
-import AudioPage from '../pages/homepage/AudioPage.vue';
-import AccessoriesPage from '../pages/homepage/AccessoryPage.vue';
-import VehiclesPage from '../pages/homepage/VehiclePage.vue';
+import TyresPage from '../pages/products/product-pages/TirePage.vue';
+import BatteriesPage from '../pages/products/product-pages/BatteryPage.vue';
+import FluidsPage from '../pages/products/product-pages/FluidsPage.vue';
+import AudioPage from '../pages/products/product-pages/AudioPage.vue';
+import AccessoriesPage from '../pages/products/product-pages/AccessoryPage.vue';
+import VehiclesPage from '../pages/products/product-pages/VehiclePage.vue';
 
-import EnginePartsPage from '../pages/homepage/EnginePartsPage.vue';
-import SuspensionPage from '../pages/homepage/SuspensionPage.vue';
-import BrakesPage from '../pages/homepage/BrakesPage.vue';
+import EnginePartsPage from '../pages/products/product-pages/EnginePartsPage.vue';
+import SuspensionPage from '../pages/products/product-pages/SuspensionPage.vue';
+import BrakesPage from '../pages/products/product-pages/BrakesPage.vue';
 
 // import Home from '@/pages/webfront/Home.vue';
 
 import Home from '@/pages/webfront/HomeView.vue';
-import ProductHome from '@/pages/productview/ProductHome.vue';
-import ContactUsLayout from '@/layouts/ContactUsLayout.vue';
-import ContactUs from '@/pages/contactus/ContactUs.vue';
-import CartLayout from '@/layouts/CartLayout.vue';
-import CartPage from '@/pages/cart/CartPage.vue';
-import CheckoutPage from '@/pages/checkoutpage/CheckoutPage.vue';
-import CheckOutLayout from '@/layouts/CheckOutLayout.vue';
-import ProductDetailsLayout from '@/layouts/ProductDetailsLayout.vue';
-import ProductDetail from '@/pages/productdetails/ProductDetail.vue';
-import AccountLayout from '@/layouts/AccountLayout.vue';
-import Accountpage from '@/pages/accounts/Accountpage.vue';
-import WishListLayout from '@/layouts/WishListLayout.vue';
+import ProductHome from '@/pages/products/products-list/ProductHome.vue';
+import ContactUs from '@/pages/contact-us/ContactUs.vue';
+import CartPage from '@/pages/shop-pages/cart/CartPage.vue';
+import CheckoutPage from '@/pages/shop-pages/checkoutpage/CheckoutPage.vue';
+import ProductDetail from '@/pages/products/single-product-view/ProductDetail.vue';
 import WishList from '@/pages/wishlists/WishList.vue';
 import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
 import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
@@ -82,7 +74,7 @@ import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
 import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
 
 import { useAuthStore } from '@/stores/auth';
-
+import ShopLayout from '@/layouts/ShopLayout.vue';
 
 
 const routes = [
@@ -108,56 +100,19 @@ const routes = [
     ],
   },
   {
-    path: '/products',
-    component: ProductViewLayout,
+    path: '',
+    component: ShopLayout,
     children: [
-    { path: '', name: 'Producthome', component: ProductHome },
-    ],
-  },
-  {
-    path: '/contact',
-    component: ContactUsLayout,
-    children: [
-    { path: '', name: 'contact', component: ContactUs },
-    ],
-  },
-  {
-    path: '/cart',
-    component: CartLayout,
-    children: [
-    { path: '', name: 'cart', component: CartPage },
-    ],
-  },
-  {
-    path: '/checkout',
-    component: CheckOutLayout,
-    children: [
-    { path: '', name: 'checkout', component: CheckoutPage },
-    ],
-  },
-  {
-    path: '/product-details',
-    component: ProductDetailsLayout,
-    children: [
-    { path: '', name: 'products', component: ProductDetail },
-    ],
-  },
-  {
-    path: '/account',
-    component: AccountLayout,
-    children: [
-    { path: '', name: 'account', component: Accountpage },
-    ],
-  },
-  {
-    path: '/wishlist',
-    component: WishListLayout,
-    children: [
-    { path: '', name: 'wishlist', component: WishList },
+      { path: '/cart', name: 'cart', component: CartPage },
+      { path: '/checkout', name: 'checkout', component: CheckoutPage },
+      { path: '/contact-us', name: 'contact-us', component: ContactUs },
+      { path: '/wishlist', name: 'wishlist', component: WishList },
+      { path: '/products', name: 'products', component: ProductHome },
+      { path: '/products/:id', name: 'single-product-view', component: ProductDetail },
     ],
   },
 
-  
+
   { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },
   { path: '/register', name: 'register', component: Register, meta: { guestOnly: true } },
   { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword, meta: { guestOnly: true } },
@@ -169,18 +124,18 @@ const routes = [
   {
     path: '/seller-dashboard',
     component: SellerDashboardLayout,
-    
+
     children: [
        {
       path: '',
       name: 'seller-dashboard',
-      component: DashBoardHome, 
+      component: DashBoardHome,
     },
       { path: '/sellerprofile', name: 'seller-profile', component: SellerProfile },
       { path: '/listingscarparts', name: 'carpart', component: CarPart },
       { path: '/listingsvehicleslist', name: 'vehicle list', component: VehiclesList,  },
 
-     
+
     ],
   },
   {
@@ -191,7 +146,7 @@ const routes = [
       {
         path: '',
         name: 'DashboardHome',
-        component: Products, 
+        component: Products,
       },
       { path: 'products', name: 'Products', component: Products },
       { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
@@ -234,21 +189,6 @@ const router = createRouter({
   history: createWebHistory(base),
   routes,
 });
-
-// route guard
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = !!localStorage.getItem('token');
-
-//   if (to.meta.requiresAuth && !isAuthenticated) {
-//     return next({ name: 'login' });
-//   }
-
-//   if (to.meta.guestOnly && isAuthenticated) {
-//     return next({ name: 'Products' }); // or any default authenticated route
-//   }
-
-//   next();
-// });
 
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();

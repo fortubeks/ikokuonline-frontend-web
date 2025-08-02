@@ -92,7 +92,7 @@
 </template>
 
 <script setup>
-import FlashSalesToday from '../homepages/FlashSalesToday.vue'
+import FlashSalesToday from '../home-page-sections/FlashSalesToday.vue'
 </script>
 
 <style scoped>
