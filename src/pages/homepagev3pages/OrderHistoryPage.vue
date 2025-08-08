@@ -66,13 +66,14 @@
           >
             Clear filters
           </button>
-          <RouterLink
+          <a
             v-else
-            to="/"
+            href="/"
+            @click.prevent="navigateTo('/')"
             class="!mt-4 !inline-block !px-6 !py-2 !bg-primary-500 !text-white !rounded-md hover:!bg-primary-600"
           >
             Start Shopping
-          </RouterLink>
+          </a>
         </div>
 
         <div v-else class="!divide-y">
@@ -101,12 +102,13 @@
                   class="!w-16 !h-16 !object-cover !rounded"
                 />
                 <div class="!ml-3 !flex-1">
-                  <RouterLink
-                    :to="`/product/${item.id}`"
+                  <a
+                    :href="`/product/${item.id}`"
+                    @click.prevent="navigateTo(`/product/${item.id}`)"
                     class="!font-medium hover:!text-primary-500 !line-clamp-1"
                   >
                     {{ item.title }}
-                  </RouterLink>
+                  </a>
                   <p class="!text-sm !text-gray-500">Qty: {{ item.quantity }}</p>
                 </div>
                 <div class="!text-right">
@@ -133,13 +135,14 @@
                 <p class="!text-sm !text-gray-500">Total</p>
                 <p class="!font-bold !text-lg">₦{{ order.total.toLocaleString() }}</p>
               </div>
-              <RouterLink
-                :to="`/account/orders/${order.id}`"
+              <a
+                :href="`/account/orders/${order.id}`"
+                @click.prevent="navigateTo(`/account/orders/${order.id}`)"
                 class="!flex !items-center !text-primary-500 hover:!underline"
               >
                 <span class="!mr-1">View Details</span>
                 <ChevronRightIcon class="!w-4 !h-4" />
-              </RouterLink>
+              </a>
             </div>
           </div>
         </div>
@@ -152,8 +155,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import Header from '../../components/homepagev3/Header.vue'
 import Footer from '../../components/homepagev3/Footer.vue'
 import BottomNavigation from '../../components/homepagev3/BottomNavigation.vue'
@@ -167,6 +170,8 @@ import {
   FilterIcon,
   SearchIcon,
 } from 'lucide-vue-next'
+
+const router = useRouter()
 
 const orders = ref([])
 const filteredOrders = ref([])
@@ -182,21 +187,14 @@ const filters = [
   { label: 'Cancelled', value: 'cancelled' },
 ]
 
-// Simulate fetching
 onMounted(() => {
   setTimeout(() => {
-    orders.value = [
-      // ...mock orders array as in source...
-    ]
+    orders.value = [] // populate with mock data
     filteredOrders.value = orders.value
     isLoading.value = false
   }, 1000)
 })
 
-onMounted(() => {
-  filterOrders()
-})
-// eslint-disable-next-line no-undef
 watch([searchQuery, activeFilter, orders], filterOrders)
 
 function filterOrders() {
@@ -240,5 +238,9 @@ function getStatus(status) {
     default:
       return { color: '!bg-gray-100 !text-gray-600', icon: ClockIcon, text: status }
   }
+}
+
+function navigateTo(path) {
+  router.push(path)
 }
 </script>
