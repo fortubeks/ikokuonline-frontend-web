@@ -325,7 +325,7 @@ const mobileLinks = [
   { href: '/cart', label: 'Cart', icon: ShoppingCartIcon, badge: itemCount },
   { href: '/account/orders', label: 'My Orders', icon: ShoppingBag },
   { href: '/', label: 'Home' },
-  { href: '/categories', label: 'Categories' },
+  { href: '/category/all', label: 'Categories' },
   { href: '/featured', label: 'Featured Deals' },
   { href: '/category/batteries', label: 'Batteries' },
   { href: '/category/accessories', label: 'Accessories' },
