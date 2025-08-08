@@ -22,14 +22,14 @@ import ProductCategoriesForm from '../pages/dashboard/product-categories/Form.vu
 import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 
-import HomePageLayout from '@/layouts/HomePageLayout.vue';
+// import HomePageLayout from '@/layouts/HomePageLayout.vue';
 
-import Home from '@/pages/webfront/HomeView.vue';
+// import Home from '@/pages/webfront/HomeView.vue';
 import ProductHome from '@/pages/products/ProductHome.vue';
 import ContactUs from '@/pages/contact-us/ContactUs.vue';
-import CartPage from '@/pages/shop-pages/cart/CartPage.vue';
-import CheckoutPage from '@/pages/shop-pages/checkoutpage/CheckoutPage.vue';
-import ProductDetail from '@/pages/products/single-product-view/ProductDetail.vue';
+// import CartPages from '@/pages/shop-pages/cart/CartPage.vue';
+// import CheckoutPages from '@/pages/shop-pages/checkoutpage/CheckoutPage.vue';
+// import ProductDetails from '@/pages/products/single-product-view/ProductDetail.vue';
 import WishList from '@/pages/wishlists/WishList.vue';
 import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
 import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
@@ -41,15 +41,63 @@ import { useAuthStore } from '@/stores/auth';
 import ShopLayout from '@/layouts/ShopLayout.vue';
 
 
-const routes = [
-  {
-    path: '',
-    component: HomePageLayout,
-    children: [
-      { path: '', name: 'home', component: Home },
+import ProductDetail from '../pages/homepagev3pages/ProductDetail.vue'
+import BecomeSellerPage from '../pages/homepagev3pages/BecomeSellerPage.vue'
+import CartPage from '../pages/homepagev3pages/CartPage.vue'
+import CheckoutPage from '../pages/homepagev3pages/CheckoutPage.vue'
+import OrderConfirmationPage from '../pages/homepagev3pages/OrderConfirmationPage.vue'
+import OrderHistoryPage from '../pages/homepagev3pages/OrderHistoryPage.vue'
+import CategoryPage from '../pages/homepagev3pages/CategoryPage.vue'
+import ProfilePage from '../pages/homepagev3pages/ProfilePage.vue'
+import EditProfilePage from '../pages/homepagev3pages/EditProfilePage.vue'
+import WishlistPage from '../pages/homepagev3pages/WishlistPage.vue'
+import FeaturedDealsPage from '../pages/homepagev3pages/FeaturedDealsPage.vue'
+import SellerProfilePage from '../pages/homepagev3pages/SellerProfilePage.vue'
+import BrandsPage from '../pages/homepagev3pages/BrandsPage.vue'
+import BrandProductsPage from '../pages/homepagev3pages/BrandsProductsPage.vue'
+import PaymentMethodsPage from '../pages/homepagev3pages/PaymentMethodsPage.vue'
+import AddressesPage from '../pages/homepagev3pages/AddressesPage.vue'
+import NotificationsPage from '../pages/homepagev3pages/NotificationsPage.vue'
+import SecurityPage from '../pages/homepagev3pages/SecurityPage.vue'
+import SettingsPage from '../pages/homepagev3pages/SettingsPage.vue'
+import HelpSupportPage from '../pages/homepagev3pages/HelpSupportPage.vue'
+import HomePage from "../pages/homepagev3pages/HomePage.vue"
 
-    ],
-  },
+
+
+const routes = [
+
+    { path: '', name: 'Home', component: HomePage },
+  { path: '/product/:id', name: 'ProductDetail', component: ProductDetail },
+  { path: '/become-seller', name: 'BecomeSeller', component: BecomeSellerPage },
+  { path: '/cart', name: 'Cart', component: CartPage },
+  { path: '/checkout', name: 'Checkout', component: CheckoutPage },
+  { path: '/order-confirmation', name: 'OrderConfirmation', component: OrderConfirmationPage },
+  { path: '/account/orders', name: 'OrderHistory', component: OrderHistoryPage },
+  { path: '/category/:id', name: 'CategoryPage', component: CategoryPage },
+  { path: '/categories', name: 'AllCategories', component: CategoryPage },
+  { path: '/profilepage', name: 'Profile', component: ProfilePage },
+  { path: '/edit-profile', name: 'EditProfile', component: EditProfilePage },
+  { path: '/wishlist', name: 'Wishlist', component: WishlistPage },
+  { path: '/featured', name: 'FeaturedDeals', component: FeaturedDealsPage },
+  { path: '/seller/:id', name: 'SellerProfile', component: SellerProfilePage },
+  { path: '/brands', name: 'Brands', component: BrandsPage },
+  { path: '/brand/:id', name: 'BrandProducts', component: BrandProductsPage },
+  { path: '/payment-methods', name: 'PaymentMethods', component: PaymentMethodsPage },
+  { path: '/addresses', name: 'Addresses', component: AddressesPage },
+  { path: '/notifications', name: 'Notifications', component: NotificationsPage },
+  { path: '/security', name: 'Security', component: SecurityPage },
+  { path: '/settings', name: 'Settings', component: SettingsPage },
+  { path: '/help', name: 'HelpSupport', component: HelpSupportPage },
+
+  // {
+  //   path: '',
+  //   component: HomePageLayout,
+  //   children: [
+  //     { path: '', name: 'home', component: Home },
+
+  //   ],
+  // },
   {
   path: '',
   component: ShopLayout,
