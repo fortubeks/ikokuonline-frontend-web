@@ -9,7 +9,7 @@
 
     <a
       href="/category/all"
-      @click="navigate($event, '/categories/all')"
+      @click="navigate($event, '/category/all')"
       class="!flex !flex-col !items-center !py-2"
     >
       <BookmarkIcon :class="iconClass('/categories', true)" />

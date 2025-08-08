@@ -10,9 +10,19 @@
         <a v-if="showBackButton" href="/" class="!mr-2">
           <ChevronLeftIcon class="!w-6 !h-6 !text-white" />
         </a>
-        <h1 v-if="title" class="!flex-1 h-full !text-base text-white !font-medium !truncate">
-          {{ title }}
-        </h1>
+        <div
+          v-if="title"
+          class="!flex-1 h-full !justify-center flex !items-center !text-base text-white !font-medium !truncate"
+        >
+          <div class="w-fit">
+            <template v-if="title === 'IkokuOnline'">
+              <img src="/ikokuonline.svg" alt="ikokuonline" />
+            </template>
+            <template v-else>
+              {{ title }}
+            </template>
+          </div>
+        </div>
         <button v-if="showBookmark" class="!ml-2">
           <BookmarkIcon
             :class="bookmarked ? '!fill-primary-500 !text-primary-500' : '!text-gray-400'"
