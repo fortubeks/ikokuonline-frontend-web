@@ -117,10 +117,10 @@
         </div>
 
         <!-- Product Details -->
-        <div class="!md:w-1/2">
+        <div class="md:w-1/2">
           <div class="!bg-white !p-4 !md:rounded-lg !mt-3 md:mt-0 !animate-fadeIn">
             <div class="!flex !items-center">
-              <h1 class="!text-xl md:!text-2xl !font-bold !flex-1">{{ product.title }}</h1>
+              <h1 class="!text-base md:!text-2xl !font-bold !flex-1">{{ product.title }}</h1>
               <div class="!flex !items-center !bg-green-50 !text-green-600 !px-2 !py-1 !rounded-md">
                 <StarIcon class="!w-4 !h-4 fill-yellow-400 text-yellow-400 !mr-1" />
                 <span class="!font-bold">4.7</span>
@@ -134,8 +134,8 @@
               <span>ID: {{ product.id }}</span>
             </div>
             <div class="!mt-4">
-              <div class="!flex !items-center">
-                <div class="!text-3xl !font-bold !text-primary-500">
+              <div class="!flex max-md:justify-between !items-center">
+                <div class="md:!text-3xl !text-2xl !font-bold !text-primary-500">
                   {{ formatPrice(product.price) }}
                 </div>
                 <div
@@ -145,15 +145,17 @@
                   Negotiable
                 </div>
               </div>
-              <div class="!mt-1 !text-sm !text-gray-600 !flex !items-center">
+              <div
+                class="!mt-1 !text-sm !text-gray-600 !flex md:flex-row flex-col md:!items-center"
+              >
                 Market price: {{ formatPrice(product.marketPrice.min) }} ~
                 {{ formatPrice(product.marketPrice.max) }}
-                <span class="!inline-block !ml-2 !text-green-600">(Good deal)</span>
+                <span class="!inline-block md:!ml-2 !text-green-600">(Good deal)</span>
               </div>
             </div>
 
             <!-- Quantity & Add to Cart -->
-            <div class="!flex !items-center !space-x-4 !mt-4">
+            <div class="!flex md:flex-row flex-col md:!items-center max-md:gap-4 !space-x-4 !mt-4">
               <div>
                 <label for="qty" class="!block !text-sm !text-gray-600 !mb-1">Quantity:</label>
                 <div class="!flex !border !rounded-md">
@@ -236,7 +238,9 @@
           </div>
 
           <!-- Seller Panel -->
-          <div class="!mt-3 !bg-white !p-4 !md:rounded-lg !animate-fadeIn !animation-delay-200">
+          <div
+            class="!mt-3 !bg-white bg-ye !p-4 !md:rounded-lg !animate-fadeIn !animation-delay-200"
+          >
             <div class="!flex !items-center">
               <img
                 :src="product.seller.image"
@@ -244,7 +248,7 @@
                 class="!w-12 !h-12 !rounded-full !object-cover"
               />
               <div class="!ml-3 !flex-1">
-                <div class="!flex !items-center">
+                <div class="!flex flex-col md:flex-row md:!items-center">
                   <h3 class="!font-medium">{{ product.seller.name }}</h3>
                   <div
                     v-if="product.seller.isVerified"
