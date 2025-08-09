@@ -33,7 +33,7 @@
             v-for="(category, idx) in categories"
             :key="idx"
             :to="`/category/${slugify(category)}`"
-            @click="onClose"
+            @click="handleLinkClick"
             class="!px-3 !py-1 !bg-gray-100 hover:!bg-gray-200 !rounded-full !text-sm !transition-colors"
           >
             {{ category }}
@@ -85,7 +85,7 @@
               v-for="(term, idx) in recentSearches"
               :key="idx"
               :to="`/search?q=${encodeURIComponent(term)}`"
-              @click="onClose"
+              @click="handleLinkClick"
               class="!flex !items-center !p-2 hover:!bg-gray-50 !rounded-lg !transition-colors"
             >
               <SearchIcon class="!w-4 !h-4 !text-gray-400 !mr-3" />
@@ -98,8 +98,9 @@
     </template>
   </div>
 </template>
+
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { SearchIcon, XIcon } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
 import { products } from '../../components/utils/homepagev3utils/data'
@@ -142,10 +143,17 @@ const fetchResults = () => {
     results.value = filtered.slice(0, 5)
     categories.value = [...new Set(filtered.map((p) => p.category).filter(Boolean))].slice(0, 3)
     loading.value = false
-  }, 300) // 300ms debounce after last keystroke
+  }, 250)
 }
 
-watch(() => [props.query, props.isVisible], fetchResults, { immediate: true })
+watch(() => props.query, fetchResults)
+watch(
+  () => props.isVisible,
+  (visible) => {
+    if (visible) fetchResults()
+    else clearTimeout(searchTimer)
+  },
+)
 
 const saveRecentSearch = (term) => {
   if (!term.trim()) return
@@ -158,10 +166,25 @@ const saveRecentSearch = (term) => {
 
 onMounted(() => {
   recentSearches.value = JSON.parse(localStorage.getItem('recentSearches') || '[]')
+  if (props.isVisible) fetchResults()
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(searchTimer)
 })
 
 const handleResultClick = () => {
   saveRecentSearch(props.query)
-  props.onClose()
+  // Delay close to allow mobile navigation to finish
+  setTimeout(() => {
+    props.onClose()
+  }, 50)
+}
+
+const handleLinkClick = () => {
+  // For category and recent search links
+  setTimeout(() => {
+    props.onClose()
+  }, 50)
 }
 </script>
