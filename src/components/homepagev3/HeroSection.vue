@@ -3,10 +3,14 @@
     <div class="!container !mx-auto !px-4 !py-8 md:!py-16">
       <div class="md:!flex md:!items-center md:!justify-between">
         <div class="md:!w-1/2 !mb-8 md:!mb-0">
-          <h1 class="!text-3xl !text-white md:!text-5xl !font-bold !mb-4 animate-fadeIn">
+          <h1
+            class="!text-3xl !text-white !max-w-[650px] md:!text-5xl !font-bold !mb-4 animate-fadeIn"
+          >
             Find The Best Car Parts At The Best Prices
           </h1>
-          <p class="!text-lg md:!text-xl !mb-6 !text-gray-300 animate-fadeIn animation-delay-200">
+          <p
+            class="!text-lg md:!text-xl !max-w-[650px] !mb-6 !text-gray-300 animate-fadeIn animation-delay-200"
+          >
             Nigeria's #1 marketplace for auto parts and accessories. Connect with verified sellers
             nationwide.
           </p>

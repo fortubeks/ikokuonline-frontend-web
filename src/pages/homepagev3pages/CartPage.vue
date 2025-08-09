@@ -11,13 +11,14 @@
           <p class="!text-gray-600 !mb-6">
             Looks like you haven't added any items to your cart yet.
           </p>
-          <RouterLink
-            to="/"
+          <a
+            href="/"
             class="!inline-block !bg-primary-500 !text-white !px-6 !py-3 !rounded-md !font-medium hover:!bg-primary-600 !transition-colors"
           >
             Continue Shopping
-          </RouterLink>
+          </a>
         </div>
+
         <!-- Cart Items -->
         <div v-else class="md:!flex md:!space-x-6">
           <!-- Items List -->
@@ -36,12 +37,12 @@
                     />
                   </div>
                   <div class="!ml-4 !flex-1">
-                    <RouterLink
-                      :to="`/product/${item.id}`"
-                      class="!font-medium hover:!text-primary-500"
+                    <a
+                      :href="`/product/${item.id}`"
+                      class="!font-medium text-black hover:!text-primary-500"
                     >
                       {{ item.title }}
-                    </RouterLink>
+                    </a>
                     <div class="!flex !items-baseline !mt-1">
                       <div class="!font-bold !text-primary-500">{{ formatPrice(item) }}</div>
                       <div v-if="item.discount" class="!ml-2 !text-sm !text-gray-400 !line-through">
@@ -52,14 +53,14 @@
                       <div class="!flex !items-center !border !rounded-md">
                         <button
                           class="!px-2 !py-1 hover:!bg-gray-100"
-                          @click="updateQuantity(item.id, item.quantity - 1)"
+                          @click="updateQuantityHandler(item.id, item.quantity - 1)"
                         >
                           <MinusIcon class="!w-4 !h-4" />
                         </button>
                         <span class="!px-3 !py-1 !border-x">{{ item.quantity }}</span>
                         <button
                           class="!px-2 !py-1 hover:!bg-gray-100"
-                          @click="updateQuantity(item.id, item.quantity + 1)"
+                          @click="updateQuantityHandler(item.id, item.quantity + 1)"
                         >
                           <PlusIcon class="!w-4 !h-4" />
                         </button>
@@ -75,9 +76,9 @@
                 </div>
               </div>
               <div class="!p-4 !bg-gray-50 !flex !items-center !justify-between">
-                <RouterLink to="/" class="!flex !items-center !text-primary-500 hover:!underline">
+                <a href="/" class="!flex !items-center !text-primary-500 hover:!underline">
                   <ChevronLeftIcon class="!w-4 !h-4 !mr-1" /> Continue Shopping
-                </RouterLink>
+                </a>
                 <button
                   class="!text-red-500 hover:!underline !flex !items-center"
                   @click="clearCart"
@@ -87,6 +88,7 @@
               </div>
             </div>
           </div>
+
           <!-- Order Summary -->
           <div class="md:!w-1/3">
             <div class="!bg-white !rounded-lg !shadow-sm !overflow-hidden !mb-6">
@@ -104,9 +106,9 @@
                 </div>
                 <div class="!flex !justify-between !border-t !pt-3 !mt-3">
                   <span class="!font-bold">Total</span>
-                  <span class="!font-bold !text-lg !text-primary-500"
-                    >₦{{ total.toLocaleString() }}</span
-                  >
+                  <span class="!font-bold !text-lg !text-primary-500">
+                    ₦{{ total.toLocaleString() }}
+                  </span>
                 </div>
                 <button
                   class="!w-full !py-3 !bg-primary-500 !text-white !rounded-md !font-medium !mt-4 hover:!bg-primary-600 !transition-colors"
@@ -115,14 +117,14 @@
                   Proceed to Checkout
                 </button>
                 <div class="!flex !items-center !justify-center !text-xs !text-gray-500 !mt-4">
-                  <ShieldCheckIcon class="!w-4 !h-4 !mr-1 !text-green-500" /><span
-                    >Secure checkout</span
-                  >
+                  <ShieldCheckIcon class="!w-4 !h-4 !mr-1 !text-green-500" />
+                  <span>Secure checkout</span>
                 </div>
               </div>
             </div>
+
             <div class="!bg-white !rounded-lg !shadow-sm !overflow-hidden !p-4">
-              <h3 class="!font-medium !mb-3">We Accept</h3>
+              <h3 class="!font-medium !mb-3 text-2xl">We Accept</h3>
               <div class="!flex !flex-wrap !gap-2">
                 <span class="!bg-gray-100 !rounded !px-3 !py-1 !text-xs">Visa</span>
                 <span class="!bg-gray-100 !rounded !px-3 !py-1 !text-xs">Mastercard</span>
@@ -139,7 +141,6 @@
 </template>
 
 <script setup>
-import { useRouter, RouterLink } from 'vue-router'
 import {
   ShoppingCartIcon,
   TrashIcon,
@@ -152,7 +153,6 @@ import Layout from '../../layouts/Layout.vue'
 import { useCart } from '../../components/homepagev3/CartProvider.js'
 
 const { items, updateQuantity, removeItem, itemCount, subtotal, totalDiscount, total } = useCart()
-const router = useRouter()
 
 const formatPrice = (item) => {
   const discounted = item.discount ? item.price * (1 - item.discount / 100) : item.price
@@ -181,5 +181,12 @@ const clearCart = () => {
   }
 }
 
-const goCheckout = () => router.push('/checkout')
+const updateQuantityHandler = (id, qty) => {
+  if (qty < 1) return
+  updateQuantity(id, qty)
+}
+
+const goCheckout = () => {
+  window.location.href = '/checkout'
+}
 </script>

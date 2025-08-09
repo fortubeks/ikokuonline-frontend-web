@@ -1,36 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
 import Login from '../pages/auth/Login.vue';
 import Register from '../pages/auth/Register.vue';
 import Test from '../pages/auth/Test.vue';
 import ForgotPassword from '../pages/auth/ForgotPassword.vue';
 import ResetPassword from '../pages/auth/ResetPassword.vue';
 import VerifyAccount from '../pages/auth/VerifyAccount.vue';
-
 import DashboardLayout from '../layouts/DashboardLayout.vue';
-
 import ProfileForm from '../pages/dashboard/profile/Form.vue';
 import VehicleListings from '../pages/dashboard/vehicle-listings/VehicleListings.vue';
 import VehicleListingsForm from '../pages/dashboard/vehicle-listings/Form.vue';
-
 import Products from '../pages/dashboard/products/Products.vue';
 import ProductsForm from '../pages/dashboard/products/Form.vue';
-
 import ProductCategories from '../pages/dashboard/product-categories/ProductCategories.vue';
 import ProductCategoriesForm from '../pages/dashboard/product-categories/Form.vue';
-
 import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
-
-// import HomePageLayout from '@/layouts/HomePageLayout.vue';
-
-// import Home from '@/pages/webfront/HomeView.vue';
-import ProductHome from '@/pages/products/ProductHome.vue';
 import ContactUs from '@/pages/contact-us/ContactUs.vue';
-// import CartPages from '@/pages/shop-pages/cart/CartPage.vue';
-// import CheckoutPages from '@/pages/shop-pages/checkoutpage/CheckoutPage.vue';
-// import ProductDetails from '@/pages/products/single-product-view/ProductDetail.vue';
-import WishList from '@/pages/wishlists/WishList.vue';
 import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
 import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
 import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
@@ -89,44 +74,12 @@ const routes = [
   { path: '/security', name: 'Security', component: SecurityPage },
   { path: '/settings', name: 'Settings', component: SettingsPage },
   { path: '/help', name: 'HelpSupport', component: HelpSupportPage },
-
-  // {
-  //   path: '',
-  //   component: HomePageLayout,
-  //   children: [
-  //     { path: '', name: 'home', component: Home },
-
-  //   ],
-  // },
   {
   path: '',
   component: ShopLayout,
   children: [
-    {
-      path: '/cart',
-      name: 'cart',
-      component: CartPage,
-      meta: {
-        title: 'Cart',
-        current: 'Product Cart',
-        links: [
-          { label: 'Home', href: '/', icon: 'ph ph-house' },
-        ],
-      },
-    },
-    {
-      path: '/checkout',
-      name: 'checkout',
-      component: CheckoutPage,
-      meta: {
-        title: 'Checkout',
-        current: 'Payment & Shipping',
-        links: [
-          { label: 'Home', href: '/', icon: 'ph ph-house' },
-          { label: 'Cart', href: '/cart', icon: 'ph ph-shopping-cart' },
-        ],
-      },
-    },
+  
+
     {
       path: '/contact',
       name: 'contact-us',
@@ -139,55 +92,8 @@ const routes = [
         ],
       },
     },
-    {
-      path: '/wishlist',
-      name: 'wishlist',
-      component: WishList,
-      meta: {
-        title: 'Wishlist',
-        current: 'Saved Products',
-        links: [
-          { label: 'Home', href: '/', icon: 'ph ph-house' },
-        ],
-      },
-    },
-    {
-      path: '/products',
-      name: 'products',
-      component: ProductHome,
-      meta: {
-        title: 'Products',
-        current: 'Browse All Products',
-        links: [
-          { label: 'Home', href: '/', icon: 'ph ph-house' },
-        ],
-      },
-    },
-    {
-      path: '/products/:id',
-      name: 'single-product-view',
-      component: ProductDetail,
-      meta: {
-        title: 'Product Details',
-        current: 'View Product',
-        links: [
-          { label: 'Home', href: '/', icon: 'ph ph-house' },
-          { label: 'Products', href: '/products', icon: 'ph ph-grid-four' },
-        ],
-      },
-    },
-    {
-      path: '/product-categories/:category',
-      name: 'product-category',
-      component: ProductHome,
-      meta: {
-        title: 'Product Category',
-        current: 'Browse Category',
-        links: [
-          { label: 'Home', href: '/', icon: 'ph ph-house' },
-        ],
-      },
-    },
+
+
   ],
 },
 

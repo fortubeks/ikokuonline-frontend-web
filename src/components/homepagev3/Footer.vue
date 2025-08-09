@@ -33,7 +33,7 @@
             <li><a href="/about" class="link">About Us</a></li>
             <li><a href="/contact" class="link">Contact Us</a></li>
             <li><a href="/blog" class="link">Blog</a></li>
-            <li><a href="/become-seller" class="link">Become a Seller</a></li>
+            <li><a href="/register" class="link">Become a Seller</a></li>
           </ul>
         </div>
 

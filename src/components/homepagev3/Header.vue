@@ -40,6 +40,7 @@
               class="!flex-1 !text-sm focus:!outline-none"
               v-model="searchQuery"
               @focus="handleSearchInputFocus"
+              @input="handleSearchInput"
             />
             <button v-if="searchQuery" @click="clearSearch" class="!ml-2">
               <XIcon class="!w-4 !h-4 !text-gray-400" />
@@ -121,7 +122,7 @@
             >
           </nav>
           <a
-            href="/become-seller"
+            href="/register"
             class="!bg-primary-500 !text-white !px-4 !py-2 !rounded hover:!bg-primary-600 !transition"
             >Become A Seller</a
           >
@@ -166,10 +167,11 @@
               class="!flex-1 !px-4 !py-2 !border-y !border-l !rounded-l-md focus:!outline-none focus:!ring-2 focus:!ring-primary-500"
               v-model="searchQuery"
               @focus="handleSearchInputFocus"
+              @input="handleSearchInput"
             />
             <button
               type="submit"
-              class="!bg-primary-500 !text-white !px-4 !py-2 !rounded-r-md hover:!bg-primary-600 !transition"
+              class="!bg-primary-500 !text-white text-base !px-4 !py-2 !rounded-r-md hover:!bg-primary-600 !transition"
             >
               <SearchIcon class="!w-5 !h-5" />
             </button>
@@ -232,7 +234,6 @@ import {
   XIcon,
   ShoppingBag,
 } from 'lucide-vue-next'
-
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import SearchResults from '../../components/homepagev3/SearchResults.vue'
@@ -286,6 +287,7 @@ onMounted(() => {
     }
   }
   document.addEventListener('mousedown', clickOutside)
+
   onBeforeUnmount(() => {
     window.removeEventListener('storage', updateWishlist)
     document.removeEventListener('mousedown', clickOutside)
@@ -306,9 +308,11 @@ const handleSearch = () => {
 }
 
 const handleSearchInputFocus = () => {
-  if (searchQuery.value.trim().length > 0) {
-    showSearchResults.value = true
-  }
+  showSearchResults.value = true
+}
+
+const handleSearchInput = () => {
+  showSearchResults.value = searchQuery.value.trim().length > 0
 }
 
 const handleCategorySelect = (cat) => {
@@ -331,7 +335,7 @@ const mobileLinks = [
   { href: '/category/accessories', label: 'Accessories' },
   { href: '/category/parts', label: 'Replacement Parts' },
   { href: '/sell', label: 'Sell' },
-  { href: '/become-seller', label: 'Become A Seller' },
+  { href: '/register', label: 'Become A Seller' },
   { href: '/contact', label: 'Contact Us' },
 ]
 </script>
