@@ -32,13 +32,6 @@ import '@/assets/dp-market-dashboard/css/magnific-popup.css'
 import '@/assets/dp-market-dashboard/css/line-awesome.min.css'
 import '@/assets/dp-market-dashboard/css/main.css'
 
-// (Dashboard Scripts)
-// import '@/assets/dp-market-dashboard/js/countdown.js'
-// import '@/assets/dp-market-dashboard/js/counterup.min.js'
-// import '@/assets/dp-market-dashboard/js/slick.min.js'
-// import '@/assets/dp-market-dashboard/js/jquery.magnific-popup.js'
-// import '@/assets/dp-market-dashboard/js/apexchart.js'
-// import '@/assets/dp-market-dashboard/js/main.js'
 
 import { useAuthStore } from '@/stores/auth';
 
