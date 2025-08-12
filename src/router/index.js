@@ -1,163 +1,103 @@
-// import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
-
-// const router = createRouter({
-//   history: createWebHistory(import.meta.env.BASE_URL),
-//   routes: [
-//     {
-//       path: '/',
-//       name: 'home',
-//       component: HomeView,
-//     },
-//     {
-//       path: '/about',
-//       name: 'about',
-//       // route level code-splitting
-//       // this generates a separate chunk (About.[hash].js) for this route
-//       // which is lazy-loaded when the route is visited.
-//       component: () => import('../views/AboutView.vue'),
-//     },
-//   ],
-// })
-
-// export default router
-
 import { createRouter, createWebHistory } from 'vue-router';
-
 import Login from '../pages/auth/Login.vue';
 import Register from '../pages/auth/Register.vue';
 import Test from '../pages/auth/Test.vue';
 import ForgotPassword from '../pages/auth/ForgotPassword.vue';
 import ResetPassword from '../pages/auth/ResetPassword.vue';
 import VerifyAccount from '../pages/auth/VerifyAccount.vue';
-
 import DashboardLayout from '../layouts/DashboardLayout.vue';
-
 import ProfileForm from '../pages/dashboard/profile/Form.vue';
 import VehicleListings from '../pages/dashboard/vehicle-listings/VehicleListings.vue';
 import VehicleListingsForm from '../pages/dashboard/vehicle-listings/Form.vue';
-
 import Products from '../pages/dashboard/products/Products.vue';
 import ProductsForm from '../pages/dashboard/products/Form.vue';
-
 import ProductCategories from '../pages/dashboard/product-categories/ProductCategories.vue';
 import ProductCategoriesForm from '../pages/dashboard/product-categories/Form.vue';
-
 import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
-
-import HomePageLayout from '@/layouts/HomePageLayout.vue';
-import ProductViewLayout from "@/layouts/ProductViewLayout.vue"
-import TyresPage from '../pages/homepage/TirePage.vue';
-import BatteriesPage from '../pages/homepage/BatteryPage.vue';
-import FluidsPage from '../pages/homepage/FluidsPage.vue';
-import AudioPage from '../pages/homepage/AudioPage.vue';
-import AccessoriesPage from '../pages/homepage/AccessoryPage.vue';
-import VehiclesPage from '../pages/homepage/VehiclePage.vue';
-
-import EnginePartsPage from '../pages/homepage/EnginePartsPage.vue';
-import SuspensionPage from '../pages/homepage/SuspensionPage.vue';
-import BrakesPage from '../pages/homepage/BrakesPage.vue';
-
-// import Home from '@/pages/webfront/Home.vue';
-
-import Home from '@/pages/webfront/HomeView.vue';
-import ProductHome from '@/pages/productview/ProductHome.vue';
-import ContactUsLayout from '@/layouts/ContactUsLayout.vue';
-import ContactUs from '@/pages/contactus/ContactUs.vue';
-import CartLayout from '@/layouts/CartLayout.vue';
-import CartPage from '@/pages/cart/CartPage.vue';
-import CheckoutPage from '@/pages/checkoutpage/CheckoutPage.vue';
-import CheckOutLayout from '@/layouts/CheckOutLayout.vue';
-import ProductDetailsLayout from '@/layouts/ProductDetailsLayout.vue';
-import ProductDetail from '@/pages/productdetails/ProductDetail.vue';
-import AccountLayout from '@/layouts/AccountLayout.vue';
-import Accountpage from '@/pages/accounts/Accountpage.vue';
-import WishListLayout from '@/layouts/WishListLayout.vue';
-import WishList from '@/pages/wishlists/WishList.vue';
-import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
-import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
-import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
-import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
-import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
+import ContactUs from '@/pages/contact-us/ContactUs.vue';
+// import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
+// import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
+// import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
+// import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
+// import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
 
 import { useAuthStore } from '@/stores/auth';
+import ShopLayout from '@/layouts/ShopLayout.vue';
+
+
+import ProductDetail from '../pages/homepagev3pages/ProductDetail.vue'
+import BecomeSellerPage from '../pages/homepagev3pages/BecomeSellerPage.vue'
+import CartPage from '../pages/homepagev3pages/CartPage.vue'
+import CheckoutPage from '../pages/homepagev3pages/CheckoutPage.vue'
+import OrderConfirmationPage from '../pages/homepagev3pages/OrderConfirmationPage.vue'
+import OrderHistoryPage from '../pages/homepagev3pages/OrderHistoryPage.vue'
+import CategoryPage from '../pages/homepagev3pages/CategoryPage.vue'
+import ProfilePage from '../pages/homepagev3pages/ProfilePage.vue'
+import EditProfilePage from '../pages/homepagev3pages/EditProfilePage.vue'
+import WishlistPage from '../pages/homepagev3pages/WishlistPage.vue'
+import FeaturedDealsPage from '../pages/homepagev3pages/FeaturedDealsPage.vue'
+import SellerProfilePage from '../pages/homepagev3pages/SellerProfilePage.vue'
+import BrandsPage from '../pages/homepagev3pages/BrandsPage.vue'
+import BrandProductsPage from '../pages/homepagev3pages/BrandsProductsPage.vue'
+import PaymentMethodsPage from '../pages/homepagev3pages/PaymentMethodsPage.vue'
+import AddressesPage from '../pages/homepagev3pages/AddressesPage.vue'
+import NotificationsPage from '../pages/homepagev3pages/NotificationsPage.vue'
+import SecurityPage from '../pages/homepagev3pages/SecurityPage.vue'
+import SettingsPage from '../pages/homepagev3pages/SettingsPage.vue'
+import HelpSupportPage from '../pages/homepagev3pages/HelpSupportPage.vue'
+import HomePage from "../pages/homepagev3pages/HomePage.vue"
 
 
 
 const routes = [
+
+    { path: '', name: 'Home', component: HomePage },
+  { path: '/product/:id', name: 'ProductDetail', component: ProductDetail },
+  { path: '/become-seller', name: 'BecomeSeller', component: BecomeSellerPage },
+  { path: '/cart', name: 'Cart', component: CartPage },
+  { path: '/checkout', name: 'Checkout', component: CheckoutPage },
+  { path: '/order-confirmation', name: 'OrderConfirmation', component: OrderConfirmationPage },
+  { path: '/account/orders', name: 'OrderHistory', component: OrderHistoryPage },
+  { path: '/category/:id', name: 'CategoryPage', component: CategoryPage },
+  { path: '/categories', name: 'AllCategories', component: CategoryPage },
+  { path: '/profilepage', name: 'Profile', component: ProfilePage },
+  { path: '/edit-profile', name: 'EditProfile', component: EditProfilePage },
+  { path: '/wishlist', name: 'Wishlist', component: WishlistPage },
+  { path: '/featured', name: 'FeaturedDeals', component: FeaturedDealsPage },
+  { path: '/seller/:id', name: 'SellerProfile', component: SellerProfilePage },
+  { path: '/brands', name: 'Brands', component: BrandsPage },
+  { path: '/brand/:id', name: 'BrandProducts', component: BrandProductsPage },
+  { path: '/payment-methods', name: 'PaymentMethods', component: PaymentMethodsPage },
+  { path: '/addresses', name: 'Addresses', component: AddressesPage },
+  { path: '/notifications', name: 'Notifications', component: NotificationsPage },
+  { path: '/security', name: 'Security', component: SecurityPage },
+  { path: '/settings', name: 'Settings', component: SettingsPage },
+  { path: '/help', name: 'HelpSupport', component: HelpSupportPage },
   {
-    path: '',
-    component: HomePageLayout,
-    children: [
-      { path: '', name: 'home', component: Home },
-      { path: 'tyres', name: 'tyres', component: TyresPage },
-      { path: 'batteries', name: 'batteries', component: BatteriesPage },
-      { path: 'fluids', name: 'fluids', component: FluidsPage },
-      { path: 'audio', name: 'audio', component: AudioPage },
-      { path: 'accessories', name: 'accessories', component: AccessoriesPage },
-      { path: 'vehicles', name: 'vehicles', component: VehiclesPage },
-      {
-        path: 'replacement',
-        children: [
-          { path: 'engine', name: 'engine-parts', component: EnginePartsPage },
-          { path: 'suspension', name: 'suspension', component: SuspensionPage },
-          { path: 'brakes', name: 'brakes', component: BrakesPage },
+  path: '',
+  component: ShopLayout,
+  children: [
+  
+
+    {
+      path: '/contact',
+      name: 'contact-us',
+      component: ContactUs,
+      meta: {
+        title: 'Contact Us',
+        current: 'Get in Touch',
+        links: [
+          { label: 'Home', href: '/', icon: 'ph ph-house' },
         ],
       },
-    ],
-  },
-  {
-    path: '/products',
-    component: ProductViewLayout,
-    children: [
-    { path: '', name: 'Producthome', component: ProductHome },
-    ],
-  },
-  {
-    path: '/contact',
-    component: ContactUsLayout,
-    children: [
-    { path: '', name: 'contact', component: ContactUs },
-    ],
-  },
-  {
-    path: '/cart',
-    component: CartLayout,
-    children: [
-    { path: '', name: 'cart', component: CartPage },
-    ],
-  },
-  {
-    path: '/checkout',
-    component: CheckOutLayout,
-    children: [
-    { path: '', name: 'checkout', component: CheckoutPage },
-    ],
-  },
-  {
-    path: '/product-details',
-    component: ProductDetailsLayout,
-    children: [
-    { path: '', name: 'products', component: ProductDetail },
-    ],
-  },
-  {
-    path: '/account',
-    component: AccountLayout,
-    children: [
-    { path: '', name: 'account', component: Accountpage },
-    ],
-  },
-  {
-    path: '/wishlist',
-    component: WishListLayout,
-    children: [
-    { path: '', name: 'wishlist', component: WishList },
-    ],
-  },
+    },
 
-  
+
+  ],
+},
+
+
   { path: '/login', name: 'login', component: Login, meta: { guestOnly: true } },
   { path: '/register', name: 'register', component: Register, meta: { guestOnly: true } },
   { path: '/forgot-password', name: 'forgot-password', component: ForgotPassword, meta: { guestOnly: true } },
@@ -166,23 +106,23 @@ const routes = [
   { path: '/test', name: 'test', component: Test },
 
 
-  {
-    path: '/seller-dashboard',
-    component: SellerDashboardLayout,
-    
-    children: [
-       {
-      path: '',
-      name: 'seller-dashboard',
-      component: DashBoardHome, 
-    },
-      { path: '/sellerprofile', name: 'seller-profile', component: SellerProfile },
-      { path: '/listingscarparts', name: 'carpart', component: CarPart },
-      { path: '/listingsvehicleslist', name: 'vehicle list', component: VehiclesList,  },
+  // {
+  //   path: '/seller-dashboard',
+  //   component: SellerDashboardLayout,
 
-     
-    ],
-  },
+  //   children: [
+  //      {
+  //     path: '',
+  //     name: 'seller-dashboard',
+  //     component: DashBoardHome,
+  //   },
+  //     { path: '/sellerprofile', name: 'seller-profile', component: SellerProfile },
+  //     { path: '/listingscarparts', name: 'carpart', component: CarPart },
+  //     { path: '/listingsvehicleslist', name: 'vehicle list', component: VehiclesList,  },
+
+
+  //   ],
+  // },
   {
     path: '/dashboard',
     component: DashboardLayout,
@@ -191,7 +131,7 @@ const routes = [
       {
         path: '',
         name: 'DashboardHome',
-        component: Products, 
+        component: Products,
       },
       { path: 'products', name: 'Products', component: Products },
       { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
@@ -234,21 +174,6 @@ const router = createRouter({
   history: createWebHistory(base),
   routes,
 });
-
-// route guard
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = !!localStorage.getItem('token');
-
-//   if (to.meta.requiresAuth && !isAuthenticated) {
-//     return next({ name: 'login' });
-//   }
-
-//   if (to.meta.guestOnly && isAuthenticated) {
-//     return next({ name: 'Products' }); // or any default authenticated route
-//   }
-
-//   next();
-// });
 
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();

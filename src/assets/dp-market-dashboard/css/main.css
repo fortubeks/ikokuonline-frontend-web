@@ -10840,3 +10840,63 @@ input[type=number] {
 .btn-main {
     background: linear-gradient(282.77deg, #601201 16.33%, #FD603E 79.96%);
 }
+
+.auth-img-cover-login {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.auth-cover-left {
+    display: flex;
+    background-color: #f7f7ff;
+    min-height: 100vh;
+}
+
+.auth-cover-right {
+    display: flex;
+    background-color: #ffffff;
+    min-height: 100vh;
+}
+
+.primary-btn {
+    width: 195px;
+    height: 52px;
+    background: linear-gradient(282.77deg, #601201 16.33%, #FD603E 79.96%);
+    border-radius: 10px;
+}
+
+.btn-fill-499 {
+    width: 499px;
+    height: 59px;
+}
+
+.google-signin {
+    width: 230px;
+    height: 59px;
+    /* Gray/grey 4 */
+    border: 1px solid #BDBDBD;
+    border-radius: 10px;
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 170%;
+    /* or 27px */
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+
+.form-header {
+    font-family: 'Sora';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 130%;
+    /* or 36px */
+    text-align: center;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+
+    /* Black/black 1 */
+    color: #000425;
+}

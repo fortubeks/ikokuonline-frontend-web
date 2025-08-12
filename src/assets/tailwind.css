@@ -1,9 +1,7 @@
+/* File: src/assets/tailwind.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import '@fontsource/sora/400.css'; 
-@import '@fontsource/sora/500.css';
-@import '@fontsource/sora/600.css'; 
-@import '@fontsource/sora/700.css';
+
 

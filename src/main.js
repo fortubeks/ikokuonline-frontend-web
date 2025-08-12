@@ -1,4 +1,13 @@
 /* eslint-disable vue/multi-word-component-names */
+// Tailwind + Fonts
+import '@fontsource/sora/400.css'
+import '@fontsource/sora/500.css'
+import '@fontsource/sora/600.css'
+import '@fontsource/sora/700.css'
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/700.css'
+import './assets/tailwind.css'
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -14,15 +23,6 @@ import VueApexCharts from 'vue3-apexcharts'
 // Bootstrap
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
-// Tailwind + Fonts
-import './assets/tailwind.css'
-import '@fontsource/sora/400.css'
-import '@fontsource/sora/500.css'
-import '@fontsource/sora/600.css'
-import '@fontsource/sora/700.css'
-import '@fontsource/inter/400.css'
-import '@fontsource/inter/700.css'
 
 // MarketPro Styles
 import '@/assets/marketpro/css/bootstrap.min.css'
@@ -67,12 +67,12 @@ app.use(pinia);
 
 const auth = useAuthStore();
 auth.checkAuth();
-auth.hydrate(); 
+auth.hydrate();
 
 app.use(router)
 app.use(MotionPlugin)
-app.use(VueApexCharts) 
-app.component('apexchart', VueApexCharts) 
+app.use(VueApexCharts)
+app.component('apexchart', VueApexCharts)
 
 app.mount('#app')
 AOS.init()

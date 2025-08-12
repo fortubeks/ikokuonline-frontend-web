@@ -20,7 +20,7 @@
           </template>
         </Suspense>
 
-        <div class=" flex-grow">
+        <div class="flex-grow">
           <router-view />
         </div>
 
@@ -32,7 +32,7 @@
 
 <script setup>
 import { defineAsyncComponent } from 'vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/dashboard/Footer.vue'
 
 const AsyncHeader = defineAsyncComponent(
   () => import('@/components/sellerdashboard/DashboardHeader.vue'),
