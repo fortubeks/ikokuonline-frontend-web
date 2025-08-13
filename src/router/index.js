@@ -16,11 +16,11 @@ import ProductCategoriesForm from '../pages/dashboard/product-categories/Form.vu
 import Orders from '../pages/dashboard/orders/Orders.vue';
 import OrderShow from '../pages/dashboard/orders/Show.vue';
 import ContactUs from '@/pages/contact-us/ContactUs.vue';
-// import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
-// import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
-// import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
-// import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
-// import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
+import SellerDashboardLayout from '@/layouts/SellerDashboardLayout.vue';
+import DashBoardHome from '@/pages/sellerdashboard/DashBoardHome.vue';
+import SellerProfile from '@/pages/sellerdashboard/SellerProfile.vue';
+import CarPart from '@/pages/sellerdashboard/listings/CarPart.vue';
+import VehiclesList from '@/pages/sellerdashboard/listings/VehiclesList.vue';
 
 import { useAuthStore } from '@/stores/auth';
 import ShopLayout from '@/layouts/ShopLayout.vue';
@@ -47,6 +47,7 @@ import SecurityPage from '../pages/homepagev3pages/SecurityPage.vue'
 import SettingsPage from '../pages/homepagev3pages/SettingsPage.vue'
 import HelpSupportPage from '../pages/homepagev3pages/HelpSupportPage.vue'
 import HomePage from "../pages/homepagev3pages/HomePage.vue"
+import EditOrderPage from '@/pages/dashboard/orders/EditOrderPage.vue';
 
 
 
@@ -106,27 +107,27 @@ const routes = [
   { path: '/test', name: 'test', component: Test },
 
 
-  // {
-  //   path: '/seller-dashboard',
-  //   component: SellerDashboardLayout,
+  {
+    path: '/seller-dashboard',
+    component: SellerDashboardLayout,
 
-  //   children: [
-  //      {
-  //     path: '',
-  //     name: 'seller-dashboard',
-  //     component: DashBoardHome,
-  //   },
-  //     { path: '/sellerprofile', name: 'seller-profile', component: SellerProfile },
-  //     { path: '/listingscarparts', name: 'carpart', component: CarPart },
-  //     { path: '/listingsvehicleslist', name: 'vehicle list', component: VehiclesList,  },
+    children: [
+       {
+      path: '',
+      name: 'seller-dashboard',
+      component: DashBoardHome,
+    },
+      { path: '/sellerprofile', name: 'seller-profile', component: SellerProfile },
+      { path: '/listingscarparts', name: 'carpart', component: CarPart },
+      { path: '/listingsvehicleslist', name: 'vehicle list', component: VehiclesList,  },
 
 
-  //   ],
-  // },
+    ],
+  },
   {
     path: '/dashboard',
     component: DashboardLayout,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
     children: [
       {
         path: '',
@@ -146,7 +147,8 @@ const routes = [
       { path: 'vehicle-listings/edit/:id', name: 'VehicleListingEdit', component: VehicleListingsForm, props: true },
 
       { path: 'orders', name: 'Orders', component: Orders },
-      { path: 'orders/:id', name: 'OrderShow', component: OrderShow, props: true },
+      { path: 'orders/add', name: 'OrderShow', component: OrderShow, props: true },
+      { path: 'orders/edit/:id', name: 'OrderEdit', component: EditOrderPage, props: true },
 
       { path: 'profile', name: 'Profile', component: ProfileForm },
     ],
