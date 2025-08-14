@@ -9,6 +9,7 @@ import DashboardLayout from '../layouts/DashboardLayout.vue';
 import ProfileForm from '../pages/dashboard/profile/Form.vue';
 import VehicleListings from '../pages/dashboard/vehicle-listings/VehicleListings.vue';
 import VehicleListingsForm from '../pages/dashboard/vehicle-listings/Form.vue';
+import VehicleListingsFormSimple from '../pages/dashboard/vehicle-listings/FormSimple.vue';
 import Products from '../pages/dashboard/products/Products.vue';
 import ProductsForm from '../pages/dashboard/products/Form.vue';
 import ProductCategories from '../pages/dashboard/product-categories/ProductCategories.vue';
@@ -52,7 +53,7 @@ import HomePage from "../pages/homepagev3pages/HomePage.vue"
 
 const routes = [
 
-    { path: '', name: 'Home', component: HomePage },
+  { path: '', name: 'Home', component: HomePage },
   { path: '/product/:id', name: 'ProductDetail', component: ProductDetail },
   { path: '/become-seller', name: 'BecomeSeller', component: BecomeSellerPage },
   { path: '/cart', name: 'Cart', component: CartPage },
@@ -126,7 +127,7 @@ const routes = [
   {
     path: '/dashboard',
     component: DashboardLayout,
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -143,7 +144,9 @@ const routes = [
 
       { path: 'vehicle-listings', name: 'VehicleListings', component: VehicleListings },
       { path: 'vehicle-listings/create', name: 'VehicleListingCreate', component: VehicleListingsForm },
+      { path: 'vehicle-listings/create/simple', name: 'VehicleListingCreateSimple', component: VehicleListingsFormSimple },
       { path: 'vehicle-listings/edit/:id', name: 'VehicleListingEdit', component: VehicleListingsForm, props: true },
+      { path: 'vehicle-listings/edit/:id/simple', name: 'VehicleListingEditSimple', component: VehicleListingsFormSimple, props: true },
 
       { path: 'orders', name: 'Orders', component: Orders },
       { path: 'orders/:id', name: 'OrderShow', component: OrderShow, props: true },

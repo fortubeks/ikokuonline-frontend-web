@@ -6,7 +6,7 @@
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="title">Product Categories</h5>
             <div class="card-header-actions">
-              <router-link :to="{ name: 'ProductCreate' }" class="btn btn-main">
+              <router-link :to="{ name: 'ProductCategoriesCreate' }" class="btn btn-main">
                 <i class="las la-plus"></i> Add Product Category
               </router-link>
             </div>
@@ -36,17 +36,20 @@
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Price</th>
+                  <th>Parent</th>
                   <th>Details</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="productCategory in paginatedProductCategories" :key="productCategory.id">
                   <td data-label="Name">{{ productCategory.name }}</td>
-                  <td data-label="Price">₦ {{ productCategory.price.toLocaleString() }}</td>
+                  <td data-label="Parent"></td>
                   <td data-label="Details">
                     <router-link
-                      :to="{ name: 'ProductEdit', params: { id: productCategory.id } }"
+                      :to="{
+                        name: 'ProductCategoriesEdit',
+                        params: { id: productCategory.id },
+                      }"
                       class="btn btn-main"
                     >
                       <i class="far fa-eye"></i>
@@ -69,7 +72,8 @@
 
 <script setup>
 import Pagination from '@components/dashboard/Pagination.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import api from '@/services/api'
 
 const productCategories = ref([
   /* ... */
@@ -83,4 +87,18 @@ const end = computed(() => Math.min(start.value + pageSize.value, productCategor
 const paginatedProductCategories = computed(() =>
   productCategories.value.slice(start.value, end.value),
 )
+
+// Fetch vehicleListings on component mount
+const fetchModelList = async () => {
+  try {
+    const response = await api.get('/api/product-categories')
+    productCategories.value = response.data
+  } catch (error) {
+    console.error('Failed to fetch list:', error)
+  }
+}
+
+onMounted(() => {
+  fetchModelList()
+})
 </script>

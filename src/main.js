@@ -36,9 +36,6 @@ import '@/assets/dp-market-dashboard/css/main.css'
 import { useAuthStore } from '@/stores/auth';
 
 
-
-
-
 // Create App
 const app = createApp(App)
 const pinia = createPinia()

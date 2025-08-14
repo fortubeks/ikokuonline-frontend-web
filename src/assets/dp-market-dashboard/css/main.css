@@ -10841,6 +10841,15 @@ input[type=number] {
     background: linear-gradient(282.77deg, #601201 16.33%, #FD603E 79.96%);
 }
 
+.btn-sub {
+    color: hsl(var(--white));
+    background-color: hsl(var(--black));
+}
+.btn-sub:hover{
+    color: hsl(var(--black));
+    background-color: hsl(var(--white));
+}
+
 .auth-img-cover-login {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);

@@ -1,6 +1,6 @@
 (function ($) {
   "use strict";
-  
+
   // ==========================================
   //      Start Document Ready function
   // ==========================================
@@ -12,7 +12,7 @@
 
     if (currentTheme) {
         document.documentElement.setAttribute('data-theme', currentTheme);
-      
+
         if (currentTheme === 'dark') {
             toggleSwitch.checked = true;
         }
@@ -22,57 +22,57 @@
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
         }
-        else {        
+        else {
           document.documentElement.setAttribute('data-theme', 'light');
           localStorage.setItem('theme', 'light');
-        }    
+        }
     }
     toggleSwitch.addEventListener('change', switchTheme, false);
-  // ============================== Light & Dark Mode Js End============================== 
+  // ============================== Light & Dark Mode Js End==============================
 
-  // ============================== Auto Suggestion Js Start ============================== 
+  // ============================== Auto Suggestion Js Start ==============================
   $('.auto-suggestion-input').on('input', function (event) {
-    event.stopPropagation(); 
-    $(this).addClass('active'); 
-    $('.auto-suggestion-list').addClass('active'); 
+    event.stopPropagation();
+    $(this).addClass('active');
+    $('.auto-suggestion-list').addClass('active');
   });
 
   $('body').on('click', function () {
-    $('.auto-suggestion-input').removeClass('active'); 
-    $('.auto-suggestion-list').removeClass('active'); 
-  }); 
-  // ============================== Auto Suggestion Js End ============================== 
+    $('.auto-suggestion-input').removeClass('active');
+    $('.auto-suggestion-list').removeClass('active');
+  });
+  // ============================== Auto Suggestion Js End ==============================
 
 
-  // ============================== Auto Suggestion Text value place to the input field Js End ============================== 
+  // ============================== Auto Suggestion Text value place to the input field Js End ==============================
   $('.auto-suggestion-list__item').on('click', function (event) {
     event.preventDefault();
     const textValue = $(this).text().trim();
     $('.auto-suggestion-input').val(textValue);
-  }); 
-  // ============================== Auto Suggestion Text value place to the input field Js End ============================== 
-    
+  });
+  // ============================== Auto Suggestion Text value place to the input field Js End ==============================
+
 
   // ============== Mobile Menu Sidebar Js Start ========
   $('.toggle-mobileMenu').on('click', function () {
     $('.mobile-menu').addClass('active');
     $('.side-overlay').addClass('show');
     $('body').addClass('scroll-hide-sm');
-  }); 
+  });
 
   $('.close-button, .side-overlay').on('click', function () {
     $('.mobile-menu').removeClass('active');
     $('.side-overlay').removeClass('show');
     $('body').removeClass('scroll-hide-sm');
-  }); 
+  });
   // ============== Mobile Menu Sidebar Js End ========
-  
+
   // ============== Mobile Nav Menu Dropdown Js Start =======================
-  var windowWidth = $(window).width(); 
-  
+  var windowWidth = $(window).width();
+
   $('.has-submenu').on('click', function () {
-    var thisItem = $(this); 
-    
+    var thisItem = $(this);
+
     if(windowWidth < 992) {
       if(thisItem.hasClass('active')) {
         thisItem.removeClass('active')
@@ -80,25 +80,26 @@
         $('.has-submenu').removeClass('active')
         $(thisItem).addClass('active')
       }
-      
+
       var submenu = thisItem.find('.nav-submenu');
-      
+
       $('.nav-submenu').not(submenu).slideUp(300);
       submenu.slideToggle(300);
     }
-    
+
   });
   // ============== Mobile Nav Menu Dropdown Js End =======================
-  
+
   // ======================== Tooltip Js Start ====================
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
   const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
   // ======================== Tooltip Js End ====================
-    
+
   // ===================== Scroll Back to Top Js Start ======================
   var progressPath = document.querySelector('.progress-wrap path');
-  var pathLength = progressPath.getTotalLength();
-  progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+  if (progressPath) {
+    var pathLength = progressPath.getTotalLength();
+    progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
   progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
   progressPath.style.strokeDashoffset = pathLength;
   progressPath.getBoundingClientRect();
@@ -125,6 +126,9 @@
     jQuery('html, body').animate({scrollTop: 0}, duration);
     return false;
   })
+  }
+
+
   // ===================== Scroll Back to Top Js End ======================
 
   // ========================== add active class to ul>li top Active current page Js Start =====================
@@ -156,9 +160,9 @@
   // ================================ Remove Sale Offer Js Start =============================
   $('.sale-offer__close').on('click', function () {
     $(this).closest('.sale-offer').addClass('d-none')
-  }); 
+  });
   // ================================ Remove Sale Offer Js End =============================
-  
+
   // ================================ CountDown Js Start =============================
   if (document.querySelector('.countdown')) {
     const myCountdown = new countdown({
@@ -170,7 +174,7 @@
     });
   }
   // ================================ CountDown Js End =============================
-  
+
   // ========================= popular Category Js Start ==============
   $('.popular-slider').slick({
     slidesToShow: 6,
@@ -214,13 +218,13 @@
     ]
   });
   // ========================= popular Category Js End ===================
-  
+
   // ========================= Wishlist Js Start ===================
   $('.product-item__wishlist').on('click', function() {
     $(this).toggleClass('active')
-  }); 
+  });
   // ========================= Wishlist Js End ===================
-  
+
   // ========================= Selling Product Js Start ==============
   $('.selling-product-slider').slick({
     slidesToShow: 3,
@@ -284,7 +288,7 @@
     ]
   });
   // ========================= Testimonial Slider Js End ===================
-  
+
   // ========================= Selling Product Js Start ==============
   $('.resource-slider').slick({
     slidesToShow: 4,
@@ -421,7 +425,7 @@
   // ========================= Service Item Js Start ===================
   $('.service-three-item__button').on('click', function () {
     var $serviceItem = $(this).closest('.service-three-item');
-    
+
     if ($serviceItem.hasClass('active')) {
       $serviceItem.removeClass('active');
     } else {
@@ -430,7 +434,7 @@
     }
   });
   // ========================= Service Item Js End ===================
-  
+
   // ========================= Latest Project Slider Into Tab Js Start ==============
   $('.latest-project-slider').slick({
     slidesToShow: 3,
@@ -534,7 +538,7 @@
   // ========================== Text Slide Js Start =====================
   $('.text-slider').marquee({
     pauseOnHover: true,
-    
+
     allowCss3Support: true,
     css3easing: 'linear',
     easing: 'linear',
@@ -545,8 +549,8 @@
     startVisible: false
   });
   // ========================== Text Slide Js End =====================
-  
-  
+
+
   // ========================= Payment Method Slider Js Start ==============
   $('.payment-method__slider').slick({
     slidesToShow: 10,
@@ -629,7 +633,7 @@
       .join("");
     }
   // ========================= Text Rotation Js End ==========================
-  
+
   // ========================= Counter Up Js End ===================
   const counterUp = window.counterUp.default;
 
@@ -668,56 +672,56 @@
   // ========================= Filter Sidebar Js Start ===================
   $('.filter-sidebar__button').on('click', function () {
     $(this).toggleClass('active')
-    $(this).siblings('.filter-sidebar__content').slideToggle(); 
-  }); 
+    $(this).siblings('.filter-sidebar__content').slideToggle();
+  });
   // ========================= Filter Sidebar Js End ===================
 
   // ========================== Grid & List View Js Start =====================
   $('.list-button').on('click', function () {
-    $('body').addClass('list-view'); 
-    $(this).addClass('active'); 
-    $('.grid-button').removeClass('active'); 
-  }); 
+    $('body').addClass('list-view');
+    $(this).addClass('active');
+    $('.grid-button').removeClass('active');
+  });
   $('.grid-button').on('click', function () {
-    $('body').removeClass('list-view'); 
-    $('.list-button').removeClass('active'); 
-    $(this).addClass('active'); 
-  }); 
+    $('body').removeClass('list-view');
+    $('.list-button').removeClass('active');
+    $(this).addClass('active');
+  });
   // ========================== Grid & List View Js End =====================
 
   // ========================== Filter Form Show hide Js Start =====================
   $('.filter-tab__button').on('click', function () {
-    $('.filter-form').slideToggle(); 
-    $(this).toggleClass('active'); 
-  }); 
+    $('.filter-form').slideToggle();
+    $(this).toggleClass('active');
+  });
   // ========================== Filter Form Show hide Js End =====================
 
   // ========================== Filter Sidebar Show hide Js Start =====================
   $('.sidebar-btn').on('click', function () {
-    $('.filter-sidebar').addClass('show'); 
-    $('.side-overlay').addClass('show'); 
-    $('body').addClass('scroll-hide-sm'); 
-  }); 
+    $('.filter-sidebar').addClass('show');
+    $('.side-overlay').addClass('show');
+    $('body').addClass('scroll-hide-sm');
+  });
   $('.filter-sidebar__close, .side-overlay').on('click', function () {
-    $('.filter-sidebar').removeClass('show'); 
-    $('.side-overlay').removeClass('show'); 
-    $('body').removeClass('scroll-hide-sm'); 
-  }); 
+    $('.filter-sidebar').removeClass('show');
+    $('.side-overlay').removeClass('show');
+    $('body').removeClass('scroll-hide-sm');
+  });
   // ========================== Filter Sidebar Show hide Js End =====================
 
   // ========================= Social Share Js Start ===========================
   $('.social-share__button').on('click', function(event) {
-    event.stopPropagation(); 
+    event.stopPropagation();
     $('.social-share__icons').toggleClass('show')
-  }); 
+  });
 
   $('body').on('click', function(event) {
     $('.social-share__icons').removeClass('show')
-  }); 
+  });
 
   // For device width size js start
   // let screenSize = screen.width
-  // alert(' Your Screen Size is: ' + screenSize + 'pixel'); 
+  // alert(' Your Screen Size is: ' + screenSize + 'pixel');
   // For device width size js start
 
   let socialShareBtn = $('.social-share');
@@ -734,38 +738,38 @@
 
   // ========================= License Dropdown Js Start ===========================
   $('.btn-has-dropdown').on('click', function (event) {
-    event.stopPropagation(); 
-    $('.license-dropdown').toggleClass('active'); 
-  }); 
+    event.stopPropagation();
+    $('.license-dropdown').toggleClass('active');
+  });
 
   $('.license-dropdown').on('click', function(event) {
-    event.stopPropagation(); 
-  }); 
+    event.stopPropagation();
+  });
 
   $('body').on('click', function () {
-    $('.license-dropdown').removeClass('active'); 
-  }); 
+    $('.license-dropdown').removeClass('active');
+  });
   // ========================= License Dropdown Js End ===========================
 
   // ========================= Select License Option Js Start ===========================
   $('.license-dropdown__item').on('click', function() {
     $('.license-dropdown__item').removeClass('activeSelectItem');
     $(this).addClass('activeSelectItem');
-    let titleText = $(this).find('.license-dropdown__title').text(); 
-    $('.btn-has-dropdown').text(""); 
-    $('.btn-has-dropdown').text(titleText); 
-    $('.license-dropdown').removeClass('active'); 
-  }); 
+    let titleText = $(this).find('.license-dropdown__title').text();
+    $('.btn-has-dropdown').text("");
+    $('.btn-has-dropdown').text(titleText);
+    $('.license-dropdown').removeClass('active');
+  });
   // ========================= Select License Option Js End ===========================
 
-  
+
   // ========================== Increment & Decrement Js Start =====================
   $(function() {
     $('[data-decrease]').click(decrease);
     $('[data-increase]').click(increase);
     $('[data-value]').on('change input', valueChange);
   });
-  
+
   function decrease() {
     var value = $(this).parent().find('[data-value]').val();
     if(value > 1) {
@@ -773,7 +777,7 @@
       $(this).parent().find('[data-value]').val(value);
     }
   }
-  
+
   function increase() {
     var value = $(this).parent().find('[data-value]').val();
     if(value < 100) {
@@ -781,7 +785,7 @@
       $(this).parent().find('[data-value]').val(value);
     }
   }
-  
+
   function valueChange() {
     var value = $(this).val();
     if(value == undefined || isNaN(value) == true || value <= 0) {
@@ -795,7 +799,7 @@
   // ========================== Cart Item Delete Js Start =====================
   $('.delete-btn').on('click', function() {
     $(this).closest('tr').addClass('d-none')
-  }); 
+  });
   // ========================== Cart Item Delete Js End =====================
 
   // ========================== Password Show Hide Js Start =====================
@@ -808,7 +812,7 @@
       input.attr("type", "password");
     }
   });
-  
+
   $(".toggle-password-two").on('click', function() {
     $(this).toggleClass(" la-eye-slash");
     var input = $($(this).attr("id"));
@@ -823,35 +827,35 @@
 
   // ========================== Dashboard Sidebar Js Start =====================
   $('.bar-icon, .arrow-icon').on('click', function () {
-    $('.dashboard').toggleClass('active'); 
-  }); 
+    $('.dashboard').toggleClass('active');
+  });
 
   $('.bar-icon').on('click', function () {
-    $('.dashboard-sidebar').toggleClass('active'); 
-    $('.side-overlay').toggleClass('show'); 
-    $('body').toggleClass('scroll-hide-sm'); 
-  }); 
+    $('.dashboard-sidebar').toggleClass('active');
+    $('.side-overlay').toggleClass('show');
+    $('body').toggleClass('scroll-hide-sm');
+  });
 
   $('.side-overlay, .dashboard-sidebar__close').on('click', function () {
-    $('.dashboard-sidebar').removeClass('active'); 
-    $('.side-overlay').removeClass('show'); 
-    $('body').removeClass('scroll-hide-sm'); 
-  }); 
+    $('.dashboard-sidebar').removeClass('active');
+    $('.side-overlay').removeClass('show');
+    $('body').removeClass('scroll-hide-sm');
+  });
   // ========================== Dashboard Sidebar Js End =====================
 
   // ==================== Dashboard User Profile Dropdown Start ==================
   $('.user-profile__button').on('click', function(event) {
     event.stopPropagation();
-    $('.user-profile-dropdown').toggleClass('show'); 
-  }); 
+    $('.user-profile-dropdown').toggleClass('show');
+  });
 
   $('.user-profile-dropdown').on('click', function (event) {
     event.stopPropagation();
     $('.user-profile-dropdown').addClass('show')
-  }); 
+  });
 
   $('body').on('click', function() {
-    $('.user-profile-dropdown').removeClass('show'); 
+    $('.user-profile-dropdown').removeClass('show');
   })
 // ==================== Dashboard User Profile Dropdown End ==================
 
@@ -881,14 +885,14 @@
   $('.screenshot-btn').on('click', function() {
     var images = JSON.parse($(this).attr('data-images'));
     var items = [];
-    
+
     for (var i = 0; i < images.length; i++) {
         items.push({
             src: images[i],
             type: 'image'
         });
     }
-    
+
     $.magnificPopup.open({
         items: items,
         gallery: {
@@ -901,11 +905,11 @@
 
   // ========================== Footer Has Class section bg Js Start =====================
   if($('.footer').hasClass('section-bg')) {
-    $('.brand').addClass('active'); 
-    $('.footer.section-bg').addClass('active'); 
+    $('.brand').addClass('active');
+    $('.footer.section-bg').addClass('active');
   }
   // ========================== Footer Has Class section bg Js End =====================
-  
+
   // ========================= Scroll Spy Js Start ===========================
   const scrollSpy = new bootstrap.ScrollSpy(document.body, {
     target: '#sidebar-scroll-spy'
@@ -928,7 +932,7 @@
       height: 486,
       type: 'area',
     },
-    
+
     dataLabels: {
       enabled: false
     },
@@ -952,7 +956,7 @@
   }
   // ========================== Apex Chart Js End =====================
 
-    let lineChart = document.querySelector("#earningChart"); 
+    let lineChart = document.querySelector("#earningChart");
     if(lineChart) {
       var options = {
         series: [{
@@ -991,7 +995,7 @@
 
   // ========================= Preloader Js Start =====================
     $(window).on("load", function(){
-      $('.loader-mask').fadeOut(); 
+      $('.loader-mask').fadeOut();
     })
     // ========================= Preloader Js End=====================
 
@@ -1003,7 +1007,7 @@
       else {
           $('.header').removeClass('fixed-header');
       }
-    }); 
+    });
     // ========================= Header Sticky Js End===================
 
 })(jQuery);

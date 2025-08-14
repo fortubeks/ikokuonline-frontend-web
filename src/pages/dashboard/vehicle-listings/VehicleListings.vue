@@ -6,9 +6,13 @@
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="title">Vehicle Listings</h5>
             <div class="card-header-actions">
-              <router-link :to="{ name: 'VehicleListingCreate' }" class="btn btn-main">
+              <button
+                class="btn btn-main"
+                data-bs-toggle="modal"
+                data-bs-target="#vehicleTypeModal"
+              >
                 <i class="las la-plus"></i> Add Vehicle Listing
-              </router-link>
+              </button>
             </div>
           </div>
           <div class="py-4">
@@ -41,12 +45,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="product in paginatedVehicleListings" :key="product.id">
-                  <td data-label="Name">{{ product.name }}</td>
-                  <td data-label="Price">₦ {{ product.price.toLocaleString() }}</td>
+                <tr v-for="vehicleListing in paginatedVehicleListings" :key="vehicleListing.id">
+                  <td data-label="Name">{{ vehicleListing.description ?? '—' }}</td>
+                  <td data-label="Price">
+                    ₦
+                    {{ vehicleListing.price != null ? vehicleListing.price.toLocaleString() : '—' }}
+                  </td>
                   <td data-label="Details">
                     <router-link
-                      :to="{ name: 'VehicleListingEdit', params: { id: product.id } }"
+                      :to="{
+                        name: vehicleListing.name
+                          ? 'VehicleListingEdit'
+                          : 'VehicleListingEditSimple',
+                        params: { id: vehicleListing.id },
+                      }"
                       class="btn btn-main"
                     >
                       <i class="far fa-eye"></i>
@@ -65,20 +77,90 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="vehicleTypeModal"
+    tabindex="-1"
+    aria-labelledby="vehicleTypeModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="vehicleTypeModalLabel">Choose Listing Type</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Select the type of vehicle listing you want to create:</p>
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <button class="btn btn-sub" @click="goTo('VehicleListingCreateSimple')">
+              <i class="las la-plus"></i>Simple
+            </button>
+            <button class="btn btn-main" @click="goTo('VehicleListingCreate')">
+              <i class="las la-plus"></i>Advanced
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import Pagination from '@components/dashboard/Pagination.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import api from '@/services/api'
 
-const vehicleListings = ref([
-  /* ... */
-]) // fetched or static
-
+const vehicleListings = ref([]) // fetched or static
 const currentPage = ref(1)
 const pageSize = ref(5)
 
 const start = computed(() => (currentPage.value - 1) * pageSize.value)
 const end = computed(() => Math.min(start.value + pageSize.value, vehicleListings.value.length))
 const paginatedVehicleListings = computed(() => vehicleListings.value.slice(start.value, end.value))
+
+// Fetch vehicleListings on component mount
+const fetchModelList = async () => {
+  try {
+    const response = await api.get('/api/vehicle-listings')
+    vehicleListings.value = response.data.data.data
+  } catch (error) {
+    console.error('Failed to fetch list:', error)
+  }
+}
+
+onMounted(() => {
+  fetchModelList()
+})
+</script>
+
+<script>
+import { Modal } from 'bootstrap'
+export default {
+  name: 'VehicleListing',
+  methods: {
+    goTo(routeName) {
+      // Close the modal
+      const modalEl = document.getElementById('vehicleTypeModal')
+      const modal = Modal.getInstance(modalEl) || new Modal(modalEl)
+      modal.hide()
+
+      // Navigate after modal is hidden
+      modalEl.addEventListener(
+        'hidden.bs.modal',
+        () => {
+          this.$router.push({ name: routeName })
+        },
+        { once: true }, // only run once
+      )
+    },
+  },
+}
 </script>

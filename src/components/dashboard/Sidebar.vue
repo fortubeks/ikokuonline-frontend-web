@@ -2,26 +2,32 @@
 <!-- components/Sidebar.vue -->
 <template>
   <div class="dashboard-sidebar">
-    <button type="button" class="dashboard-sidebar__close  d-lg-none d-flex">
+    <button type="button" class="dashboard-sidebar__close d-lg-none d-flex">
       <i class="las la-times"></i>
     </button>
     <div class="dashboard-sidebar__inner">
       <a href="/" class="logo mb-48">
         <img src="@/assets/images/logo/ikokuonline_logo.png" alt="Logo" class="white-version" />
-        <img src="@/assets/images/logo/ikokuonline_white_logo.png" alt="Logo" class="dark-version" />
+        <img
+          src="@/assets/images/logo/ikokuonline_white_logo.png"
+          alt="Logo"
+          class="dark-version"
+        />
       </a>
       <a href="/" class="logo favicon mb-48">
         <img src="@/assets/images/logo/favicon.png" alt="Favicon" />
       </a>
 
       <ul class="sidebar-list">
-        <li v-for="item in links" :key="item.text" :class="['sidebar-list__item', isActive(item.route) ? 'activePage' : ''] ">
+        <li
+          v-for="item in links"
+          :key="item.text"
+          :class="['sidebar-list__item', isActive(item.route) ? 'activePage' : '']"
+        >
           <router-link
             :to="item.route"
             :class="['sidebar-list__link', isActive(item.route) ? 'activePage' : '']"
           >
-
-
             <span class="sidebar-list__icon">
               <img :src="item.icon" class="icon" />
               <img :src="item.activeIcon" class="icon icon-active" />
@@ -35,14 +41,17 @@
 </template>
 
 <script setup>
-import { useAppConfig } from '@/composables/useAppConfig';
-import { useRoute } from 'vue-router';
-const icons = import.meta.glob('@/assets/dp-market-dashboard/images/icons/*.svg', { eager: true, import: 'default' });
+import { useAppConfig } from '@/composables/useAppConfig'
+import { useRoute } from 'vue-router'
+const icons = import.meta.glob('@/assets/dp-market-dashboard/images/icons/*.svg', {
+  eager: true,
+  import: 'default',
+})
 
-const route = useRoute();
+const route = useRoute()
 
 // eslint-disable-next-line no-unused-vars
-const { appUrl } = useAppConfig();
+const { appUrl } = useAppConfig()
 
 const links = [
   {
@@ -70,6 +79,12 @@ const links = [
     activeIcon: [`/src/assets/dp-market-dashboard/images/icons/sidebar-icon-active5.svg`],
   },
   {
+    text: 'Product Categories',
+    route: '/dashboard/product-categories',
+    icon: [`/src/assets/dp-market-dashboard/images/icons/sidebar-icon5.svg`],
+    activeIcon: [`/src/assets/dp-market-dashboard/images/icons/sidebar-icon-active5.svg`],
+  },
+  {
     text: 'Orders',
     route: '/dashboard/orders',
     icon: [`/src/assets/dp-market-dashboard/images/icons/sidebar-icon12.svg`],
@@ -81,19 +96,12 @@ const links = [
     icon: [`/src/assets/dp-market-dashboard/images/icons/sidebar-icon13.svg`],
     activeIcon: [`/src/assets/dp-market-dashboard/images/icons/sidebar-icon-active13.svg`],
   },
-];
+]
 
 const isActive = (targetRoute) => {
   if (targetRoute === '/dashboard') {
-    return route.path === '/dashboard';
+    return route.path === '/dashboard'
   }
-  return route.path.startsWith(targetRoute);
-};
-
-
-
-
+  return route.path.startsWith(targetRoute)
+}
 </script>
-
-
-

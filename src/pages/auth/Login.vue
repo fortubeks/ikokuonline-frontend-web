@@ -8,7 +8,7 @@
           <div class="col-12 col-xl-5 col-xxl-4 d-none d-xl-flex p-0">
             <div class="!h-dvh">
               <img
-                src="@/assets/marketpro/images/login-cover.jpg"
+                src="@/assets/dp-market-dashboard/images/login-cover.jpg"
                 class="object-cover h-full w-[800px]"
                 width="650"
                 alt="Login Image"
@@ -21,7 +21,7 @@
             <div class="md:px-[120px] px-[24px] py-40">
               <div class="mx-auto mb-32" style="width: fit-content">
                 <img
-                  src="@/assets/marketpro/images/logo/ikokuonline_logo.png"
+                  src="@/assets/dp-market-dashboard/images/logo/ikokuonline_logo.png"
                   width="116"
                   height="59"
                   alt="Logo Image"
