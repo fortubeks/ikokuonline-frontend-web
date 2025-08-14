@@ -4,7 +4,7 @@
     <div class="dashboard__inner d-flex">
       <Sidebar />
 
-      <div class="dashboard-body">
+      <div class="dashboard-body !overflow-y-auto !h-screen">
         <Header />
         <div class="dashboard-body__content">
           <router-view />

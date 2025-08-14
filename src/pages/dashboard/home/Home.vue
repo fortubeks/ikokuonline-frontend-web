@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="dashboard-body__content">
     <div class="welcome-balance mt-2 mb-40 d-flex justify-content-between gap-2">
