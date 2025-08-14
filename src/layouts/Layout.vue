@@ -9,7 +9,7 @@
       searchPlaceholder="Search in Car Parts"
       :onSearch="handleSearch"
     />
-    <main class="!overflow-x-hidden">
+    <main class="!overflow-x-hidden w-full">
       <slot />
     </main>
     <Footer />

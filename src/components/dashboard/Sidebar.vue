@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <!-- components/Sidebar.vue -->
 <template>
-  <div class="dashboard-sidebar">
+  <div class="dashboard-sidebar !h-dvh">
     <button type="button" class="dashboard-sidebar__close d-lg-none d-flex">
       <i class="las la-times"></i>
     </button>
@@ -63,6 +63,12 @@ const links = [
   {
     text: 'Profile',
     route: '/dashboard/profile',
+    icon: icons[`/src/assets/dp-market-dashboard/images/icons/sidebar-icon2.svg`],
+    activeIcon: icons[`/src/assets/dp-market-dashboard/images/icons/sidebar-icon-active2.svg`],
+  },
+  {
+    text: 'Users',
+    route: '/dashboard/users',
     icon: icons[`/src/assets/dp-market-dashboard/images/icons/sidebar-icon2.svg`],
     activeIcon: icons[`/src/assets/dp-market-dashboard/images/icons/sidebar-icon-active2.svg`],
   },

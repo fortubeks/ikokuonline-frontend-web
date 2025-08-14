@@ -67,7 +67,7 @@
                 </div>
               </div>
 
-              <div class="mt-48">
+              <div class="md:mt-48 mt-24">
                 <router-link
                   to="/forgot-password"
                   class="text-danger-600 text-sm fw-semibold hover-text-decoration-underline"
