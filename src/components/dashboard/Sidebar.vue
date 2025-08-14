@@ -67,6 +67,12 @@ const links = [
     activeIcon: icons[`/src/assets/dp-market-dashboard/images/icons/sidebar-icon-active2.svg`],
   },
   {
+    text: 'Users',
+    route: '/dashboard/users',
+    icon: icons[`/src/assets/dp-market-dashboard/images/icons/sidebar-icon2.svg`],
+    activeIcon: icons[`/src/assets/dp-market-dashboard/images/icons/sidebar-icon-active2.svg`],
+  },
+  {
     text: 'Vehicle Listings',
     route: '/dashboard/vehicle-listings',
     icon: [`/src/assets/dp-market-dashboard/images/icons/sidebar-icon4.svg`],

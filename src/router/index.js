@@ -48,6 +48,8 @@ import SettingsPage from '../pages/homepagev3pages/SettingsPage.vue'
 import HelpSupportPage from '../pages/homepagev3pages/HelpSupportPage.vue'
 import HomePage from "../pages/homepagev3pages/HomePage.vue"
 import EditOrderPage from '@/pages/dashboard/orders/EditOrderPage.vue';
+import UsersPage from '@/pages/dashboard/users/UsersPage.vue';
+import DashboardHomePage from '@/pages/dashboard/dashboardhome/DashboardHomePage.vue';
 
 
 
@@ -132,7 +134,7 @@ const routes = [
       {
         path: '',
         name: 'DashboardHome',
-        component: Products,
+        component: DashboardHomePage,
       },
       { path: 'products', name: 'Products', component: Products },
       { path: 'products/create', name: 'ProductCreate', component: ProductsForm },
@@ -151,6 +153,9 @@ const routes = [
       { path: 'orders/edit/:id', name: 'OrderEdit', component: EditOrderPage, props: true },
 
       { path: 'profile', name: 'Profile', component: ProfileForm },
+
+       { path: 'users', name: 'users', component: UsersPage },
+
     ],
   },
   {
