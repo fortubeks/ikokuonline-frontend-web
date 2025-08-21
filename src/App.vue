@@ -11,12 +11,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 import PreLoader from './components/utils/PreLoader.vue'
 import { provideCart } from './components/homepagev3/CartProvider'
+import { useAuthStore } from './stores/auth'
 
-provideCart()
+const authStore = useAuthStore()
+provideCart(toRef(authStore, 'isAuthenticated'))
+
+//provideCart()
 
 const preloaderRef = ref(null)
 const router = useRouter()

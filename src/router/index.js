@@ -52,14 +52,14 @@ import HomePage from "../pages/homepagev3pages/HomePage.vue"
 
 const routes = [
 
-    { path: '', name: 'Home', component: HomePage },
-  { path: '/product/:id', name: 'ProductDetail', component: ProductDetail },
+  { path: '', name: 'Home', component: HomePage },
+  { path: '/product/:slug', name: 'ProductDetail', component: ProductDetail },
   { path: '/become-seller', name: 'BecomeSeller', component: BecomeSellerPage },
   { path: '/cart', name: 'Cart', component: CartPage },
   { path: '/checkout', name: 'Checkout', component: CheckoutPage },
   { path: '/order-confirmation', name: 'OrderConfirmation', component: OrderConfirmationPage },
   { path: '/account/orders', name: 'OrderHistory', component: OrderHistoryPage },
-  { path: '/category/:id', name: 'CategoryPage', component: CategoryPage },
+  { path: '/category/:slug', name: 'CategoryPage', component: CategoryPage },
   { path: '/categories', name: 'AllCategories', component: CategoryPage },
   { path: '/profilepage', name: 'Profile', component: ProfilePage },
   { path: '/edit-profile', name: 'EditProfile', component: EditProfilePage },
@@ -175,11 +175,23 @@ const router = createRouter({
   routes,
 });
 
+// router.beforeEach((to, from, next) => {
+//   const auth = useAuthStore();
+
+//   if (to.meta.requiresAuth && !auth.isAuthenticated) {
+//     next({ name: 'login' });
+//   } else {
+//     next();
+//   }
+// });
+
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
 
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
     next({ name: 'login' });
+  } else if (to.meta.guestOnly && auth.isAuthenticated) {
+    next({ name: 'DashboardHome' });
   } else {
     next();
   }

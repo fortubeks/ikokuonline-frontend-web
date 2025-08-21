@@ -745,9 +745,25 @@ export default {
       ].filter(Boolean).length
     },
     isMobileView() {
-      // basic check: show mobile panels only when sm:hidden part is active
-      // If you're using Tailwind, it will match; otherwise, this simply returns true when screen width < 640
       return window.innerWidth < 640
+    },
+    currentFilters() {
+      const filters = {
+        category: this.selectedCategory,
+        priceMin: this.priceRange.min,
+        priceMax: this.priceRange.max,
+        make: this.selectedMake,
+        conditions: this.selectedConditions.length > 0 ? this.selectedConditions.map(this.getApiConditionKey) : null,
+        colors: this.selectedColors.length > 0 ? this.selectedColors : null,
+        verifiedOnly: this.verifiedOnly || null,
+        hasDiscount: this.hasDiscount || null,
+        minDiscount: this.minDiscount,
+        sort: this.getApiSortKey(this.selectedSort),
+        time: this.getApiTimeKey(this.selectedTime),
+      }
+      return Object.fromEntries(
+        Object.entries(filters).filter(([_, value]) => value !== null && value !== '' && (Array.isArray(value) ? value.length > 0 : true))
+      )
     },
   },
   mounted() {
@@ -760,7 +776,6 @@ export default {
   },
   methods: {
     handleResize() {
-      // force reactive re-evaluation if needed
       this.$forceUpdate()
     },
     handleClickOutside(e) {
@@ -774,13 +789,39 @@ export default {
       }
     },
 
-    // View
+    getApiSortKey(sortOption) {
+      const sortMap = {
+        'Recommended': 'recommended',
+        'Newest': 'newest',
+        'Price: Low to High': 'price_asc',
+        'Price: High to Low': 'price_desc',
+        'Most Popular': 'popular',
+        'Best Rated': 'rated',
+        'Discount: High to Low': 'discount_desc',
+      };
+      return sortMap[sortOption] || 'recommended';
+    },
+
+    getApiTimeKey(timeOption) {
+      const timeMap = {
+        'Any time': 'any_time',
+        'Today': 'today',
+        'Last 3 days': 'last_3_days',
+        'Last week': 'last_week',
+        'Last month': 'last_month',
+      };
+      return timeMap[timeOption] || 'any_time';
+    },
+
+    getApiConditionKey(condition) {
+      return condition.toLowerCase().replace(/[\s-]/g, '_');
+    },
+
     handleViewChange(newView) {
       this.view = newView
       if (typeof this.onViewChange === 'function') this.onViewChange(newView)
     },
 
-    // Dropdown toggles
     toggleCategoryDropdown() {
       this.showCategoryDropdown = !this.showCategoryDropdown
       this.showPriceDropdown = false
@@ -817,24 +858,22 @@ export default {
       this.showSortDropdown = false
     },
 
-    // Selections
     selectCategory(category) {
       this.selectedCategory = this.selectedCategory === category ? null : category
       this.showCategoryDropdown = false
-      this.emitFiltersDelayed()
+      this.applyFilters()
     },
     selectMake(make) {
       this.selectedMake = this.selectedMake === make ? null : make
       this.showMakeDropdown = false
-      this.emitFiltersDelayed()
+      this.applyFilters()
     },
     clearPrice() {
       this.priceRange = { min: null, max: null }
       this.showPriceDropdown = false
-      this.emitFiltersDelayed()
+      this.applyFilters()
     },
 
-    // Conditions/colors toggles
     toggleCondition(condition) {
       const idx = this.selectedConditions.indexOf(condition)
       if (idx >= 0) this.selectedConditions.splice(idx, 1)
@@ -846,31 +885,24 @@ export default {
       else this.selectedColors.push(color)
     },
 
-    // Sorting/time
     handleSortChange(option) {
       this.selectedSort = option
       this.showSortDropdown = false
       this.showMobileSort = false
-      if (typeof this.onSortChange === 'function') this.onSortChange(option)
+      this.applyFilters()
     },
     handleTimeChange(option) {
       this.selectedTime = option
       this.showTimeDropdown = false
+      this.applyFilters()
     },
 
-    // Filters apply / clear
     applyFilters() {
-      const filters = {
-        category: this.selectedCategory,
-        priceRange: this.priceRange,
-        make: this.selectedMake,
-        conditions: this.selectedConditions.length > 0 ? [...this.selectedConditions] : null,
-        colors: this.selectedColors.length > 0 ? [...this.selectedColors] : null,
-        verifiedOnly: this.verifiedOnly || null,
-        hasDiscount: this.hasDiscount || null,
-        minDiscount: this.minDiscount,
+      // Create a copy of the current filters to avoid reactivity issues
+      const filters = { ...this.currentFilters }
+      if (typeof this.onFilterChange === 'function') {
+        this.onFilterChange(filters)
       }
-      if (typeof this.onFilterChange === 'function') this.onFilterChange(filters)
       this.showFilterModal = false
     },
     clearFilters() {
@@ -882,26 +914,9 @@ export default {
       this.verifiedOnly = false
       this.hasDiscount = false
       this.minDiscount = null
-      if (typeof this.onFilterChange === 'function') this.onFilterChange({})
-      if (typeof this.onResetFilters === 'function') this.onResetFilters()
-    },
-
-    // small helper to debounce immediate emission after a dropdown selection
-    emitFiltersDelayed() {
-      setTimeout(() => {
-        if (typeof this.onFilterChange === 'function') {
-          this.onFilterChange({
-            category: this.selectedCategory,
-            priceRange: this.priceRange,
-            make: this.selectedMake,
-            conditions: this.selectedConditions.length > 0 ? [...this.selectedConditions] : null,
-            colors: this.selectedColors.length > 0 ? [...this.selectedColors] : null,
-            verifiedOnly: this.verifiedOnly || null,
-            hasDiscount: this.hasDiscount || null,
-            minDiscount: this.minDiscount,
-          })
-        }
-      }, 100)
+      if (typeof this.onResetFilters === 'function') {
+        this.onResetFilters()
+      }
     },
   },
 }

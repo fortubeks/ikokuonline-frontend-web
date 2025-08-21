@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', {
         localStorage.removeItem('user');
       } catch (error) {
         if (error.response?.status !== 401) {
-            console.error('Logout failed', error.response?.data);
+            //console.error('Logout failed', error.response?.data);
         }
       } finally {
         this.user = null;
@@ -40,6 +40,15 @@ export const useAuthStore = defineStore('auth', {
         } catch (error) {
             this.logout();
         }
-    }
+    },
+
+    clearAuth() {
+      // Clear local storage or session storage
+      localStorage.removeItem('user');
+      
+      // Reset the state to its initial values
+      this.user = null;
+      this.isAuthenticated = false;
+    },
   },
 });

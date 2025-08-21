@@ -151,7 +151,7 @@
               </button>
               <button
                 v-for="cat in categories"
-                :key="cat.id"
+                :key="cat.slug"
                 class="!block !w-full !text-left !px-4 !py-2 hover:!bg-gray-100"
                 @click="handleCategorySelect(cat.name)"
               >
@@ -238,7 +238,8 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import SearchResults from '../../components/homepagev3/SearchResults.vue'
 import { useCart } from '../../components/homepagev3/CartProvider'
-import { categories } from '../../components/utils/homepagev3utils/data'
+//import { categories } from '../../components/utils/homepagev3utils/data'
+import api from '@/services/api'
 
 const props = defineProps({
   showBackButton: Boolean,
@@ -262,7 +263,9 @@ const wishlistCount = ref(0)
 const searchInputRef = ref(null)
 const categoryDropdownRef = ref(null)
 
-onMounted(() => {
+const categories = ref([])
+
+onMounted(async () => {
   const updateWishlist = () => {
     const saved = localStorage.getItem('wishlist')
     wishlistCount.value = saved ? JSON.parse(saved).length : 0
@@ -288,6 +291,13 @@ onMounted(() => {
   }
   document.addEventListener('mousedown', clickOutside)
 
+  try {
+    const { data } = await api.get('/api/product-categories') // Adjust endpoint as needed
+    categories.value = data.data
+  } catch (error) {
+    console.error('Failed to load categories:', error)
+  }
+
   onBeforeUnmount(() => {
     window.removeEventListener('storage', updateWishlist)
     document.removeEventListener('mousedown', clickOutside)
@@ -303,7 +313,7 @@ const handleSearch = () => {
   if (searchQuery.value.trim()) {
     props.onSearch(searchQuery.value)
     showSearchResults.value = false
-    router.push(`/search?q=${encodeURIComponent(searchQuery.value)}`)
+    router.push(`/category/all/?q=${encodeURIComponent(searchQuery.value)}`)
   }
 }
 

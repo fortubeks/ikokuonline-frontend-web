@@ -25,7 +25,7 @@
       </div>
 
       <div
-        v-else-if="filteredProducts.length === 0"
+        v-else-if="currentProducts.length === 0"
         class="!bg-white !rounded-lg !p-8 !text-center !mt-4"
       >
         <h3 class="!text-xl !font-bold !mb-2">No products found</h3>
@@ -41,9 +41,7 @@
       <template v-else>
         <div class="!flex !justify-between !items-center !mb-4">
           <p class="!text-sm !text-gray-600">
-            Showing {{ indexOfFirstProduct + 1 }}-
-            {{ Math.min(indexOfLastProduct, filteredProducts.length) }} of
-            {{ filteredProducts.length }} results
+            Showing {{ meta.from }}-{{ meta.to }} of {{ meta.total }} results
           </p>
         </div>
 
@@ -54,16 +52,16 @@
               :key="product.id"
               class="!animate-fadeIn !cursor-pointer"
               :style="{ animationDelay: `${index * 50}ms` }"
-              @click="handleProductClick(product.id)"
+              @click="handleProductClick(product.slug)"
             >
               <ProductCard v-bind="product" :view="view" />
             </div>
           </div>
 
           <Pagination
-            v-if="totalPages > 1"
+            v-if="meta.total_pages > 1"
             :currentPage="currentPage"
-            :totalPages="totalPages"
+            :totalPages="meta.total_pages"
             @pageChange="handlePageChange"
           />
         </div>
@@ -79,66 +77,42 @@ import Layout from '../../layouts/Layout.vue'
 import FilterBar from '../../components/homepagev3/FilterBar.vue'
 import ProductCard from '../../components/homepagev3/ProductCard.vue'
 import Pagination from '../../components/homepagev3/Pagination.vue'
-import { products, categories } from '../../components/utils/homepagev3utils/data'
+import api from '@/services/api'
 
 const route = useRoute()
 const router = useRouter()
-const id = route.params.id
+const category_id = route.params.slug
+const q = route.query.q
 
-const categoryProducts = ref([])
-const filteredProducts = ref([])
+const currentProducts = ref([])
 const view = ref('grid')
 const isLoading = ref(true)
-const activeSort = ref('Recommended')
 const activeFilters = ref({})
 const categoryInfo = ref(null)
 
 const currentPage = ref(1)
 const productsPerPage = 8
 
-onMounted(() => {
-  loadCategoryData()
+const products = ref([])
+const categories = ref([])
+const totalProducts = ref(0)
+
+const meta = ref({
+  from: 0,
+  to: 0,
+  total: 0,
+  last_page: 1,
+  total_pages: 1
 })
 
-watch(
-  () => route.params.id,
-  () => {
-    loadCategoryData()
-  },
-)
-
-function loadCategoryData() {
-  isLoading.value = true
-  currentPage.value = 1
-
-  const category = categories.find((cat) => cat.id === id)
-  categoryInfo.value = category
-
-  setTimeout(() => {
-    let filtered
-    if (!id || id === 'all') {
-      filtered = [...products]
-    } else {
-      const categoryName = category?.name || id.replace(/-/g, ' ')
-      filtered = products.filter(
-        (p) =>
-          p.category?.toLowerCase() === categoryName.toLowerCase() ||
-          p.category?.toLowerCase().includes(categoryName.toLowerCase()),
-      )
-    }
-    categoryProducts.value = filtered
-    filteredProducts.value = filtered
-    isLoading.value = false
-  }, 500)
-}
+onMounted(() => {
+  fetchCategories()
+  fetchProducts()
+})
 
 function handleFilterChange(filters) {
   activeFilters.value = filters
   currentPage.value = 1
-}
-
-function handleSortChange(sort) {
-  activeSort.value = sort
 }
 
 function handleViewChange(newView) {
@@ -147,8 +121,6 @@ function handleViewChange(newView) {
 
 function resetFilters() {
   activeFilters.value = {}
-  filteredProducts.value = categoryProducts.value
-  activeSort.value = 'Recommended'
   currentPage.value = 1
 }
 
@@ -157,25 +129,60 @@ function handlePageChange(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-function handleProductClick(productId) {
-  router.push(`/product/${productId}`)
+function handleProductClick(productSlug) {
+  router.push(`/product/${productSlug}`)
 }
 
-const indexOfLastProduct = computed(() => currentPage.value * productsPerPage)
-const indexOfFirstProduct = computed(() => indexOfLastProduct.value - productsPerPage)
-const currentProducts = computed(() =>
-  filteredProducts.value.slice(indexOfFirstProduct.value, indexOfLastProduct.value),
-)
-const totalPages = computed(() => Math.ceil(filteredProducts.value.length / productsPerPage))
-
-const categoryName = computed(() => {
-  if (categoryInfo.value?.name) return categoryInfo.value.name
-  if (id === 'all') return 'All Products'
-  return id.replace(/-/g, ' ').replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase())
-})
+const categoryName = 'All';
 
 const gridClass = '!grid !grid-cols-2 md:!grid-cols-3 lg:!grid-cols-4 !gap-4'
 const listClass = '!flex !flex-col !space-y-3'
+
+const fetchProducts = async () => {
+  isLoading.value = true
+  try {
+    const params = {
+      q: q,
+      category: category_id,
+      ...activeFilters.value, // Merge all active filters here
+      page: currentPage.value,
+      per_page: productsPerPage
+    }
+    const response = await api.get('/api/products', { params })
+
+    const resData = response.data.data
+    products.value = resData.data
+    currentProducts.value = products.value
+
+    meta.value = {
+      from: resData.from,
+      to: resData.to,
+      total: resData.total,
+      last_page: resData.last_page,
+      total_pages: Math.ceil(resData.total / resData.per_page)
+    }
+  } catch (error) {
+    console.error('Failed to fetch products:', error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+watch([() => category_id, route.query.q, activeFilters, currentPage], () => {
+  fetchProducts()
+},
+{ deep: true })
+
+const fetchCategories = async () => {
+  try {
+    const response = await api.get('/api/product-categories')
+
+    const resData = response.data.data
+    categories.value = resData.data
+  } catch (error) {
+    console.error('Failed to fetch products:', error)
+  }
+}
 </script>
 
 <style scoped>

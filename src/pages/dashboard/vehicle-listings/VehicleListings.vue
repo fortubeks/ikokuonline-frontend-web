@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import Pagination from '@components/Pagination.vue';
+import Pagination from '@components/dashboard/Pagination.vue';
 import { ref, computed, onMounted } from 'vue';
 import api from '@/services/api';
 

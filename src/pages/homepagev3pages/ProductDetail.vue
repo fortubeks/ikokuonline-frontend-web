@@ -1,6 +1,6 @@
 <template>
   <div class="!min-h-screen !bg-gray-100 !pb-16 md:!pb-0">
-    <Header :show-back-button="true" :title="product?.title ?? 'Product Detail'" />
+    <Header :show-back-button="true" :title="product?.name ?? 'Product Detail'" />
     <div
       v-if="isLoading"
       class="!flex !flex-col !items-center !h-[calc(100vh_-_200px)] !justify-center"
@@ -29,12 +29,12 @@
             >
             <span class="!mx-2 !text-gray-400">/</span>
             <RouterLink
-              :to="`/category/${categoryLowercase}`"
+              :to="`/category/${product.product_category}`"
               class="!text-gray-500 hover:!text-primary-500 transition-colors"
-              >{{ category }}</RouterLink
+              >{{ product.product_category_name }}</RouterLink
             >
             <span class="!mx-2 !text-gray-400">/</span>
-            <span class="!text-gray-700 !truncate">{{ product.title }}</span>
+            <span class="!text-gray-700 !truncate">{{ product.name }}</span>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@
         <div class="md:w-1/2">
           <div class="!bg-white !p-4 !md:rounded-lg !mt-3 md:mt-0 !animate-fadeIn">
             <div class="!flex !items-center">
-              <h1 class="!text-base md:!text-2xl !font-bold !flex-1">{{ product.title }}</h1>
+              <h1 class="!text-base md:!text-2xl !font-bold !flex-1">{{ product.name }}</h1>
               <div class="!flex !items-center !bg-green-50 !text-green-600 !px-2 !py-1 !rounded-md">
                 <StarIcon class="!w-4 !h-4 fill-yellow-400 text-yellow-400 !mr-1" />
                 <span class="!font-bold">4.7</span>
@@ -323,17 +323,17 @@
                 :key="p.id"
                 class="!bg-white !rounded-lg overflow-hidden hover:!shadow-md transition-shadow"
               >
-                <RouterLink :to="`/product/${p.id}`">
+                <RouterLink :to="`/product/${p.slug}`">
                   <div class="!relative !pb-[75%]">
                     <img
-                      :src="p.image"
-                      :alt="p.title"
+                      :src="p.display_image_url"
+                      :alt="p.name"
                       class="!absolute !inset-0 !w-full !h-full !object-cover hover:!scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div class="!p-3">
                     <div class="!font-bold !text-primary-500">{{ formatPrice(p.price) }}</div>
-                    <h3 class="!text-sm !font-medium !line-clamp-2">{{ p.title }}</h3>
+                    <h3 class="!text-sm !font-medium !line-clamp-2">{{ p.name }}</h3>
                   </div>
                 </RouterLink>
               </div>
@@ -377,7 +377,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import Header from '../../components/homepagev3/Header.vue'
 import Footer from '../../components/homepagev3/Footer.vue'
@@ -398,13 +398,16 @@ import {
   TruckIcon,
   CheckIcon,
 } from 'lucide-vue-next'
-import { products } from '../../components/utils/homepagev3utils/data'
+//import { products } from '../../components/utils/homepagev3utils/data'
+import api from '@/services/api'
 
 const route = useRoute()
 // const router = useRouter()
 const cart = useCart()
 
-const id = route.params.id
+const slug = route.params.slug
+const product_id = ref(null);
+const product_category = ref(null);
 const product = ref(null)
 const isLoading = ref(true)
 const currentImageIndex = ref(0)
@@ -416,39 +419,36 @@ const shareMessage = ref('')
 
 const similarProducts = ref([])
 
-onMounted(() => {
+onMounted(async () => {
   window.scrollTo(0, 0)
   const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]')
-  isSaved.value = wishlist.includes(id)
-  setTimeout(() => {
-    const found = products.find((p) => p.id === id)
-    if (!found) {
-      product.value = null
-      isLoading.value = false
-      return
-    }
+  isSaved.value = wishlist.includes(product_id)
+
+  try {
+    const res = await api.get(`/api/products/${slug}`)
+    const data = res.data.data
+
     product.value = {
-      ...found,
-      images: [found.image /* Placeholder images... */],
-      negotiable: true,
-      marketPrice: { min: found.price * 0.95, max: found.price * 1.05 },
-      seller: {
-        id: 's' + Math.random().toString(36).substr(2, 5),
-        name: found.sellerName || 'Auto Parts Seller',
-        image: found.sellerImage || 'https://randomuser.me/api/portraits/men/32.jpg',
-        isVerified: found.isVerified || false,
-        responseTime: 'Typically replies within a few hours',
-        memberSince: '1 year on IkokuOnline',
+      ...data,
+      images: data.images?.length ? data.images : [data.image],
+      marketPrice: data.marketPrice || {
+        min: data.price * 0.95,
+        max: data.price * 1.05,
       },
-      details: found.details || [],
-      safetyTips: ['Avoid prepayments', 'Meet in public', 'Inspect item', 'Pay after receiving'],
-      postedTime: found.postedTime || '3 days ago',
+      seller: data.seller || {},
+      safetyTips: data.safetyTips || ['Avoid prepayments', 'Meet in public', 'Inspect item', 'Pay after receiving'],
     }
-    similarProducts.value = products
-      .filter((p) => p.category === found.category && p.id !== id)
-      .slice(0, 4)
+
+    product_category.value = product.value.product_category
+    const simRes = await api.get(`/api/products?category=${encodeURIComponent(product.value.product_category)}&exclude=${product.value.id}&limit=4`)
+    similarProducts.value = simRes.data.data.data
+
+  } catch (error) {
+    console.error('Error fetching product:', error)
+    product.value = null
+  } finally {
     isLoading.value = false
-  }, 800)
+  }
 })
 
 const nextImage = () => {
@@ -495,11 +495,12 @@ const addToCart = () => {
   if (!product.value) return
   isAdding.value = true
   cart.addItem({
-    id,
-    title: product.value.title,
+    id: product.value.id,
+    name: product.value.name,
     price: product.value.price,
-    image: product.value.images[0],
+    display_image_url: product.value.display_image_url,
     quantity: quantity.value,
+    slug: product.value.slug,
   })
   setTimeout(() => {
     isAdding.value = false
@@ -508,11 +509,30 @@ const addToCart = () => {
   }, 800)
 }
 
+const incrementQty = () => {
+  if (product.value?.stock && quantity.value >= product.value.stock) return
+  quantity.value++
+}
+
+const decrementQty = () => {
+  if (quantity.value > 1) {
+    quantity.value--
+  }
+}
+
+watch(quantity, (newVal) => {
+  if (newVal < 1) {
+    quantity.value = 1
+  }
+  if (product.value?.stock && newVal > product.value.stock) {
+    quantity.value = product.value.stock
+  }
+})
+
 // eslint-disable-next-line no-unused-vars
 const formatDate = (str) =>
   new Date(str).toLocaleDateString('en-NG', { year: 'numeric', month: 'long', day: 'numeric' })
-const category = computed(
-  () => product.value?.details.find((d) => d.label === 'Category')?.value || '',
-)
-const categoryLowercase = computed(() => category.value.toLowerCase())
+// const category = computed(
+//   () => product.value?.details.find((d) => d.label === 'Category')?.value || '',
+// )
 </script>

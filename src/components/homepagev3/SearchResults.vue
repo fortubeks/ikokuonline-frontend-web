@@ -19,20 +19,20 @@
       ></div>
     </div>
 
-    <div v-else-if="results.length === 0 && query.trim() !== ''" class="!p-6 !text-center">
+    <div v-else-if="results.length === 0 && query.trim() !== ''  && Object.keys(categories).length === 0" class="!p-6 !text-center">
       <p class="!text-gray-500">No results found for "{{ query }}"</p>
       <p class="!text-sm !text-gray-400 !mt-2">Try using different keywords or check for typos</p>
     </div>
 
     <template v-else>
       <!-- Categories -->
-      <div v-if="categories.length" class="!p-4 !border-b">
+      <div v-if="Object.keys(categories).length" class="!p-4 !border-b">
         <h4 class="!text-xs !text-gray-500 !mb-2">CATEGORIES</h4>
         <div class="!flex !flex-wrap !gap-2">
           <RouterLink
-            v-for="(category, idx) in categories"
-            :key="idx"
-            :to="`/category/${slugify(category)}`"
+            v-for="(category, slug) in categories"
+            :key="slug"
+            :to="`/category/${slug}`"
             @click="handleLinkClick"
             class="!px-3 !py-1 !bg-gray-100 hover:!bg-gray-200 !rounded-full !text-sm !transition-colors"
           >
@@ -48,26 +48,26 @@
           <RouterLink
             v-for="product in results"
             :key="product.id"
-            :to="`/product/${product.id}`"
+            :to="`/product/${product.slug}`"
             @click="handleResultClick"
             class="!flex !items-center !p-2 hover:!bg-gray-50 !rounded-lg !transition-colors"
           >
             <div class="!w-12 !h-12 !flex-shrink-0">
               <img
-                :src="product.image"
-                :alt="product.title"
+                :src="product.display_image_url"
+                :alt="product.name"
                 class="!w-full !h-full !object-cover !rounded"
               />
             </div>
             <div class="!ml-3 !flex-1">
-              <h5 class="!font-medium line-clamp-1 text-base">{{ product.title }}</h5>
+              <h5 class="!font-medium line-clamp-1 text-base">{{ product.name }}</h5>
               <p class="!text-sm !text-gray-500">{{ product.category }}</p>
             </div>
             <div class="!text-primary-500 !font-bold">₦{{ product.price.toLocaleString() }}</div>
           </RouterLink>
 
           <RouterLink
-            :to="`/search?q=${encodeURIComponent(query)}`"
+            :to="`/category/all?q=${encodeURIComponent(query)}`"
             @click="handleResultClick"
             class="!block !text-center !text-primary-500 hover:!underline !py-2 !font-medium"
           >
@@ -79,12 +79,19 @@
       <!-- Recent Searches -->
       <div class="!p-4 !border-t">
         <h4 class="!text-xs !text-gray-500 !mb-2">RECENT SEARCHES</h4>
+        <button
+          v-if="recentSearches.length"
+          @click="clearRecentSearches"
+          class="!text-xs !text-red-500 hover:!underline"
+        >
+          Clear
+        </button>
         <div class="!space-y-2">
           <template v-if="recentSearches.length">
             <RouterLink
               v-for="(term, idx) in recentSearches"
               :key="idx"
-              :to="`/search?q=${encodeURIComponent(term)}`"
+              :to="`/category/all?q=${encodeURIComponent(term)}`"
               @click="handleLinkClick"
               class="!flex !items-center !p-2 hover:!bg-gray-50 !rounded-lg !transition-colors"
             >
@@ -104,6 +111,7 @@ import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { SearchIcon, XIcon } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
 import { products } from '../../components/utils/homepagev3utils/data'
+import api from '@/services/api'
 
 const props = defineProps({
   query: { type: String, required: true },
@@ -131,18 +139,34 @@ const fetchResults = () => {
 
   loading.value = true
 
-  searchTimer = setTimeout(() => {
-    const term = props.query.toLowerCase()
+  // searchTimer = setTimeout(() => {
+  //   const term = props.query.toLowerCase()
 
-    const filtered = products.filter((p) =>
-      [p.title, p.description, p.category, p.compatibility]
-        .filter(Boolean)
-        .some((field) => field.toLowerCase().includes(term)),
-    )
+  //   const filtered = products.filter((p) =>
+  //     [p.title, p.description, p.category, p.compatibility]
+  //       .filter(Boolean)
+  //       .some((field) => field.toLowerCase().includes(term)),
+  //   )
 
-    results.value = filtered.slice(0, 5)
-    categories.value = [...new Set(filtered.map((p) => p.category).filter(Boolean))].slice(0, 3)
-    loading.value = false
+  //   results.value = filtered.slice(0, 5)
+  //   categories.value = [...new Set(filtered.map((p) => p.category).filter(Boolean))].slice(0, 3)
+  //   loading.value = false
+  // }, 250)
+  searchTimer = setTimeout(async () => {
+    try {
+      const response = await api.get(`/api/products`, {
+        params: { q: props.query }
+      })
+
+      results.value = response.data.data.data
+      categories.value = response.data.data.categories
+    } catch (err) {
+      console.error('Search failed:', err)
+      results.value = []
+      categories.value = []
+    } finally {
+      loading.value = false
+    }
   }, 250)
 }
 
@@ -162,6 +186,11 @@ const saveRecentSearch = (term) => {
   const updated = [term, ...filtered].slice(0, 5)
   localStorage.setItem('recentSearches', JSON.stringify(updated))
   recentSearches.value = updated
+}
+
+const clearRecentSearches = () => {
+  localStorage.removeItem('recentSearches')
+  recentSearches.value = []
 }
 
 onMounted(() => {

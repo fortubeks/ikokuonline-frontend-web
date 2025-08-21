@@ -94,6 +94,9 @@ import router from '../../router'
 
 import api from '@/services/api'
 import { useAuthStore } from '@/stores/auth'
+import { useCart } from '../../components/homepagev3/CartProvider.js'
+
+const { mergeGuestIntoUser, removeGuestCartFromStorage, readGuestCartFromStorage } = useCart()
 
 onMounted(() => {
   if (window.google) {
@@ -123,10 +126,11 @@ const handleGoogleCredential = async (response) => {
     const auth = useAuthStore()
     auth.setUser(res.data.user)
 
-    console.log('is_authenticated: ' + auth.isAuthenticated)
+    //console.log('is_authenticated: ' + auth.isAuthenticated)
     // alert('Signed in with Google!');
     router.push('/dashboard') // or any route after login
   } catch (error) {
+    console.log(error)
     console.error('Google login failed:', error.response?.data)
     alert(error.response?.data?.message || 'Google login failed')
   }

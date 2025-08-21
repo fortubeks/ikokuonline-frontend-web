@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="`/product/${id}`"
+    :href="`/product/${slug}`"
     class="!block"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
@@ -13,7 +13,7 @@
       <div class="!relative !w-1/3">
         <img
           :src="image"
-          :alt="title"
+          :alt="name"
           class="!w-full !h-full !object-cover"
           style="height: 120px"
         />
@@ -82,7 +82,7 @@
     >
       <div class="!relative !pb-[75%]">
         <img
-          :src="image"
+          :src="display_image_url"
           :alt="title"
           class="!absolute !inset-0 !w-full !h-full !object-cover !transition-transform !duration-300"
           :class="isHovered ? '!scale-105' : ''"
@@ -127,7 +127,7 @@
             {{ formattedPrice }}
           </div>
         </div>
-        <h3 class="!mt-1 !text-sm !font-medium line-clamp-2">{{ title }}</h3>
+        <h3 class="!mt-1 !text-sm !font-medium line-clamp-2">{{ name }}</h3>
         <div class="!flex !items-center !mt-1 !text-xs !text-gray-500">
           <MapPinIcon class="!w-3 !h-3 !mr-1" />
           <span>{{ location }}</span>
@@ -154,10 +154,11 @@ import { useToast } from 'vue-toastification'
 
 const props = defineProps({
   id: String,
-  title: String,
+  slug: String,
+  name: String,
   price: Number,
   location: String,
-  image: String,
+  display_image_url: String,
   isVerified: Boolean,
   isFeatured: Boolean,
   view: String,
@@ -194,8 +195,8 @@ const formattedPrice = computed(() => {
   return new Intl.NumberFormat('en-NG', {
     style: 'currency',
     currency: 'NGN',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   })
     .format(props.price)
     .replace('NGN', '₦')

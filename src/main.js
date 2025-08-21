@@ -65,9 +65,9 @@ const pinia = createPinia()
 app.use(pinia);
 
 
-const auth = useAuthStore();
-auth.checkAuth();
-auth.hydrate();
+// const auth = useAuthStore();
+// auth.checkAuth();
+// auth.hydrate();
 
 app.use(router)
 app.use(MotionPlugin)

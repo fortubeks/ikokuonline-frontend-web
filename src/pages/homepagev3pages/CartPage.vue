@@ -31,8 +31,8 @@
                 <div v-for="item in items" :key="item.id" class="!p-4 !flex">
                   <div class="!w-24 !h-24 !flex-shrink-0">
                     <img
-                      :src="item.image"
-                      :alt="item.title"
+                      :src="item.product.display_image_url"
+                      :alt="item.product.name"
                       class="!w-full !h-full !object-cover !rounded-md"
                     />
                   </div>
@@ -41,11 +41,11 @@
                       :href="`/product/${item.id}`"
                       class="!font-medium text-black hover:!text-primary-500"
                     >
-                      {{ item.title }}
+                      {{ item.product.name }}
                     </a>
                     <div class="!flex !items-baseline !mt-1">
                       <div class="!font-bold !text-primary-500">{{ formatPrice(item) }}</div>
-                      <div v-if="item.discount" class="!ml-2 !text-sm !text-gray-400 !line-through">
+                      <div v-if="item.product.discount" class="!ml-2 !text-sm !text-gray-400 !line-through">
                         {{ formatOriginalPrice(item) }}
                       </div>
                     </div>
@@ -53,14 +53,14 @@
                       <div class="!flex !items-center !border !rounded-md">
                         <button
                           class="!px-2 !py-1 hover:!bg-gray-100"
-                          @click="updateQuantityHandler(item.id, item.quantity - 1)"
+                          @click="updateQuantityHandler(item, item.quantity - 1)"
                         >
                           <MinusIcon class="!w-4 !h-4" />
                         </button>
                         <span class="!px-3 !py-1 !border-x">{{ item.quantity }}</span>
                         <button
                           class="!px-2 !py-1 hover:!bg-gray-100"
-                          @click="updateQuantityHandler(item.id, item.quantity + 1)"
+                          @click="updateQuantityHandler(item, item.quantity + 1)"
                         >
                           <PlusIcon class="!w-4 !h-4" />
                         </button>
@@ -83,7 +83,7 @@
                   class="!text-red-500 hover:!underline !flex !items-center"
                   @click="clearCart"
                 >
-                  <TrashIcon class="!w-4 !h-4 !mr-1" /> Remove Item
+                  <TrashIcon class="!w-4 !h-4 !mr-1" /> Remove All Items
                 </button>
               </div>
             </div>
@@ -152,10 +152,10 @@ import {
 import Layout from '../../layouts/Layout.vue'
 import { useCart } from '../../components/homepagev3/CartProvider.js'
 
-const { items, updateQuantity, removeItem, itemCount, subtotal, totalDiscount, total } = useCart()
+const { items, updateQuantity, removeItem, clearCart, itemCount, subtotal, totalDiscount, total } = useCart()
 
 const formatPrice = (item) => {
-  const discounted = item.discount ? item.price * (1 - item.discount / 100) : item.price
+  const discounted = item.product.discount ? item.product.price * (1 - item.product.discount / 100) : item.product.price
   return new Intl.NumberFormat('en-NG', {
     style: 'currency',
     currency: 'NGN',
@@ -175,15 +175,15 @@ const formatOriginalPrice = (item) => {
     .replace('NGN', '₦')
 }
 
-const clearCart = () => {
-  if (confirm('Are you sure you want to clear your cart?')) {
-    items.value.forEach((item) => removeItem(item.id))
-  }
-}
+// const clearCart = () => {
+//   if (confirm('Are you sure you want to clear your cart?')) {
+//     items.value.forEach((item) => removeItem(item.id))
+//   }
+// }
 
-const updateQuantityHandler = (id, qty) => {
-  if (qty < 1) return
-  updateQuantity(id, qty)
+const updateQuantityHandler = (item, qty) => {
+  if (qty < 1 || qty > item.product.stock) return
+  updateQuantity(item.id, qty)
 }
 
 const goCheckout = () => {

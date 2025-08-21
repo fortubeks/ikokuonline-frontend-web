@@ -224,21 +224,21 @@
             </div>
             <div class="!p-4 !space-y-3">
               <div class="!max-h-64 !overflow-y-auto !mb-4">
-                <div v-for="item in items" :key="item.id" class="!flex !py-2 !border-b">
+                <div v-for="item in items" :key="item.product.id" class="!flex !py-2 !border-b">
                   <div class="!w-16 !h-16">
                     <img
-                      :src="item.image"
-                      :alt="item.title"
+                      :src="item.product.display_image_url"
+                      :alt="item.product.name"
                       class="!w-full !h-full !object-cover !rounded"
                     />
                   </div>
                   <div class="!ml-3 !flex-1">
-                    <div class="!text-sm !font-medium !line-clamp-1">{{ item.title }}</div>
+                    <div class="!text-sm !font-medium !line-clamp-1">{{ item.product.name }}</div>
                     <div class="!text-xs !text-gray-500">Qty: {{ item.quantity }}</div>
                     <div class="!font-medium !text-primary-500">
                       ₦{{
                         (
-                          (item.discount ? item.price * (1 - item.discount / 100) : item.price) *
+                          (item.discount ? item.product.price * (1 - item.product.discount / 100) : item.product.price) *
                           item.quantity
                         ).toLocaleString()
                       }}
@@ -322,6 +322,90 @@
 </template>
 
 <script setup>
+// import { ref, computed } from 'vue'
+// import { useRouter } from 'vue-router'
+// import { CreditCardIcon, CheckIcon, MapPinIcon, UserIcon, PhoneIcon } from 'lucide-vue-next'
+// import Header from '../../components/homepagev3/Header.vue'
+// import Footer from '../../components/homepagev3/Footer.vue'
+// import BottomNavigation from '../../components/homepagev3/BottomNavigation.vue'
+// import { useCart } from '../../components/homepagev3/CartProvider.js'
+
+// const { items, subtotal, total, totalDiscount, clearCart } = useCart()
+// const router = useRouter()
+
+// const firstName = ref('')
+// const lastName = ref('')
+// const email = ref('')
+// const phone = ref('')
+// const address = ref('')
+// const city = ref('')
+// const state = ref('')
+// const deliveryMethod = ref('standard')
+// const paymentMethod = ref('card')
+// const isProcessing = ref(false)
+
+// const deliveryCosts = { standard: 1500, express: 3000, pickup: 0 }
+// const actualDeliveryCost = computed(() => deliveryCosts[deliveryMethod.value])
+// const finalTotal = computed(() => total.value + actualDeliveryCost.value)
+
+// const deliveryOptions = {
+//   standard: { name: 'Standard Delivery', desc: '3-5 business days', costText: '₦1,500' },
+//   express: { name: 'Express Delivery', desc: '1-2 business days', costText: '₦3,000' },
+//   pickup: { name: 'Pickup from Store', desc: 'Collect from Lagos store', costText: 'Free' },
+// }
+
+// const paymentOptions = {
+//   card: { name: 'Credit/Debit Card', desc: 'Pay securely with your card', icon: CreditCardIcon },
+//   bank: { name: 'Bank Transfer', desc: 'Pay via bank transfer', icon: CheckIcon },
+//   cash: { name: 'Cash on Delivery', desc: 'Pay when you receive your order', icon: UserIcon },
+// }
+
+// const states = ['Lagos', 'Abuja', 'Rivers', 'Kano', 'Oyo', 'Kaduna', 'Enugu']
+
+// const isFormValid = computed(() => {
+//   return (
+//     firstName.value.trim() &&
+//     lastName.value.trim() &&
+//     email.value.includes('@') &&
+//     phone.value.length >= 10 &&
+//     (deliveryMethod.value === 'pickup' ||
+//       (address.value.trim() && city.value.trim() && state.value.trim()))
+//   )
+// })
+
+// function handleSubmit() {
+//   if (!isFormValid.value) {
+//     alert('Please fill in all required fields correctly')
+//     return
+//   }
+//   isProcessing.value = true
+//   setTimeout(() => {
+//     clearCart()
+//     router.push({
+//       path: '/order-confirmation',
+//       state: {
+//         orderId: 'ORD' + Math.floor(Math.random() * 1000000),
+//         orderDate: new Date().toISOString(),
+//         deliveryMethod: deliveryMethod.value,
+//         paymentMethod: paymentMethod.value,
+//         items: items.value,
+//         subtotal: subtotal.value,
+//         discount: totalDiscount.value,
+//         deliveryCost: actualDeliveryCost.value,
+//         total: finalTotal.value,
+//         shippingDetails: {
+//           name: `${firstName.value} ${lastName.value}`,
+//           email: email.value,
+//           phone: phone.value,
+//           address: address.value,
+//           city: city.value,
+//           state: state.value,
+//         },
+//       },
+//     })
+//   }, 2000)
+// }
+
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { CreditCardIcon, CheckIcon, MapPinIcon, UserIcon, PhoneIcon } from 'lucide-vue-next'
@@ -329,21 +413,26 @@ import Header from '../../components/homepagev3/Header.vue'
 import Footer from '../../components/homepagev3/Footer.vue'
 import BottomNavigation from '../../components/homepagev3/BottomNavigation.vue'
 import { useCart } from '../../components/homepagev3/CartProvider.js'
+import { useAuthStore } from '@/stores/auth'
+import api from '@/services/api'
 
-const { items, subtotal, total, totalDiscount, clearCart } = useCart()
+const { cart, subtotal, total, totalDiscount, clearCart } = useCart()
 const router = useRouter()
+const { user, isAuthenticated } = useAuthStore();
 
-const firstName = ref('')
-const lastName = ref('')
-const email = ref('')
-const phone = ref('')
-const address = ref('')
-const city = ref('')
-const state = ref('')
+// ---- Form state ----
+const firstName = ref(isAuthenticated.value ? user.value?.first_name ?? '' : '')
+const lastName = ref(isAuthenticated.value ? user.value?.last_name ?? '' : '')
+const email = ref(isAuthenticated.value ? user.value?.email ?? '' : '')
+const phone = ref(isAuthenticated.value ? user.value?.phone ?? '' : '')
+const address = ref(isAuthenticated.value ? user.value?.address ?? '' : '')
+const city = ref(isAuthenticated.value ? user.value?.city ?? '' : '')
+const state = ref(isAuthenticated.value ? user.value?.state ?? '' : '')
 const deliveryMethod = ref('standard')
 const paymentMethod = ref('card')
 const isProcessing = ref(false)
 
+// ---- Delivery costs ----
 const deliveryCosts = { standard: 1500, express: 3000, pickup: 0 }
 const actualDeliveryCost = computed(() => deliveryCosts[deliveryMethod.value])
 const finalTotal = computed(() => total.value + actualDeliveryCost.value)
@@ -362,6 +451,7 @@ const paymentOptions = {
 
 const states = ['Lagos', 'Abuja', 'Rivers', 'Kano', 'Oyo', 'Kaduna', 'Enugu']
 
+// ---- Validation ----
 const isFormValid = computed(() => {
   return (
     firstName.value.trim() &&
@@ -373,36 +463,75 @@ const isFormValid = computed(() => {
   )
 })
 
-function handleSubmit() {
+// ---- Order submission ----
+async function handleSubmit() {
   if (!isFormValid.value) {
     alert('Please fill in all required fields correctly')
     return
   }
+
   isProcessing.value = true
-  setTimeout(() => {
-    clearCart()
-    router.push({
-      path: '/order-confirmation',
-      state: {
-        orderId: 'ORD' + Math.floor(Math.random() * 1000000),
-        orderDate: new Date().toISOString(),
-        deliveryMethod: deliveryMethod.value,
-        paymentMethod: paymentMethod.value,
-        items: items.value,
-        subtotal: subtotal.value,
-        discount: totalDiscount.value,
-        deliveryCost: actualDeliveryCost.value,
-        total: finalTotal.value,
-        shippingDetails: {
-          name: `${firstName.value} ${lastName.value}`,
-          email: email.value,
-          phone: phone.value,
-          address: address.value,
-          city: city.value,
-          state: state.value,
-        },
+  try {
+    const orderPayload = {
+      customer: {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        phone: phone.value,
       },
-    })
-  }, 2000)
+      shipping: deliveryMethod.value === 'pickup'
+        ? { method: 'pickup' }
+        : {
+            method: deliveryMethod.value,
+            address: address.value,
+            city: city.value,
+            state: state.value,
+          },
+      cart: cart.value,
+      subtotal: subtotal.value,
+      discount: totalDiscount.value,
+      deliveryCost: actualDeliveryCost.value,
+      total: finalTotal.value,
+      paymentMethod: paymentMethod.value,
+    }
+
+    const res = await api.post('/api/orders/checkout', orderPayload)
+
+    console.log(res)
+
+    const data = res.data
+
+    if (data.status === false) { 
+      throw new Error(data.message || 'Failed to place order.');
+    }
+
+    //cart.clearCart()
+    clearCart()
+
+    // Payment handling
+    if (paymentMethod.value === 'card' && data.data.payment.url) {
+      window.location.href = data.data.payment.url
+      return
+    }
+
+    if (paymentMethod.value === 'bank') {
+      router.push({
+        path: '/order-confirmation',
+        state: { ...data, note: 'Please complete your bank transfer using the provided details.' },
+      })
+    } else {
+      router.push({
+        path: '/order-confirmation',
+        state: data,
+      })
+    }
+
+    //clearCart()
+  } catch (err) {
+    console.error(err)
+    alert('Something went wrong placing your order. Please try again.')
+  } finally {
+    isProcessing.value = false
+  }
 }
 </script>
