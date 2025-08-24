@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="py-4">
-            <form class="search-input d-sm-block">
+            <form class="search-input d-sm-block" @submit.prevent>
               <span class="icon">
                 <img
                   src="@/assets/dp-market-dashboard/images/icons/search-dark.svg"
@@ -26,6 +26,7 @@
               </span>
               <input
                 type="text"
+                v-model="searchQuery"
                 class="common-input common-input--md common-input--bg pill w-100"
                 placeholder="Search here..."
               />
@@ -54,10 +55,13 @@
                     </router-link>
                   </td>
                 </tr>
+                <tr v-if="paginatedProducts.length === 0">
+                  <td colspan="3" class="text-center">No products found</td>
+                </tr>
               </tbody>
             </table>
             <Pagination
-              :total="products.length"
+              :total="filteredProducts.length"
               v-model:currentPage="currentPage"
               v-model:pageSize="pageSize"
             />
@@ -69,20 +73,6 @@
 </template>
 
 <script setup>
-// import Pagination from '@components/Pagination.vue';
-// import { ref, computed } from 'vue';
-
-// const products = ref([/* ... */]); // fetched or static
-
-// const currentPage = ref(1);
-// const pageSize = ref(5);
-
-// const start = computed(() => (currentPage.value - 1) * pageSize.value);
-// const end = computed(() => Math.min(start.value + pageSize.value, products.value.length));
-// const paginatedProducts = computed(() =>
-//   products.value.slice(start.value, end.value)
-// );
-
 import Pagination from '@components/dashboard/Pagination.vue'
 import { ref, computed, onMounted } from 'vue'
 import api from '@/services/api'
@@ -90,10 +80,20 @@ import api from '@/services/api'
 const products = ref([])
 const currentPage = ref(1)
 const pageSize = ref(5)
+const searchQuery = ref('')
 
+// filter products by search
+const filteredProducts = computed(() => {
+  if (!searchQuery.value) return products.value
+  return products.value.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  )
+})
+
+// pagination logic applied to filtered results
 const start = computed(() => (currentPage.value - 1) * pageSize.value)
-const end = computed(() => Math.min(start.value + pageSize.value, products.value.length))
-const paginatedProducts = computed(() => products.value.slice(start.value, end.value))
+const end = computed(() => Math.min(start.value + pageSize.value, filteredProducts.value.length))
+const paginatedProducts = computed(() => filteredProducts.value.slice(start.value, end.value))
 
 // Fetch products on component mount
 const fetchProducts = async () => {

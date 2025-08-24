@@ -25,6 +25,7 @@
               </span>
               <input
                 type="text"
+                v-model="searchQuery"
                 class="common-input common-input--md common-input--bg pill w-100"
                 placeholder="Search here..."
               />
@@ -43,7 +44,7 @@
               <tbody>
                 <tr v-for="productCategory in paginatedProductCategories" :key="productCategory.id">
                   <td data-label="Name">{{ productCategory.name }}</td>
-                  <td data-label="Parent"></td>
+                  <td data-label="Parent">{{ productCategory.parent?.name || '—' }}</td>
                   <td data-label="Details">
                     <router-link
                       :to="{
@@ -59,7 +60,7 @@
               </tbody>
             </table>
             <Pagination
-              :total="productCategories.length"
+              :total="filteredCategories.length"
               v-model:currentPage="currentPage"
               v-model:pageSize="pageSize"
             />
@@ -75,24 +76,35 @@ import Pagination from '@components/dashboard/Pagination.vue'
 import { ref, computed, onMounted } from 'vue'
 import api from '@/services/api'
 
-const productCategories = ref([
-  /* ... */
-]) // fetched or static
-
+const productCategories = ref([])
 const currentPage = ref(1)
 const pageSize = ref(5)
+const searchQuery = ref('')
 
+// 🔍 Filtered categories by search
+const filteredCategories = computed(() => {
+  if (!searchQuery.value.trim()) {
+    return productCategories.value
+  }
+  return productCategories.value.filter(
+    (cat) =>
+      cat.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      (cat.parent?.name || '').toLowerCase().includes(searchQuery.value.toLowerCase()),
+  )
+})
+
+// Pagination depends on filtered results
 const start = computed(() => (currentPage.value - 1) * pageSize.value)
-const end = computed(() => Math.min(start.value + pageSize.value, productCategories.value.length))
+const end = computed(() => Math.min(start.value + pageSize.value, filteredCategories.value.length))
 const paginatedProductCategories = computed(() =>
-  productCategories.value.slice(start.value, end.value),
+  filteredCategories.value.slice(start.value, end.value),
 )
 
-// Fetch vehicleListings on component mount
+// Fetch product categories on component mount
 const fetchModelList = async () => {
   try {
     const response = await api.get('/api/product-categories')
-    productCategories.value = response.data
+    productCategories.value = response.data.data.data
   } catch (error) {
     console.error('Failed to fetch list:', error)
   }

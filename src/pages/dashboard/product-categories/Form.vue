@@ -20,9 +20,9 @@
             </div>
 
             <div class="col-sm-6 col-xs-6">
-              <label for="product_category_id" class="form-label">Parent Category</label>
+              <label for="parent_id" class="form-label">Parent Category</label>
               <select
-                v-model="form.product_category_id"
+                v-model="form.parent_id"
                 class="common-input common-input--md border--color-dark bg--white"
               >
                 <option value="">Select Category</option>
@@ -62,7 +62,7 @@ export default {
     return {
       productCategory: null,
       form: {
-        product_category_id: '',
+        parent_id: '',
         name: '',
       },
       productCategories: [],
@@ -81,7 +81,7 @@ export default {
       api
         .get('/api/product-categories')
         .then((res) => {
-          this.productCategories = res.data
+          this.productCategories = res.data.data.data
         })
         .catch((err) => console.error(err))
     },
